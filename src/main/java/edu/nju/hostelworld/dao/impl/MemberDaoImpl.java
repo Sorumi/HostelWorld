@@ -20,16 +20,16 @@ import java.util.List;
  */
 
 @Repository
-public class MemberDaoImpl implements MemberDao {
+public class MemberDaoImpl extends BaseDaoImpl implements MemberDao {
 
-    @Autowired
-    private BaseDao baseDao;
+//    @Autowired
+//    private BaseDao baseDao;
 
     public ResultMessage addMember(Member member) {
         try {
-            Session session = baseDao.setUpSession();
+            Session session = setUpSession();
             session.save(member);
-            baseDao.commitAndClose(session);
+            commitAndClose(session);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultMessage.FAILED;
@@ -40,9 +40,9 @@ public class MemberDaoImpl implements MemberDao {
 
     public ResultMessage updateMember(Member member) {
         try {
-            Session session = baseDao.setUpSession();
+            Session session = setUpSession();
             session.update(member);
-            baseDao.commitAndClose(session);
+            commitAndClose(session);
 
         } catch (DataAccessException e) {
             e.printStackTrace();
@@ -54,10 +54,10 @@ public class MemberDaoImpl implements MemberDao {
     public long countMember() {
         long count = 0;
         try {
-            Session session = baseDao.setUpSession();
+            Session session = setUpSession();
             String hql = "select count(*) from Member";
             count = (Long) session.createQuery(hql).uniqueResult();
-            baseDao.commitAndClose(session);
+            commitAndClose(session);
 
         } catch (DataAccessException e) {
             e.printStackTrace();
@@ -68,12 +68,10 @@ public class MemberDaoImpl implements MemberDao {
     public Member findMemberByID(String ID) {
         Member member = null;
         try {
-            Session session = baseDao.setUpSession();
+            Session session = setUpSession();
             Object obj = session.get(Member.class, ID);
-//            List list = hibernateTemplateMysql.find("from Member where id = ?", ID);
-//            member = list.size() == 0 ? null : (Member) list.get(0);
             member = (Member) obj;
-            baseDao.commitAndClose(session);
+            commitAndClose(session);
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
@@ -83,12 +81,11 @@ public class MemberDaoImpl implements MemberDao {
     public Member findMemberByUsername(String username) {
         Member member = null;
         try {
-//            List list = hibernateTemplateMysql.find("from Member where username = ?", username);
-            Session session = baseDao.setUpSession();
-            String hql = "select count(*) from Member";
+            Session session = setUpSession();
+            String hql = "from Member where username = " + username;
             List list = session.createQuery(hql).list();
             member = list.size() == 0 ? null : (Member) list.get(0);
-            baseDao.commitAndClose(session);
+            commitAndClose(session);
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
@@ -98,11 +95,11 @@ public class MemberDaoImpl implements MemberDao {
     public List<Member> findAllMembers() {
         List list = null;
         try {
-            Session session = baseDao.setUpSession();
+            Session session = setUpSession();
             String hql = "from Member";
             list = session.createQuery(hql).list();
 //            list = hibernateTemplateMysql.find("from Member");
-            baseDao.commitAndClose(session);
+            commitAndClose(session);
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
