@@ -22,9 +22,6 @@ import java.util.List;
 @Repository
 public class MemberDaoImpl extends BaseDaoImpl implements MemberDao {
 
-//    @Autowired
-//    private BaseDao baseDao;
-
     public ResultMessage addMember(Member member) {
         try {
             Session session = setUpSession();

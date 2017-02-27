@@ -42,9 +42,9 @@
             </props>
         </property>
     </bean>
-    <!--<bean id="hibernateTemplateMysql" class="org.springframework.orm.hibernate5.HibernateTemplate">-->
+    <!--<Bean id="hibernateTemplateMysql" class="org.springframework.orm.hibernate5.HibernateTemplate">-->
         <!--<property name="sessionFactory" ref="sessionFactory"></property>-->
-    <!--</bean>-->
+    <!--</Bean>-->
 
     <!-- 定义事务管理器（声明式的事务） -->
     <bean id="transactionManager"
@@ -52,7 +52,7 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <!-- 定义 Autowired 自动注入 bean -->
+    <!-- 定义 Autowired 自动注入 Bean -->
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 
     <!-- 扫描有注解的文件 base-package 包路径 -->

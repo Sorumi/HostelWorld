@@ -23,7 +23,7 @@ public interface OrderDao {
 
     public List<BookOrder> findAllOrders();
 
-    public List<BookOrder> findMemberOrders(String memberID);
+    public List<BookOrder> findMemberOrders(String memberID, OrderState orderState);
 
-    public List<BookOrder> findHostelOrders(String hostelID);
+    public List<BookOrder> findHostelOrders(String hostelID, OrderState orderState);
 }

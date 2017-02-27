@@ -1,17 +1,17 @@
 package edu.nju.hostelworld.service;
 
+import edu.nju.hostelworld.Bean.MemberInfoBean;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.util.ResultMessage;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Sorumi on 17/2/2.
  */
-
-@Service
 public interface MemberService {
+
+    public MemberInfoBean convertToMemberInfoBean(Member member);
 
     public ResultMessage addMember(Member member);
 

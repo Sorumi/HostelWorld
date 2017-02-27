@@ -130,7 +130,7 @@ public class BaseDaoImpl implements BaseDao {
         List list = null;
         try {
             Session session = setUpSession();
-            String hql = "from BookOrder where " + field + " = :value";
+            String hql = "from " + c.getName() + " where " + field + " = :value";
             Query query = session.createQuery(hql);
             query.setParameter("value", value);
             list = query.list();

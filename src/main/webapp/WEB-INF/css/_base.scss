@@ -1,0 +1,85 @@
+html, body, h1, h2, h3, h4, h5, h6, hr, li, ul, p, a, img, button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: $gray-color-dark;
+  font-size: $base-font-size ;
+  font-family: $base-font-family;
+  font-weight: $base-font-weight;
+  //line-height: $base-line-height;
+  text-decoration: none;
+  list-style: none;
+}
+
+body {
+  background-color: $gray-color-white;
+}
+
+* {
+  position: relative;
+  @include box-sizing(border-box);
+}
+
+button {
+  border: 0;
+  outline: none;
+  background-color: transparent;
+  color: $gray-color-ultra-light;
+  cursor: pointer;
+}
+
+input, textarea {
+  font-family: $base-font-family;
+  font-weight: $base-font-weight;
+  outline: none;
+  border: 0;
+  resize: none;
+}
+
+input {
+  width: 200px;
+  height: 40px;
+  font-size: 14px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  font-size: 14px;
+}
+
+input[type="text"], input[type="password"], input[type="number"], textarea {
+  padding: 5px 10px;
+  background-color: $white-color;
+  border: solid 1px $gray-color-light;
+  border-radius: $radius;
+  color: $gray-color-dark;
+}
+
+input[type="button"], input[type="submit"] {
+  padding: 0;
+}
+
+
+//.mdl-button.button-active {
+//  background-color: $theme-color !important;
+//}
+//
+//.mdl-button.button-inactive {
+//  background-color: $gray-color !important;
+//}
+//
+//.mdl-button--raised {
+//  min-width: 100px;
+//  height: 36px;
+//  font-size: 16px;
+//  font-family: $base-font-family;
+//  font-weight: $base-font-weight;
+//  @include border-radius(3px);
+//}
+//
+
+
+.clear-fix {
+  clear: both;
+}

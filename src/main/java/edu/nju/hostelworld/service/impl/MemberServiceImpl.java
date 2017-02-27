@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.service.impl;
 
+import edu.nju.hostelworld.Bean.MemberInfoBean;
 import edu.nju.hostelworld.dao.MemberDao;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.service.MemberService;
@@ -20,6 +21,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberDao memberDao;
+
+    @Override
+    public MemberInfoBean convertToMemberInfoBean(Member member) {
+        MemberInfoBean memberInfoBean = new MemberInfoBean();
+        memberInfoBean.setMember(member);
+        if (member.getAccount() != null) {
+            memberInfoBean.setAccount(member.getAccount());
+        }
+        return memberInfoBean;
+    }
 
     public ResultMessage addMember(Member member) {
         member.setID(generateMemberID());

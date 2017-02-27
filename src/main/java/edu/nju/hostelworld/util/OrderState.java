@@ -4,23 +4,37 @@ package edu.nju.hostelworld.util;
  * Created by Sorumi on 17/2/3.
  */
 public enum OrderState {
-    UnCheckIn("未入住"), // 未入住
-    CheckIn("已入住"), // 已入住
-    CheckOut("已退房"), // 已退房
-    Cancelled("已取消"), // 已取消
-    Expired("已过期"); // 已过期
+    UnCheckIn("未入住", "orange"), // 未入住
+    CheckIn("已入住", "blue"), // 已入住
+    CheckOut("已退房", "green"), // 已退房
+    Cancelled("已退订", "pink"), // 已取消
+    Expired("已过期", "purple"); // 已过期
 //    Accounted("已结算"); // 已结算
 
 
     private final String name;
+    private final String color;
 
-    private OrderState(String name) {
-
+    private OrderState(String name, String color) {
         this.name = name;
+        this.color = color;
     }
 
     public String getName() {
         return this.name;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public static OrderState getByString(String string) {
+
+        System.out.println(string);
+        for (OrderState orderState : OrderState.values()) {
+            if (string.toLowerCase().equals(orderState.toString().toLowerCase()))
+                return orderState;
+        }
+        return null;
+    }
 }

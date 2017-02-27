@@ -50,20 +50,48 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
 
     public List<BookOrder> findOrderByOrderState(OrderState orderState) {
         return findByFieldAndValue(BookOrder.class, "state", orderState);
-
-
     }
 
     public List<BookOrder> findAllOrders() {
         return findAll(BookOrder.class);
     }
 
-    public List<BookOrder> findMemberOrders(String memberID) {
-        return findByFieldAndValue(BookOrder.class, "memberID", memberID);
+    public List<BookOrder> findMemberOrders(String memberID, OrderState orderState) {
+        if (orderState == null) {
+            return findByFieldAndValue(BookOrder.class, "memberID", memberID);
+        }
+        List list = null;
+        try {
+            Session session = setUpSession();
+            String hql = "from BookOrder where memberID = :memberID and state = :state";
+            Query query = session.createQuery(hql);
+            query.setParameter("memberID", memberID);
+            query.setParameter("state", orderState);
+            list = query.list();
+            commitAndClose(session);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
-    public List<BookOrder> findHostelOrders(String hostelID) {
-        return findByFieldAndValue(BookOrder.class, "hostelID", hostelID);
+    public List<BookOrder> findHostelOrders(String hostelID, OrderState orderState) {
+        if (orderState == null) {
+            return findByFieldAndValue(BookOrder.class, "hostelID", hostelID);
+        }
+        List list = null;
+        try {
+            Session session = setUpSession();
+            String hql = "from BookOrder where hostelID = :hostelID and state = :state";
+            Query query = session.createQuery(hql);
+            query.setParameter("hostelID", hostelID);
+            query.setParameter("state", orderState);
+            list = query.list();
+            commitAndClose(session);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
 

@@ -6,6 +6,7 @@ import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.util.HostelState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -41,8 +42,10 @@ public class HostelDaoImpl extends BaseDaoImpl implements HostelDao {
         Hostel hostel = null;
         try {
             Session session = setUpSession();
-            String hql = "select count(*) from Hostel";
-            List list = session.createQuery(hql).list();
+            String hql = "from Hostel where username = :username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            List list = query.list();
             hostel = list.size() == 0 ? null : (Hostel) list.get(0);
             commitAndClose(session);
         } catch (DataAccessException e) {

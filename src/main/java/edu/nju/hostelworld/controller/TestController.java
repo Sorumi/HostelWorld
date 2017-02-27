@@ -1,17 +1,13 @@
 package edu.nju.hostelworld.controller;
 
-import edu.nju.hostelworld.Bean.TestBean;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Sorumi on 17/2/24.
  */
 
-@Controller
+//@Controller
 @RequestMapping("/test")
 public class TestController {
 
@@ -31,7 +27,7 @@ public class TestController {
         System.out.println("get" + id);
         Member member = memberService.findMemberByID(id);
         model.addAttribute("member", member);
-        return "showMember";
+        return "test/showMember";
     }
 
     @RequestMapping("/show")
@@ -39,7 +35,7 @@ public class TestController {
         String id = request.getParameter("id");
         Member member = memberService.findMemberByID(id);
         model.addAttribute("member", member.getName());
-        return "showMember";
+        return "test/showMember";
     }
 
     //test
@@ -57,7 +53,7 @@ public class TestController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String student(ModelMap modelMap) {
         modelMap.addAttribute("member", new Member());
-        return "add";
+        return "test/add";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -66,21 +62,21 @@ public class TestController {
         model.addAttribute("member", member);
 //        model.addAttribute("name", member.getName());
 //        model.addAttribute("ID", member.getID());
-        return "member";
+        return "test/member";
     }
 
-    @RequestMapping(value = "/test/add", method = RequestMethod.GET)
-    public String addTest(ModelMap modelMap) {
-        modelMap.addAttribute("test", new TestBean());
-        return "addTest";
-    }
-
-    @RequestMapping(value = "/test/add", method = RequestMethod.POST)
-    public String showTest(@ModelAttribute("test") TestBean test, ModelMap model) {
-//        model.addAttribute("name", member.getName());
-//        model.addAttribute("ID", member.getID());
-        return "showTest";
-    }
+//    @RequestMapping(value = "/test/add", method = RequestMethod.GET)
+//    public String addTest(ModelMap modelMap) {
+//        modelMap.addAttribute("test", new TestBean());
+//        return "test/addTest";
+//    }
+//
+//    @RequestMapping(value = "/test/add", method = RequestMethod.POST)
+//    public String showTest(@ModelAttribute("test") TestBean test, ModelMap model) {
+////        model.addAttribute("name", member.getName());
+////        model.addAttribute("ID", member.getID());
+//        return "test/showTest";
+//    }
 }
 
 

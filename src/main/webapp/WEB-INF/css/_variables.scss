@@ -1,0 +1,54 @@
+/*
+ * Fonts
+ */
+$font-weight-thin: 	      100;
+$font-weight-ultra-light: 200;
+$font-weight-light:       300;
+$font-weight-normal:      400;
+$font-weight-medium:      500;
+$font-weight-semi-bold:   600;
+$font-weight-bold:        700;
+$font-weight-ultra-bold:  800;
+$font-weight-black:       900;
+
+$base-font-family:   "Pingfang SC", "Open Sans", "Lantinghei SC", "Microsoft Yahei Light", "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$base-font-size:     18px;
+$base-font-weight:   $font-weight-light;
+$small-font-size:    14px;
+$base-line-height:   24px;
+$theme-font-family:  "Bangla MN";
+
+/*
+ * Colors
+ */
+$white-color:             #FFF;
+
+$gray-color-white:        #FAFAFA;
+$gray-color-ultra-light:  #EEEEEE;
+$gray-color-light:        #DDDDDD;
+$gray-color:              #B3B3B3;
+$gray-color-dark:         #808080;
+$gray-color-ultra-dark:   #646464;
+
+$theme-color:             #00CCCC;
+$theme-color-dark:        #313B42;
+//$minor-color-red:         #F26F23;
+//$minor-color-yellow:      #FFC94F;
+//$minor-color-green:       #9FDBE2;
+//$minor-color-dark:        #3D456F;
+
+$red-color:               #FF2C14;
+$yellow-color:            #F8E71C;
+$blue-color:              #12B7F3;
+$green-color:             #00CCCC;
+$purple-color:            #BC52FD;
+$pink-color:              #FC537D;
+$orange-color:            #FD9C4B;
+
+$theme-font-color:        #5B6E79;
+//$theme-color-dark-alpha:  rgba(48,53,55,0.8);
+
+$shadow-color:            rgba(64,64,64,0.5);
+
+
+$radius: 5px;

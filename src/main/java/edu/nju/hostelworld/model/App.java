@@ -14,17 +14,17 @@ public class App {
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
-    private int ID;
+    private String  ID;
 
     private double money;
 
     private double commission;
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
