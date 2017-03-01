@@ -27,7 +27,7 @@ public class HostelDaoImpl extends BaseDaoImpl implements HostelDao {
     }
 
     public ResultMessage updateHostel(Hostel hostel) {
-        return updateHostel(hostel);
+        return update(hostel);
     }
 
     public long countHostels() {

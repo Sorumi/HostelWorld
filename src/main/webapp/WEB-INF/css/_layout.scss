@@ -634,11 +634,14 @@ form.search-small {
 }
 
 .right-buttons {
-  button {
+  button, a {
     float: right;
   }
 }
 
+.left-nav {
+  float: left;
+}
 .order-wrapper {
   width: 100%;
   margin: 30px 0;
@@ -694,6 +697,14 @@ form.search-small {
       bottom: 20px;
       font-size: 18px;
       color: $red-color;
+    }
+    .order-accounted {
+      top: 110px;
+      right: 20px;
+      color: $gray-color-light;
+      &.unaccounted {
+        color: $red-color;
+      }
     }
     .info-button {
       right: 20px;

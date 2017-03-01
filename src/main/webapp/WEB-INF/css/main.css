@@ -713,8 +713,11 @@ form.search-small {
     font-size: 14px;
     color: #B3B3B3; }
 
-.right-buttons button {
+.right-buttons button, .right-buttons a {
   float: right; }
+
+.left-nav {
+  float: left; }
 
 .order-wrapper {
   width: 100%;
@@ -764,6 +767,12 @@ form.search-small {
       bottom: 20px;
       font-size: 18px;
       color: #FF2C14; }
+    .order-wrapper .info-wrapper .order-accounted {
+      top: 110px;
+      right: 20px;
+      color: #DDDDDD; }
+      .order-wrapper .info-wrapper .order-accounted.unaccounted {
+        color: #FF2C14; }
     .order-wrapper .info-wrapper .info-button {
       right: 20px;
       bottom: 20px; }

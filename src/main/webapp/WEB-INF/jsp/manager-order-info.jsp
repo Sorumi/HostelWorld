@@ -12,7 +12,7 @@
 
 <div class="top-fix"></div>
 
-<%@ include file="include/member-nav.jsp" %>
+<%@ include file="include/manager-nav.jsp" %>
 
 <main>
     <div class="container card order-info">
@@ -25,12 +25,12 @@
                 </div>
                 <div class="grid-content">
                     <%--<c:choose>--%>
-                        <%--<c:when test="${order.bookOrder.ID == null}">--%>
-                            <%--<span id="id">非会员</span>--%>
-                        <%--</c:when>--%>
-                        <%--<c:otherwise>--%>
-                            <span id="id">${order.bookOrder.ID}</span>
-                        <%--</c:otherwise>--%>
+                    <%--<c:when test="${order.bookOrder.ID == null}">--%>
+                    <%--<span id="id">非会员</span>--%>
+                    <%--</c:when>--%>
+                    <%--<c:otherwise>--%>
+                    <span id="id">${order.bookOrder.ID}</span>
+                    <%--</c:otherwise>--%>
                     <%--</c:choose>--%>
                 </div>
             </div>
@@ -46,27 +46,48 @@
                     </div>
                 </div>
             </div>
-
-            <%--<div class="grid-row">--%>
-                <%--<div class="grid-label">--%>
-                    <%--<label for="member">会员信息</label>--%>
-                <%--</div>--%>
-                <%--<div class="grid-content">--%>
-                    <%--<div id="member" class="member-info">--%>
-                        <%--<span class="member-name">会员名称</span>--%>
-                        <%--<span class="member-contact">联系方式</span>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
+            <div class="grid-row">
+                <div class="grid-label">
+                    <label for="member">会员信息</label>
+                </div>
+                <div class="grid-content">
+                    <div id="member">
+                        <span class="member-name">${order.member.name}</span>
+                        <span class="member-contact">${order.member.contact}</span>
+                    </div>
+                </div>
+            </div>
 
             <div class="grid-row">
                 <div class="grid-label">
                     <label for="state">订单状态</label>
                 </div>
                 <div class="grid-content">
-                    <span id="state" class="tag tag-${order.bookOrder.state.color}-current">${order.bookOrder.state.name}</span>
+                    <span id="state"
+                          class="tag tag-${order.bookOrder.state.color}-current">${order.bookOrder.state.name}</span>
                 </div>
             </div>
+
+            <c:if test="${order.bookOrder.state == 'CheckOut'}">
+                <div class="grid-row">
+                    <div class="grid-label">
+                        <label for="accounted">订单状态</label>
+                    </div>
+                    <div class="grid-content">
+                        <c:choose>
+                            <c:when test="${order.bookOrder.accounted}">
+                                <span id="accounted" class="tag tag-green-current">已结算</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span id="accounted" class="tag tag-red-current">未结算</span>
+                                <form action="/admin/order/${order.bookOrder.ID}/account" method="post" class="inline">
+                                    <button type="submit" class="major-button-small">结算</button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:if>
 
             <div class="grid-row">
                 <div class="grid-label">
@@ -92,7 +113,6 @@
                                 <span>${order.bookOrder.checkInTime}</span>
                             </c:otherwise>
                         </c:choose>
-                        <%--<button class="major-button-small">登记入住</button>--%>
                     </div>
                 </div>
             </div>
@@ -112,7 +132,6 @@
                                 <span>${order.bookOrder.checkOutTime}</span>
                             </c:otherwise>
                         </c:choose>
-                        <%--<button class="major-button-small">登记退房</button>--%>
                     </div>
                 </div>
             </div>
@@ -168,7 +187,8 @@
             </div>
             <div class="row">
                 <label for="discount">优惠</label>
-                <span id="discount">-￥ <span class="money">-${order.bookOrder.originPrice - order.bookOrder.totalPrice}</span></span>
+                <span id="discount">-￥ <span
+                        class="money">-${order.bookOrder.originPrice - order.bookOrder.totalPrice}</span></span>
                 <div class="clear-fix"></div>
             </div>
             <div class="row">
@@ -181,17 +201,12 @@
         <div class="clear-fix"></div>
         <div class="book-submit">
             <button class="major-button" onclick="history.back()">返回</button>
-            <c:if test="${order.bookOrder.state == 'UnCheckIn'}">
-                <form action="/order/${order.bookOrder.ID}/cancel" method="post" class="inline">
-                    <button type="submit" class="minor-button">取消预订</button>
-                </form>
-            </c:if>
         </div>
         <div class="clear-fix"></div>
     </div>
 </main>
 
 <script>
-    $(".money").number( true, 2 );
+    $(".money").number(true, 2);
 </script>
 <%@ include file="include/footer.jsp" %>

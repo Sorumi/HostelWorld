@@ -36,6 +36,14 @@
                     <span id="facility">${hostel.facility}</span>
                 </div>
             </div>
+            <div class="grid-row grid-row-line">
+                <div class="grid-label">
+                    <label for="money">资产金额</label>
+                </div>
+                <div class="grid-content">
+                    <span id="money">${hostel.money}</span>
+                </div>
+            </div>
         </div>
         <a href="/hostel/order" class="major-button">管理</a>
         <a href="/hostel/application/edit/add" class="minor-button">修改</a>

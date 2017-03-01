@@ -26,6 +26,8 @@ public interface OrderService {
 
     public ResultMessage checkOutOrder(String ID);
 
+    public ResultMessage accountOrder(String ID);
+
     public ResultMessage expireOrder(String ID);
 
     public OrderBean findOrderByID(String ID);

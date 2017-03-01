@@ -14,6 +14,8 @@ import java.util.List;
 public interface HostelService {
     public ResultMessage addHostel(Hostel hostel);
 
+    public ResultMessage updateMoney(String ID, double money);
+
     public Hostel findHostelByID(String ID);
 
     public Hostel findHostelByUsername(String username);

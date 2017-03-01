@@ -42,6 +42,10 @@ public class BookOrder {
 
     private boolean accounted;
 
+    private String notMemberName;
+
+    private String notMemberContact;
+
     public String getID() {
         return ID;
     }
@@ -152,5 +156,21 @@ public class BookOrder {
 
     public void setAccounted(boolean accounted) {
         this.accounted = accounted;
+    }
+
+    public String getNotMemberName() {
+        return notMemberName;
+    }
+
+    public void setNotMemberName(String notMemberName) {
+        this.notMemberName = notMemberName;
+    }
+
+    public String getNotMemberContact() {
+        return notMemberContact;
+    }
+
+    public void setNotMemberContact(String notMemberContact) {
+        this.notMemberContact = notMemberContact;
     }
 }

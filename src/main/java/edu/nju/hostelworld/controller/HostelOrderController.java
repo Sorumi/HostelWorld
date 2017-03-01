@@ -91,4 +91,28 @@ public class HostelOrderController {
         return "redirect:/hostel/order/" + ID;
     }
 
+    @RequestMapping(value = "/order/{id}/checkout", method = RequestMethod.POST)
+    public String orderCheckOut(@PathVariable(value = "id") String ID, ModelMap model) {
+        Hostel hostel;
+        if (model.get("hostel") == null) {
+            return "redirect:/hostel/login";
+        } else {
+            hostel = (Hostel) model.get("hostel");
+        }
+
+        OrderBean orderBean = orderService.findOrderByID(ID);
+        if (orderBean == null) {
+            model.addAttribute("alertMessage", "订单不存在！");
+            return "alert";
+        } else if (!orderBean.getBookOrder().getHostelID().equals(hostel.getID())) {
+            model.addAttribute("alertMessage", "您无法操作此订单！");
+            return "alert";
+        }
+
+        ResultMessage resultMessage = orderService.checkOutOrder(orderBean.getBookOrder().getID());
+        System.out.println(resultMessage);
+
+        return "redirect:/hostel/order/" + ID;
+    }
+
 }

@@ -1,6 +1,6 @@
 package edu.nju.hostelworld.service.impl;
 
-import edu.nju.hostelworld.Bean.OrderBean;
+
 import edu.nju.hostelworld.Bean.RoomStockBean;
 import edu.nju.hostelworld.dao.HostelDao;
 import edu.nju.hostelworld.dao.HostelRoomDao;
@@ -35,6 +35,22 @@ public class HostelServiceImpl implements HostelService {
         hostel.setID(generateHostelID());
         hostel.setState(HostelState.Unopened);
         return hostelDao.addHostel(hostel);
+    }
+
+    @Override
+    public ResultMessage updateMoney(String ID, double money) {
+        Hostel hostel = hostelDao.findHostelByID(ID);
+        if (hostel == null) {
+            return ResultMessage.NOT_EXIST;
+        } else if (hostel.getState() == HostelState.Unopened) {
+            return ResultMessage.FAILED;
+        }
+        double oldMoney = hostel.getMoney();
+//        if (oldMoney + money < 0) {
+//            return ResultMessage.INSUFFICIENT;
+//        }
+        hostel.setMoney(oldMoney + money);
+        return hostelDao.updateHostel(hostel);
     }
 
     @Override

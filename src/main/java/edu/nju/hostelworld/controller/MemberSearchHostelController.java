@@ -55,8 +55,8 @@ public class MemberSearchHostelController {
     @RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
     public String hostel(@PathVariable("id") String id, ModelMap model) {
         MemberHostelInfoBean memberHostelInfoBean = new MemberHostelInfoBean();
-        memberHostelInfoBean.setCheckInDate(LocalDate.now().minusDays(15).toString());
-        memberHostelInfoBean.setCheckOutDate(LocalDate.now().minusDays(14).toString());
+        memberHostelInfoBean.setCheckInDate(LocalDate.now().toString());
+        memberHostelInfoBean.setCheckOutDate(LocalDate.now().plusDays(1).toString());
 
         memberHostelInfoBean.setHostel(hostelService.findHostelByID(id));
         List list = hostelService.getRoomStockByCheckDate(id,
@@ -71,10 +71,15 @@ public class MemberSearchHostelController {
 
     @RequestMapping(value = "/search/{id}/roomstock", method = RequestMethod.POST)
     @ResponseBody
-    public List hostelRoomStocks(@RequestBody SearchRoomJsonBean searchRoomJsonBean) {
+    public List hostelRoomStocks(@RequestBody SearchRoomJsonBean searchRoomJsonBean, HttpSession session, ModelMap model) {
         List list = hostelService.getRoomStockByCheckDate(searchRoomJsonBean.getHostelID(),
                 LocalDate.parse(searchRoomJsonBean.getCheckInDate()),
                 LocalDate.parse(searchRoomJsonBean.getCheckOutDate()));
+
+        MemberHostelInfoBean memberHostelInfoBean = (MemberHostelInfoBean) session.getAttribute("memberHostelInfoBean");
+        memberHostelInfoBean.setRoomStocks(list);
+        model.addAttribute("memberHostelInfoBean", memberHostelInfoBean);
+
        return list;
     }
 

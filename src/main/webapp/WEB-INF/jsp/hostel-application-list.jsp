@@ -18,15 +18,7 @@
     <div class="container">
         <div class="card application-search">
             <h1 class="title">申请管理</h1>
-            <div class="right-buttons">
-                <c:if test="${hostel.state == 'Unopened'}">
-                    <a href="/hostel/application/open/add" class="major-button-small">申请开店</a>
-                </c:if>
-                <c:if test="${hostel.state == 'Opening'}">
-                    <a href="/hostel/application/edit/add" class="major-button-small">申请修改</a>
-                </c:if>
-            </div>
-            <div class="sub-nav">
+            <div class="sub-nav left-nav">
                 <a
                         <c:if test="${applicationType == null}">
                             class="current"
@@ -44,7 +36,15 @@
                         href="/hostel/application?type=Edit">修改申请</a>
             </div>
         </div>
-
+        <div class="right-buttons">
+            <c:if test="${hostel.state == 'Unopened'}">
+                <a href="/hostel/application/open/add" class="major-button-small">申请开店</a>
+            </c:if>
+            <c:if test="${hostel.state == 'Opening'}">
+                <a href="/hostel/application/edit/add" class="major-button-small">申请修改</a>
+            </c:if>
+        </div>
+        <div class="clear-fix"></div>
         <div class="application-wrapper">
             <c:forEach var="application" items="${applicationList}">
                 <div class="application-img-wrapper">

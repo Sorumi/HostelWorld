@@ -24,35 +24,23 @@
                     <label for="id">订单编号</label>
                 </div>
                 <div class="grid-content">
-                    <c:choose>
-                        <c:when test="${order.bookOrder.ID == null}">
-                            <span id="id">非会员</span>
-                        </c:when>
-                        <c:otherwise>
+                    <%--<c:choose>--%>
+                        <%--<c:when test="${order.bookOrder.ID == null}">--%>
+                            <%--<span id="id">非会员</span>--%>
+                        <%--</c:when>--%>
+                        <%--<c:otherwise>--%>
                             <span id="id">${order.bookOrder.ID}</span>
-                        </c:otherwise>
-                    </c:choose>
+                        <%--</c:otherwise>--%>
+                    <%--</c:choose>--%>
                 </div>
             </div>
-
-            <%--<div class="grid-row">--%>
-                <%--<div class="grid-label">--%>
-                    <%--<label for="hostel">酒店信息</label>--%>
-                <%--</div>--%>
-                <%--<div class="grid-content">--%>
-                    <%--<div id="hostel" class="hostel-info">--%>
-                        <%--<span class="hostel-name">${order.hostel.name}</span>--%>
-                        <%--<span class="hostel-address">${order.hostel.address}</span>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
 
             <div class="grid-row">
                 <div class="grid-label">
                     <label for="member">会员信息</label>
                 </div>
                 <div class="grid-content">
-                    <div id="member" class="member-info">
+                    <div id="member">
                         <span class="member-name">${order.member.name}</span>
                         <span class="member-contact">${order.member.contact}</span>
                     </div>
@@ -186,7 +174,7 @@
 
         <div class="clear-fix"></div>
         <div class="book-submit">
-            <button class="major-button">返回</button>
+            <button class="major-button" onclick="history.back()">返回</button>
         </div>
         <div class="clear-fix"></div>
     </div>

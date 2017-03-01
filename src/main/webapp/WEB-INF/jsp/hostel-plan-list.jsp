@@ -19,10 +19,12 @@
         <div class="right-buttons">
             <a href="/hostel/plan/add" class="major-button-small">发布计划</a>
         </div>
-        <div class="sub-nav">
+        <div class="sub-nav left-nav">
             <a href="/hostel/room">房间查看</a>
             <a class="current" href="/hostel/plan">房间计划</a>
         </div>
+
+        <div class="clear-fix"></div>
         <div class="room-wrapper">
             <div id="rooms" class="room-list grid">
                 <div class="grid-row grid-row-line">

@@ -151,24 +151,40 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResultMessage checkInOrder(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
-        if (bookOrder.getState() == OrderState.UnCheckIn && LocalDate.parse(bookOrder.getCheckInDate()).equals(LocalDate.now())) {
+//        if (bookOrder.getState() == OrderState.UnCheckIn && LocalDate.parse(bookOrder.getCheckInDate()).equals(LocalDate.now())) {
             bookOrder.setState(OrderState.CheckIn);
             bookOrder.setCheckInTime(DateAndTimeUtil.timeStringWithHyphen(LocalDateTime.now()));
             ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
             if (resultMessage == ResultMessage.SUCCESS) {
-                memberService.addPoint(bookOrder.getMemberID(), (int) bookOrder.getTotalPrice());
+                return memberService.addPoint(bookOrder.getMemberID(), (int) bookOrder.getTotalPrice());
             }
-        }
+//        }
         return ResultMessage.FAILED;
     }
 
     @Override
     public ResultMessage checkOutOrder(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
-        if (bookOrder.getState() == OrderState.CheckIn && LocalDate.parse(bookOrder.getCheckOutDate()).equals(LocalDate.now())) {
+//        if (bookOrder.getState() == OrderState.CheckIn && LocalDate.parse(bookOrder.getCheckOutDate()).equals(LocalDate.now())) {
             bookOrder.setState(OrderState.CheckOut);
             bookOrder.setCheckOutTime(DateAndTimeUtil.timeStringWithHyphen(LocalDateTime.now()));
-            return orderDao.updateOrder(bookOrder);
+            ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
+        return resultMessage;
+//        }
+//        return ResultMessage.FAILED;
+    }
+
+    @Override
+    public ResultMessage accountOrder(String ID) {
+        BookOrder bookOrder = orderDao.findOrderByID(ID);
+        if (bookOrder.getState() == OrderState.CheckOut && !bookOrder.isAccounted()) {
+            bookOrder.setAccounted(true);
+            ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
+            if (resultMessage == ResultMessage.SUCCESS) {
+                appService.updateMoney(-bookOrder.getTotalPrice());
+                resultMessage = hostelService.updateMoney(bookOrder.getHostelID(), bookOrder.getTotalPrice());
+                return resultMessage;
+            }
         }
         return ResultMessage.FAILED;
     }

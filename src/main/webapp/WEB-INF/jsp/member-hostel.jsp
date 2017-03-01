@@ -63,7 +63,8 @@
                         <div class="vertical-label-input submit-column">
                             <div>
                                 <div class="label-fix"></div>
-                                <button id="search" class="major-button" type="button">搜索</button>
+                                <input id="submit" class="major-button" type="submit" value="预定">
+                                <%--<button id="search" class="major-button" type="button">搜索</button>--%>
                             </div>
                         </div>
                         <%--</form>--%>
@@ -98,7 +99,7 @@
                                 </div>
                             </c:forEach>
                         </div>
-                        <input id="submit" class="major-button" type="submit" value="预定">
+                        <%--<input id="submit" class="major-button" type="submit" value="预定">--%>
                     </form>
                 </div>
             </div>
@@ -116,59 +117,64 @@
 </main>
 
 <script>
-    $(".money").number( true, 2 );
+    $(".money").number(true, 2 );
+
+    function refreshRoomStock() {
+
+        var checkInDate = $("#check-in-date").val();
+        var checkOutDate = $("#check-out-date").val();
+
+        var data = {
+            "checkInDate": checkInDate,
+            "checkOutDate": checkOutDate,
+            "hostelID": "${memberHostelInfoBean.hostel.ID}",
+        };
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            url: "/search/${memberHostelInfoBean.hostel.ID}/roomstock",
+            data: JSON.stringify(data),
+
+            success: function (data) {
+                console.log(data);
+
+                $("#rooms").html(' <div class="grid-row grid-row-line">' +
+                        '<div class="room-img"></div>' +
+                        '<div class="room-name title">名称</div>' +
+                        '<div class="room-price title">价格</div>' +
+                        '<div class="room-quantity title">数量</div>' +
+                        '<div class="room-operation title">操作</div>' +
+                        '</div>');
+                for (var i = 0; i < data.length; i++) {
+                    $("#rooms").html($("#rooms").html() + '<div class="grid-row grid-row-line">' +
+                            '<div class="room-img">' +
+                            '<div class="room-img-wrapper">' +
+                            '<div class="img"></div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="room-name">' + data[i].name + '</div>' +
+                            '<div class="room-price">￥ <span class="money">' + data[i].price + '</span></div>' +
+                            '<div class="room-quantity">' + data[i].availableQuantity + '</div>' +
+                            '<div class="room-operation">' +
+                            '<button type="button" class="minor-button">加入</button>' +
+                            '<div class="quantity-select">' +
+                            '<input type="text" name="bookQuantity[' + i + ']">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>')
+
+                }
+                $(".money").number( true, 2 );
+            }
+        });
+    }
 
     $(function () {
-        $("#search").click(function () {
-            var checkInDate = $("#check-in-date").val();
-            var checkOutDate = $("#check-out-date").val();
-
-            var data = {
-                "checkInDate": checkInDate,
-                "checkOutDate": checkOutDate,
-                "hostelID": "${memberHostelInfoBean.hostel.ID}",
-            };
-
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json",
-                url: "/search/${memberHostelInfoBean.hostel.ID}/roomstock",
-                data: JSON.stringify(data),
-
-                success: function (data) {
-                    console.log(data);
-
-                    $("#rooms").html(' <div class="grid-row grid-row-line">' +
-                            '<div class="room-img"></div>' +
-                            '<div class="room-name title">名称</div>' +
-                            '<div class="room-price title">价格</div>' +
-                            '<div class="room-quantity title">数量</div>' +
-                            '<div class="room-operation title">操作</div>' +
-                            '</div>');
-                    for (var i = 0; i < data.length; i++) {
-                        $("#rooms").html($("#rooms").html() + '<div class="grid-row grid-row-line">' +
-                                '<div class="room-img">' +
-                                '<div class="room-img-wrapper">' +
-                                '<div class="img"></div>' +
-                                '</div>' +
-                                '</div>' +
-                                '<div class="room-name">' + data[i].name + '</div>' +
-                                '<div class="room-price">￥ <span class="money">' + data[i].price + '</span></div>' +
-                                '<div class="room-quantity">' + data[i].availableQuantity + '</div>' +
-                                '<div class="room-operation">' +
-                                '<button type="button" class="minor-button">加入</button>' +
-                                '<div class="quantity-select">' +
-                                '<input type="text" name="bookQuantity[' + i + ']">' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>')
-
-                    }
-                    $(".money").number( true, 2 );
-                }
-            });
-        });
+//        $("#search").click(function () {
+//
+//        });
     });
 
     Date.prototype.addDays = function(days) {
@@ -182,6 +188,7 @@
         defaultDate: new Date(),
         onChange: function(selectedDates, dateStr, instance) {
             changeEnd();
+            refreshRoomStock();
         },
     });
 
@@ -191,6 +198,7 @@
         defaultDate: new Date().addDays(1),
         onChange: function(selectedDates, dateStr, instance) {
             changeStart();
+            refreshRoomStock();
         },
     });
 

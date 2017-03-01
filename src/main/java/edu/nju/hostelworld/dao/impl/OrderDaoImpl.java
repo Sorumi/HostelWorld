@@ -49,6 +49,9 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
     }
 
     public List<BookOrder> findOrderByOrderState(OrderState orderState) {
+        if (orderState == null) {
+            return findAllOrders();
+        }
         return findByFieldAndValue(BookOrder.class, "state", orderState);
     }
 
