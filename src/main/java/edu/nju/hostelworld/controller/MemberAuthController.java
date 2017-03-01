@@ -25,6 +25,11 @@ public class MemberAuthController {
     @Autowired
     private MemberService memberService;
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String defaultGet(ModelMap model) {
+        return "redirect:/login";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGet(ModelMap model) {
         boolean isLogin = model.containsAttribute("member");

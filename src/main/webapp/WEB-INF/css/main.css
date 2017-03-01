@@ -751,6 +751,10 @@ form.search-small {
       color: #DDDDDD; }
     .order-wrapper .info-wrapper .order-state {
       right: 20px; }
+    .order-wrapper .info-wrapper .order-not-member {
+      top: 50px;
+      right: 20px;
+      color: #DDDDDD; }
     .order-wrapper .info-wrapper .order-hotel-name {
       top: 40px;
       font-size: 18px;

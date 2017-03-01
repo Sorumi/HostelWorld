@@ -25,6 +25,11 @@ public class HostelAuthController {
     @Autowired
     private HostelService hostelService;
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String defaultGet(ModelMap model) {
+        return "redirect:/hostel/login";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGet(ModelMap model) {
         boolean isLogin = model.containsAttribute("hostel");

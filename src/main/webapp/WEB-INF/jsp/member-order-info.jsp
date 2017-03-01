@@ -34,7 +34,14 @@
                     <%--</c:choose>--%>
                 </div>
             </div>
-
+            <div class="grid-row">
+                <div class="grid-label">
+                    <label for="booked-time">预定时间</label>
+                </div>
+                <div class="grid-content">
+                    <span id="booked-time">${order.bookOrder.bookedTime}</span>
+                </div>
+            </div>
             <div class="grid-row">
                 <div class="grid-label">
                     <label for="hostel">酒店信息</label>

@@ -64,6 +64,9 @@
                     <span class="order-id">订单编号:${order.bookOrder.ID}</span>
                     <span class="order-date">订单日期:${order.bookOrder.bookedTime}</span>
                     <span class="order-state tag tag-${order.bookOrder.state.color}-current">${order.bookOrder.state.name}</span>
+                    <c:if test="${order.bookOrder.memberID == ''}">
+                        <span class="order-not-member">非会员</span>
+                    </c:if>
                     <span class="order-hotel-name">${order.hostel.name} （${order.hostel.ID}）</span>
                     <!--<p>地址</p>-->
                     <span class="order-check-date">入离日期:${order.bookOrder.checkInDate} - ${order.bookOrder.checkOutDate}</span>

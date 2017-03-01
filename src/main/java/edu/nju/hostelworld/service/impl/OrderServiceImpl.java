@@ -1,15 +1,9 @@
 package edu.nju.hostelworld.service.impl;
 
-import edu.nju.hostelworld.Bean.MemberHostelInfoBean;
-import edu.nju.hostelworld.Bean.OrderBean;
-import edu.nju.hostelworld.Bean.OrderRoomBean;
-import edu.nju.hostelworld.Bean.RoomStockBean;
+import edu.nju.hostelworld.Bean.*;
 import edu.nju.hostelworld.dao.OrderDao;
 import edu.nju.hostelworld.dao.OrderRoomDao;
-import edu.nju.hostelworld.model.BookOrder;
-import edu.nju.hostelworld.model.HostelRoom;
-import edu.nju.hostelworld.model.Member;
-import edu.nju.hostelworld.model.OrderRoom;
+import edu.nju.hostelworld.model.*;
 import edu.nju.hostelworld.service.AppService;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.MemberService;
@@ -70,7 +64,6 @@ public class OrderServiceImpl implements OrderService {
         OrderBean orderBean = new OrderBean();
         BookOrder bookOrder = new BookOrder();
         bookOrder.setHostelID(memberHostelInfoBean.getHostel().getID());
-//        System.out.println(member.getID());
         bookOrder.setMemberID(member.getID());
         bookOrder.setCheckInDate(memberHostelInfoBean.getCheckInDate());
         bookOrder.setCheckOutDate(memberHostelInfoBean.getCheckOutDate());
@@ -81,6 +74,45 @@ public class OrderServiceImpl implements OrderService {
         orderBean.setRooms(orderRooms);
         orderBean.setHostel(memberHostelInfoBean.getHostel());
         orderBean.setMember(member);
+
+        return orderBean;
+    }
+
+    @Override
+    public OrderBean generateOrder(HostelBookOrderBean hostelBookOrderBean, Hostel hostel) {
+        List<RoomStockBean> roomStocks = hostelBookOrderBean.getRoomStocks();
+
+        double price = 0;
+        List<OrderRoomBean> orderRooms = new ArrayList<>();
+        for (int i = 0; i < hostelBookOrderBean.getBookQuantity().size(); i++) {
+            Integer quantity = hostelBookOrderBean.getBookQuantity().get(i);
+            if (quantity != null && quantity > 0) {
+                RoomStockBean roomStockBean = roomStocks.get(i);
+                OrderRoomBean orderRoomBean = new OrderRoomBean();
+                orderRoomBean.setHostelRoomID(roomStockBean.getID());
+                orderRoomBean.setName(roomStockBean.getName());
+                orderRoomBean.setPrice(roomStockBean.getPrice());
+                orderRoomBean.setQuantity(quantity);
+                orderRoomBean.setTotal(roomStockBean.getPrice() * quantity);
+                orderRooms.add(orderRoomBean);
+                price += roomStockBean.getPrice() * quantity;
+            }
+        }
+
+        OrderBean orderBean = new OrderBean();
+        BookOrder bookOrder = new BookOrder();
+        bookOrder.setHostelID(hostel.getID());
+        bookOrder.setNotMemberName(hostelBookOrderBean.getName());
+        bookOrder.setNotMemberContact(hostelBookOrderBean.getContact());
+        bookOrder.setPeopleQuantity(hostelBookOrderBean.getPeopleQuantity());
+        bookOrder.setCheckInDate(hostelBookOrderBean.getCheckInDate());
+        bookOrder.setCheckOutDate(hostelBookOrderBean.getCheckOutDate());
+        bookOrder.setOriginPrice(price);
+        bookOrder.setTotalPrice(price);
+
+        orderBean.setBookOrder(bookOrder);
+        orderBean.setRooms(orderRooms);
+        orderBean.setHostel(hostel);
 
         return orderBean;
     }
@@ -99,7 +131,9 @@ public class OrderServiceImpl implements OrderService {
         if (resultMessage == ResultMessage.FAILED) {
             return resultMessage;
         }
-        memberService.updateMoney(bookOrder.getMemberID(), -bookOrder.getTotalPrice());
+        if (bookOrder.getMemberID() != null) {
+            memberService.updateMoney(bookOrder.getMemberID(), -bookOrder.getTotalPrice());
+        }
         appService.updateMoney(bookOrder.getTotalPrice());
 
         List<OrderRoomBean> orderRoomBeans = orderBean.getRooms();
@@ -132,7 +166,9 @@ public class OrderServiceImpl implements OrderService {
                 return resultMessage;
             }
 
-            memberService.updateMoney(bookOrder.getMemberID(), bookOrder.getTotalPrice());
+            if (bookOrder.getMemberID() != null) {
+                memberService.updateMoney(bookOrder.getMemberID(), bookOrder.getTotalPrice());
+            }
             appService.updateMoney(-bookOrder.getTotalPrice());
 
             List<OrderRoom> orderRooms = orderRoomDao.findOrderRoomsByOrderID(bookOrder.getID());
@@ -151,27 +187,28 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResultMessage checkInOrder(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
-//        if (bookOrder.getState() == OrderState.UnCheckIn && LocalDate.parse(bookOrder.getCheckInDate()).equals(LocalDate.now())) {
+        if (bookOrder.getState() == OrderState.UnCheckIn) { // && LocalDate.parse(bookOrder.getCheckInDate()).equals(LocalDate.now())) {
             bookOrder.setState(OrderState.CheckIn);
             bookOrder.setCheckInTime(DateAndTimeUtil.timeStringWithHyphen(LocalDateTime.now()));
             ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
-            if (resultMessage == ResultMessage.SUCCESS) {
+            if (resultMessage == ResultMessage.SUCCESS && bookOrder.getMemberID() != null) {
                 return memberService.addPoint(bookOrder.getMemberID(), (int) bookOrder.getTotalPrice());
             }
-//        }
+
+        }
         return ResultMessage.FAILED;
     }
 
     @Override
     public ResultMessage checkOutOrder(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
-//        if (bookOrder.getState() == OrderState.CheckIn && LocalDate.parse(bookOrder.getCheckOutDate()).equals(LocalDate.now())) {
+        if (bookOrder.getState() == OrderState.CheckIn) { // && LocalDate.parse(bookOrder.getCheckOutDate()).equals(LocalDate.now())) {
             bookOrder.setState(OrderState.CheckOut);
             bookOrder.setCheckOutTime(DateAndTimeUtil.timeStringWithHyphen(LocalDateTime.now()));
             ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
-        return resultMessage;
-//        }
-//        return ResultMessage.FAILED;
+            return resultMessage;
+        }
+        return ResultMessage.FAILED;
     }
 
     @Override
@@ -266,7 +303,14 @@ public class OrderServiceImpl implements OrderService {
         }
 
         orderBean.setHostel(hostelService.findHostelByID(bookOrder.getHostelID()));
-        orderBean.setMember(memberService.findMemberByID(bookOrder.getMemberID()));
+        if (bookOrder.getMemberID() == null) {
+            Member member = new Member();
+            member.setName(bookOrder.getNotMemberName());
+            member.setContact(bookOrder.getNotMemberContact());
+            orderBean.setMember(member);
+        } else {
+            orderBean.setMember(memberService.findMemberByID(bookOrder.getMemberID()));
+        }
         orderBean.setBookOrder(bookOrder);
         orderBean.setRooms(orderRoomBeans);
 

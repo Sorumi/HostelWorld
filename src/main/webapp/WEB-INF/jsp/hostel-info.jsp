@@ -41,15 +41,19 @@
                     <label for="money">资产金额</label>
                 </div>
                 <div class="grid-content">
-                    <span id="money">${hostel.money}</span>
+                    <span id="money">￥ <span class="money">${hostel.money}</span></span>
                 </div>
             </div>
         </div>
+        <a href="/hostel/order/book" class="major-button">非会员入住</a>
         <a href="/hostel/order" class="major-button">管理</a>
         <a href="/hostel/application/edit/add" class="minor-button">修改</a>
     </div>
 
 </main>
 
+<script>
+    $(".money").number(true, 2);
+</script>
 
 <%@ include file="include/footer.jsp" %>

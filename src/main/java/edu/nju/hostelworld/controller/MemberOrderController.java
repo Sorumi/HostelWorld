@@ -86,7 +86,7 @@ public class MemberOrderController {
             return "alert";
         }
 
-        ResultMessage resultMessage = orderService.cancelOrder(orderBean.getBookOrder().getID());
+        ResultMessage resultMessage = orderService.cancelOrder(ID);
         System.out.println(resultMessage);
 
         return "redirect:/order/" + ID;

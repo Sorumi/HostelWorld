@@ -26,6 +26,11 @@ public class ManagerAuthController {
     @Autowired
     private ManagerService managerService;
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String defaultGet(ModelMap model) {
+        return "redirect:/admin/login";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGet(ModelMap model) {
         boolean isLogin = model.containsAttribute("manager");

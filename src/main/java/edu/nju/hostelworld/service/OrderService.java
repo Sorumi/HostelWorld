@@ -1,7 +1,9 @@
 package edu.nju.hostelworld.service;
 
+import edu.nju.hostelworld.Bean.HostelBookOrderBean;
 import edu.nju.hostelworld.Bean.MemberHostelInfoBean;
 import edu.nju.hostelworld.Bean.OrderBean;
+import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.util.OrderState;
 import edu.nju.hostelworld.util.ResultMessage;
@@ -13,6 +15,8 @@ import java.util.List;
  */
 public interface OrderService {
     public OrderBean generateOrder(MemberHostelInfoBean memberHostelInfoBean, Member member);
+
+    public OrderBean generateOrder(HostelBookOrderBean hostelBookOrderBean, Hostel hostel);
 
 //    public ResultMessage addOrder(BookOrder bookOrder);
 
