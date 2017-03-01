@@ -87,7 +87,9 @@
                         <c:choose>
                             <c:when test="${order.bookOrder.checkInTime == null}">
                                 <span>未入住</span>
-                                <button class="major-button-small">登记入住</button>
+                                <form action="/hostel/order/${order.bookOrder.ID}/checkin" method="post" class="inline">
+                                    <button type="submit" class="major-button-small">登记入住</button>
+                                </form>
                             </c:when>
                             <c:otherwise>
                                 <span>${order.bookOrder.checkInTime}</span>
@@ -108,7 +110,9 @@
                             <c:when test="${order.bookOrder.checkOutTime == null}">
                                 <span>未退房</span>
                                 <c:if test="${order.bookOrder.checkInTime != null}">
-                                    <button class="major-button-small">登记退房</button>
+                                    <form action="/hostel/order/${order.bookOrder.ID}/checkout" method="post" class="inline">
+                                        <button type="submit" class="major-button-small">登记退房</button>
+                                    </form>
                                 </c:if>
                             </c:when>
                             <c:otherwise>
@@ -151,9 +155,9 @@
                                     </div>
                                 </div>
                                 <div class="room-name">${room.name}</div>
-                                <div class="room-price">${room.price} 元</div>
+                                <div class="room-price">￥ <span class="money">${room.price}</span></div>
                                 <div class="room-quantity">${room.quantity}</div>
-                                <div class="room-total">${room.total} 元</div>
+                                <div class="room-total">￥ <span class="money">${room.total}</span></div>
                             </div>
                         </c:forEach>
 
@@ -165,17 +169,17 @@
         <div class="price-wrapper">
             <div class="row">
                 <label for="origin-price">原价</label>
-                <span id="origin-price">${order.bookOrder.originPrice} 元</span>
+                <span id="origin-price">￥ <span class="money">${order.bookOrder.originPrice}</span></span>
                 <div class="clear-fix"></div>
             </div>
             <div class="row">
                 <label for="discount">优惠</label>
-                <span id="discount">-${order.bookOrder.originPrice - order.bookOrder.totalPrice}元</span>
+                <span id="discount">-￥ <span class="money">-${order.bookOrder.originPrice - order.bookOrder.totalPrice}</span></span>
                 <div class="clear-fix"></div>
             </div>
             <div class="row">
                 <label for="total-price">总价</label>
-                <span id="total-price">${order.bookOrder.totalPrice} 元</span>
+                <span id="total-price">￥ <span class="money">${order.bookOrder.totalPrice}</span></span>
                 <div class="clear-fix"></div>
             </div>
         </div>
@@ -183,12 +187,13 @@
         <div class="clear-fix"></div>
         <div class="book-submit">
             <button class="major-button">返回</button>
-            <c:if test="${order.bookOrder.state == 'UnCheckIn'}">
-                <button class="minor-button">取消预订</button>
-            </c:if>
         </div>
         <div class="clear-fix"></div>
     </div>
 </main>
+
+<script>
+    $(".money").number( true, 2 );
+</script>
 
 <%@ include file="include/footer.jsp" %>

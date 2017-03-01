@@ -17,7 +17,7 @@
 <main>
     <div class="container card member-info">
         <h1 class="title">修改个人资料</h1>
-        <form action="/info/edit" method="post" id="edit-form">
+        <form action="/info/edit" method="post" autocomplete="off" id="edit-form">
             <div class="grid">
                 <div class="grid-row">
                     <div class="grid-label">
@@ -81,13 +81,13 @@
 
         var account = $("#account").val();
         var accountAlert = $("#account + .alert");
-        var accountReg = /^[0-9][0-9]*?$/;
+        var accountReg = /^[0-9]+$/;
         var isAccount = accountReg.test(account);
         accountAlert.text(isAccount ? "" : "请输入正确银行卡号！");
 
         var contact = $("#contact").val();
         var contactAlert = $("#contact + .alert");
-        var contactReg = /^[0-9][0-9]*$/;
+        var contactReg = /^[0-9]+$/;
         var isContact = contactReg.test(contact);
         contactAlert.text(isContact ? "" : "请输入正确的联系方式！");
 

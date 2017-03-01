@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
     String path = request.getContextPath();
@@ -24,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="<%= basePath %>/css/main.css"/>
 
     <script src="<%= basePath %>/js/jquery-3.1.1.min.js"></script>
-    <script src="<%= basePath %>/js/jquery.validate.js"></script>
+    <script src="<%= basePath %>/js/jquery.number.js"></script>
     <script src="<%= basePath %>/js/flatpickr.min.js"></script>
 </head>
 <body>
@@ -33,8 +34,26 @@
     <div class="container">
         <a class="title" href="#">Hostel World</a>
         <div class="nav">
-            <%--<a href="/logout">登出</a>--%>
-            <%--<span>一个图标</span>--%>
+            <div class="nav">
+                <c:if test="${member == null && hostel == null && manager == null}" >
+                    <a href="/hostel/register">旅舍注册</a>
+                    <a href="/hostel/login">旅舍登录</a>
+
+                    <a href="/register">注册</a>
+                    <a href="/login">登录</a>
+                </c:if>
+                <c:if test="${member != null}" >
+                    <a href="/logout">注销</a>
+                    <a href="/info">个人</a>
+                </c:if>
+                <c:if test="${hostel != null}" >
+                    <a href="/hostel/logout">注销</a>
+                    <a href="/hostel/room">管理</a>
+                </c:if>
+                <c:if test="${manager != null}" >
+                    <a href="/admin/logout">注销</a>
+                </c:if>
+            </div>
         </div>
     </div>
 </header>

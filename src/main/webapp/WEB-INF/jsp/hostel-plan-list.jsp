@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <div class="room-plan-name">${room.name}</div>
-                        <div class="room-plan-price">${room.price} 元</div>
+                        <div class="room-plan-price">￥ <span class="money">${room.price}</span></div>
                         <div class="room-plan-quantity">${room.quantity}</div>
                         <div class="room-plan-start-date">${room.startDate}</div>
                         <div class="room-plan-end-date">${room.endDate}</div>
@@ -74,5 +74,7 @@
     </div>
 </main>
 
-
+<script>
+    $(".money").number( true, 2 );
+</script>
 <%@ include file="include/footer.jsp" %>

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="include/header.jsp" %>
 
@@ -17,10 +18,18 @@
 
 <main>
     <div class="container card">
-        <p>
-            啦啦啦
-        </p>
-        <button class="major-button">申请开店</button>
+        <c:if test="${hostelInfoBean.openApplication.state == 'Unchecked'}">
+            <span>您的申请正在审核中！</span>
+            <a href="/hostel/application/${hostelInfoBean.openApplication.ID}" class="major-button-small">查看</a>
+        </c:if>
+        <c:if test="${hostelInfoBean.openApplication.state == 'Failed'}">
+            <span>您的申请未通过！</span>
+            <a href="/hostel/application/${hostelInfoBean.openApplication.ID}" class="major-button-small">查看</a>
+        </c:if>
+
+        <c:if test="${hostelInfoBean.openApplication == null || hostelInfoBean.openApplication.state == 'Failed'}">
+            <a href="/hostel/application/open/add" class="major-button">申请开店</a>
+        </c:if>
     </div>
 </main>
 

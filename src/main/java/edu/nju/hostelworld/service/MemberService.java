@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface MemberService {
 
-    public MemberInfoBean convertToMemberInfoBean(Member member);
+    public MemberInfoBean convertToMemberInfoBean(String memberID);
 
     public ResultMessage addMember(Member member);
 

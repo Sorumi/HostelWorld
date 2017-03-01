@@ -17,7 +17,7 @@
 <main>
     <div class="container card plan-edit">
         <h1 class="title">发布计划</h1>
-        <form action="/hostel/plan/add" method="post" id="add-form">
+        <form action="/hostel/plan/add" method="post" autocomplete="off" id="add-form">
             <div class="grid">
                 <div class="grid-row">
                     <div class="grid-label">
@@ -134,6 +134,7 @@
             startDatePickr.setDate(endDate.addDays(-1));
         }
     }
+
 </script>
 
 <%@ include file="include/footer.jsp" %>

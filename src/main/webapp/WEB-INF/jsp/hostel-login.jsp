@@ -15,7 +15,7 @@
     <div class="container card">
         <h1 class="title">旅舍登录</h1>
 
-        <form action="/hostel/login" method="post">
+        <form action="/hostel/login" method="post" id="login-form">
             <table>
                 <tr>
                     <td>
@@ -23,6 +23,7 @@
                     </td>
                     <td>
                         <input type="text" id="username" name="username" value="${hostelRegisterBean.username}"/>
+                        <span class="alert"></span>
                     </td>
                 </tr>
                 <tr>
@@ -31,14 +32,34 @@
                     </td>
                     <td>
                         <input type="password" id="password" name="password" value="${hostelRegisterBean.password}"/>
+                        <span class="alert"></span>
                     </td>
                 </tr>
             </table>
             <p class="alert">${alert}</p>
-            <input type="submit" class="major-button" value="登录"/>
+            <input id="submit-button" class="major-button" value="登录"/>
             <a href="/hostel/register" class="minor-button">注册</a>
         </form>
     </div>
 </main>
+
+<script>
+    //validate
+    $("#submit-button").click(function () {
+        var username = $("#username").val();
+        var usernameAlert = $("#username + .alert");
+        var isUsername = username != "";
+        usernameAlert.text(isUsername ? "" : "请输入用户名！");
+
+        var password = $("#password").val();
+        var passwordAlert = $("#password + .alert");
+        var isPassword = password != "";
+        passwordAlert.text(isPassword ? "" : "请输入密码！");
+
+        if (isUsername && isPassword) {
+            $("#login-form").submit();
+        }
+    });
+</script>
 
 <%@ include file="include/footer.jsp" %>

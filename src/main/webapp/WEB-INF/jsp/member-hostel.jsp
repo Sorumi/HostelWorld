@@ -84,7 +84,7 @@
                                         </div>
                                     </div>
                                     <div class="room-name">${room.name}</div>
-                                    <div class="room-price">${room.price} 元</div>
+                                    <div class="room-price">￥ <span class="money">${room.price}</span></div>
                                     <div class="room-quantity">${room.availableQuantity}</div>
                                     <div class="room-operation">
                                         <button type="button" class="minor-button">加入</button>
@@ -107,7 +107,7 @@
                     <label for="total">总价</label>
                 </div>
                 <div class="grid-content">
-                    <span id="total">3000元</span>
+                    <span id="total">￥ <span class="money">3000</span></span>
                 </div>
             </div>
 
@@ -116,6 +116,8 @@
 </main>
 
 <script>
+    $(".money").number( true, 2 );
+
     $(function () {
         $("#search").click(function () {
             var checkInDate = $("#check-in-date").val();
@@ -152,7 +154,7 @@
                                 '</div>' +
                                 '</div>' +
                                 '<div class="room-name">' + data[i].name + '</div>' +
-                                '<div class="room-price">' + data[i].price + ' 元</div>' +
+                                '<div class="room-price">￥ <span class="money">' + data[i].price + '</span></div>' +
                                 '<div class="room-quantity">' + data[i].availableQuantity + '</div>' +
                                 '<div class="room-operation">' +
                                 '<button type="button" class="minor-button">加入</button>' +
@@ -163,19 +165,51 @@
                                 '</div>')
 
                     }
+                    $(".money").number( true, 2 );
                 }
             });
         });
     });
 
-    var checkIn = new Flatpickr($("#check-in-date")[0], {
-//        minDate: new Date(),
+    Date.prototype.addDays = function(days) {
+        var dat = new Date(this.valueOf());
+        dat.setDate(dat.getDate() + days);
+        return dat;
+    }
+
+    var startDatePickr = new Flatpickr($("#check-in-date")[0], {
+        minDate: new Date(),
+        defaultDate: new Date(),
+        onChange: function(selectedDates, dateStr, instance) {
+            changeEnd();
+        },
     });
 
 
-    var checkOut = new Flatpickr($("#check-out-date")[0], {
-//        minDate: new Date(),
+    var endDatePickr = new Flatpickr($("#check-out-date")[0], {
+        minDate: new Date().addDays(1),
+        defaultDate: new Date().addDays(1),
+        onChange: function(selectedDates, dateStr, instance) {
+            changeStart();
+        },
     });
+
+    function changeEnd() {
+        var startDate = new Date($("#check-in-date")[0].value);
+        var endDate = new Date($("#check-out-date")[0].value);
+        if (startDate >= endDate) {
+            endDatePickr.setDate(startDate.addDays(1));
+        }
+    }
+
+    function changeStart() {
+        var startDate = new Date($("#check-in-date")[0].value);
+        var endDate = new Date($("#check-out-date")[0].value);
+        if (startDate >= endDate) {
+            startDatePickr.setDate(endDate.addDays(-1));
+        }
+    }
+
 </script>
 
 <%@ include file="include/footer.jsp" %>

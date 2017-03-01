@@ -186,6 +186,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderBean findOrderByID(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
+        if (bookOrder == null) {
+            return null;
+        }
         return orderToOrderBean(bookOrder);
     }
 

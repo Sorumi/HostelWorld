@@ -62,17 +62,17 @@
                     <span id="state" class="tag tag-${memberInfoBean.member.state.color}-current">${memberInfoBean.member.state.name}</span>
                     <c:if test="${memberInfoBean.member.state == 'Inactive'}">
                         <form action="/info/activate" method="post" class="inline">
-                            <input type="submit" class="major-button-small" value="激活">
+                            <button type="submit" class="major-button-small">激活</button>
                         </form>
                     </c:if>
                     <c:if test="${memberInfoBean.member.state == 'Pause'}">
                         <form action="/info/resume" method="post" class="line">
-                            <input type="submit" class="major-button-small" value="恢复">
+                            <button type="submit" class="major-button-small">恢复</button>
                         </form>
                     </c:if>
                     <c:if test="${memberInfoBean.member.state == 'Normal'}">
                         <form action="/info/stop" method="post" class="inline">
-                            <input type="submit" class="major-button-small" value="停止">
+                            <button type="submit" class="major-button-small">停止</button>
                         </form>
                     </c:if>
                     <%--<button class="major-button-small">激活/恢复/停止</button>--%>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="grid-content">
                     <span id="level">${memberInfoBean.level}</span>
-                    <span class="purchased-amount">消费金额:${memberInfoBean.purchasedAmount} 元</span>
+                    <span class="purchased-amount">消费金额:￥ <span class="money">${memberInfoBean.purchasedAmount}</span></span>
                 </div>
             </div>
             <div class="grid-row">
@@ -93,7 +93,7 @@
                 </div>
                 <div class="grid-content">
                     <span id="point">${memberInfoBean.member.point}</span>
-                    <button class="major-button-small">兑换金额${memberInfoBean.member.point / 100}元</button>
+                    <button class="major-button-small">兑换金额￥ <span class="money">${memberInfoBean.member.point / 100}</span></button>
                 </div>
             </div>
             <div class="grid-row">
@@ -101,7 +101,7 @@
                     <label for="money">余额</label>
                 </div>
                 <div class="grid-content">
-                    <span id="money">${memberInfoBean.member.money} 元</span>
+                    <span id="money">￥ <span class="money">${memberInfoBean.member.money}</span></span>
                     <button class="major-button-small">充值</button>
                 </div>
             </div>
@@ -134,6 +134,8 @@
     </div>
 </main>
 
-
+<script>
+    $(".money").number( true, 2 );
+</script>
 
 <%@ include file="include/footer.jsp" %>

@@ -104,4 +104,18 @@ public class Hostel {
     public void setMoney(double money) {
         this.money = money;
     }
+
+    @Override
+    public int hashCode() {
+        return Integer.parseInt(ID);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object.getClass() != Hostel.class) {
+            return false;
+        }
+        Hostel hostel = (Hostel) object;
+        return this.ID.equals(hostel.ID);
+    }
 }

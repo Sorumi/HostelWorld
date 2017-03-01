@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Sorumi
-  Date: 17/2/26
-  Time: 下午12:34
+  Date: 17/2/25
+  Time: 下午1:08
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,16 +13,16 @@
 
 <main>
     <div class="container card">
-        <h1 class="title">旅舍注册</h1>
+        <h1 class="title">管理员登录</h1>
 
-        <form action="/hostel/register" method="post" autocomplete="off" id="register-form">
+        <form action="/admin/login" method="post" id="login-form">
             <table>
                 <tr>
                     <td>
                         <label for="username">用户名</label>
                     </td>
                     <td>
-                        <input type="text" id="username" name="username" value="${hostelRegisterBean.username}">
+                        <input type="text" id="username" name="username" value="${memberRegisterBean.username}"/>
                         <span class="alert"></span>
                     </td>
                 </tr>
@@ -31,24 +31,13 @@
                         <label for="password">密码</label>
                     </td>
                     <td>
-                        <input type="password" id="password" name="password" value="${hostelRegisterBean.password}">
-                        <span class="alert"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="confirm-password">确认密码</label>
-                    </td>
-                    <td>
-                        <input type="password" id="confirm-password" name="confirmPassword" value="${hostelRegisterBean.confirmPassword}">
+                        <input type="password" id="password" name="password" value="${memberRegisterBean.password}"/>
                         <span class="alert"></span>
                     </td>
                 </tr>
             </table>
-
             <p class="alert">${alert}</p>
-            <input id="submit-button" class="major-button" value="注册"/>
-            <a href="/hostel/login" class="minor-button">登录</a>
+            <input id="submit-button" class="major-button" value="登录"/>
         </form>
     </div>
 </main>
@@ -66,14 +55,10 @@
         var isPassword = password != "";
         passwordAlert.text(isPassword ? "" : "请输入密码！");
 
-        var confirmPassword = $("#confirm-password").val();
-        var confirmPasswordAlert = $("#confirm-password + .alert");
-        var isConfirmPassword = password == confirmPassword;
-        confirmPasswordAlert.text(isConfirmPassword ? "" : "与密码不一致！");
-
-        if (isUsername && isPassword && isConfirmPassword) {
-            $("#register-form").submit();
+        if (isUsername && isPassword) {
+            $("#login-form").submit();
         }
     });
 </script>
+
 <%@ include file="include/footer.jsp" %>

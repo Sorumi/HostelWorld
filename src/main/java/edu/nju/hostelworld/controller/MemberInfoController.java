@@ -36,8 +36,10 @@ public class MemberInfoController {
         } else {
             member = (Member) model.get("member");
         }
+        member = memberService.findMemberByID(member.getID());
+        model.addAttribute("member", member);
 
-        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
+        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member.getID());
         model.addAttribute("memberInfoBean", memberInfoBean);
 
         return "member-info";
@@ -90,10 +92,10 @@ public class MemberInfoController {
 
         ResultMessage resultMessage = memberService.activate(member.getID());
 
-        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
-        model.addAttribute("memberInfoBean", memberInfoBean);
+//        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
+//        model.addAttribute("memberInfoBean", memberInfoBean);
 
-        return "member-info";
+        return "redirect:/info";
     }
 
 
@@ -108,10 +110,10 @@ public class MemberInfoController {
 
         ResultMessage resultMessage = memberService.resume(member.getID());
 
-        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
-        model.addAttribute("memberInfoBean", memberInfoBean);
+//        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
+//        model.addAttribute("memberInfoBean", memberInfoBean);
 
-        return "member-info";
+        return "redirect:/info";
     }
 
     @RequestMapping(value = "/info/stop", method = RequestMethod.POST)
@@ -125,10 +127,10 @@ public class MemberInfoController {
 
         ResultMessage resultMessage = memberService.stop(member.getID());
 
-        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
-        model.addAttribute("memberInfoBean", memberInfoBean);
+//        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
+//        model.addAttribute("memberInfoBean", memberInfoBean);
 
-        return "member-info";
+        return "redirect:/info";
     }
 
 

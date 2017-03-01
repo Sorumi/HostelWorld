@@ -46,6 +46,7 @@ public class MemberSearchHostelController {
     public String searchHostel(SearchHostelBean searchHostelBean, ModelMap model) {
 
         List hostels = hostelService.findHostelsByKeyword(searchHostelBean.getKeyword());
+//        System.out.println(hostels.size());
         searchHostelBean.setHostels(hostels);
 
         return "member-search-hostel";

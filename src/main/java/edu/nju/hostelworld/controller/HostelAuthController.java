@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by Sorumi on 17/2/26.
  */
 
 @Controller
 @RequestMapping("/hostel")
-@SessionAttributes({"hostel"})
+@SessionAttributes({"hostel", "member"})
 public class HostelAuthController {
 
     @Autowired
@@ -35,7 +37,7 @@ public class HostelAuthController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPost(HostelRegisterBean hostelRegisterBean, ModelMap model) {
+    public String loginPost(HostelRegisterBean hostelRegisterBean, HttpSession session, ModelMap model) {
         boolean isLogin = model.containsAttribute("hostel");
         if (isLogin) {
             return "redirect:/hostel/home";
@@ -66,6 +68,8 @@ public class HostelAuthController {
 
         Hostel hostel = hostelService.findHostelByUsername(username);
         model.addAttribute("hostel", hostel);
+        session.removeAttribute("member");
+        model.remove("member");
 
         return "redirect:/hostel/home";
     }
@@ -125,7 +129,19 @@ public class HostelAuthController {
         return "redirect:/hostel/home";
     }
 
-    private boolean isValid(String keyword) {
+    @RequestMapping(value = "/logout")
+    public String logout(HttpSession session, ModelMap model) {
+//        boolean isLogin = model.containsAttribute("hostel");
+//        if (!isLogin) {
+//
+//        }
+        session.removeAttribute("hostel");
+        model.remove("hostel");
+
+        return "redirect:/hostel/login";
+    }
+
+        private boolean isValid(String keyword) {
         return keyword != null && !keyword.equals("");
     }
 

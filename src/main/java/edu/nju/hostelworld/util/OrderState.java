@@ -29,8 +29,6 @@ public enum OrderState {
     }
 
     public static OrderState getByString(String string) {
-
-        System.out.println(string);
         for (OrderState orderState : OrderState.values()) {
             if (string.toLowerCase().equals(orderState.toString().toLowerCase()))
                 return orderState;

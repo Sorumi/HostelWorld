@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="room-name">${room.name}</div>
-                        <div class="room-price">${room.price} 元</div>
+                        <div class="room-price">￥ <span class="money">${room.price}</span></div>
                         <div class="room-quantity-available">${room.availableQuantity}</div>
                         <div class="room-quantity-total">${room.totalQuantity}</div>
                     </div>
@@ -55,6 +55,8 @@
     </div>
 </main>
 <script>
+    $(".money").number( true, 2 );
+
     var date = new Flatpickr($("#date")[0], {
         onChange: function (selectedDates, dateStr, instance) {
             loadRooms();
@@ -94,13 +96,15 @@
                             '</div>' +
                             '</div>' +
                             '<div class="room-name">' + data[i].name + '</div>' +
-                            '<div class="room-price">' + data[i].price + ' 元</div>' +
+                            '<div class="room-price">￥ <span class="money">' + data[i].price + ' </span></div>' +
                             '<div class="room-quantity-available">' + data[i].availableQuantity + '</div>' +
                             '<div class="room-quantity-total">' + data[i].totalQuantity + '</div>' +
                             '</div>' +
                             '</div>')
 
                 }
+
+                $(".money").number( true, 2 );
             }
         });
     }

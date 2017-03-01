@@ -63,7 +63,7 @@
                 <div class="info-wrapper card">
                     <span class="order-id">订单编号:${order.bookOrder.ID}</span>
                     <span class="order-date">订单日期:${order.bookOrder.bookedTime}</span>
-                    <span class="order-state tag tag-green-current">${order.bookOrder.state.name}</span>
+                    <span class="order-state tag tag-${order.bookOrder.state.color}-current">${order.bookOrder.state.name}</span>
                     <span class="order-hotel-name">${order.member.name}</span>
                     <!--<p>地址</p>-->
                     <span class="order-check-date">入离日期:${order.bookOrder.checkInDate} - ${order.bookOrder.checkOutDate}</span>
@@ -72,7 +72,7 @@
                             ${room.name} × ${room.quantity}
                         </c:forEach>
                     </span>
-                    <span class="order-price">${order.bookOrder.totalPrice} 元</span>
+                    <span class="order-price">￥ <span class="money">${order.bookOrder.totalPrice}</span></span>
                     <a href="/hostel/order/${order.bookOrder.ID}" class="major-button info-button">详情</a>
                 </div>
             </div>
@@ -81,5 +81,8 @@
     </div>
 </main>
 
+<script>
+    $(".money").number( true, 2 );
+</script>
 
 <%@ include file="include/footer.jsp" %>

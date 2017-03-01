@@ -61,7 +61,8 @@ input[type="text"], input[type="password"], input[type="number"], textarea {
   color: #808080; }
 
 input[type="button"], input[type="submit"] {
-  padding: 0; }
+  padding: 0;
+  cursor: pointer; }
 
 .clear-fix {
   clear: both; }
@@ -242,10 +243,20 @@ header {
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.5); }
   header .title {
+    float: left;
     display: block;
     font-family: "Bangla MN";
     font-size: 32px;
     color: #00CCCC; }
+  header .nav {
+    float: right; }
+    header .nav a {
+      margin: 0 10px;
+      line-height: 40px;
+      font-size: 16px;
+      color: #00CCCC; }
+      header .nav a:hover {
+        opacity: 0.6; }
 
 .top-fix {
   height: 80px; }
@@ -271,6 +282,9 @@ nav {
 
 main {
   padding: 30px 0 100px; }
+
+input#submit-button {
+  cursor: pointer; }
 
 form.search-large {
   width: 800px;
@@ -724,7 +738,7 @@ form.search-small {
     width: 700px;
     height: 200px;
     font-size: 14px; }
-    .order-wrapper .info-wrapper span, .order-wrapper .info-wrapper button, .order-wrapper .info-wrapper input, .order-wrapper .info-wrapper a {
+    .order-wrapper .info-wrapper > span, .order-wrapper .info-wrapper button, .order-wrapper .info-wrapper input, .order-wrapper .info-wrapper a {
       position: absolute; }
     .order-wrapper .info-wrapper .order-id {
       left: 20px;
@@ -791,20 +805,35 @@ form.search-small {
     width: 700px;
     height: 200px;
     font-size: 14px; }
-    .application-wrapper .info-wrapper span, .application-wrapper .info-wrapper button, .application-wrapper .info-wrapper input {
+    .application-wrapper .info-wrapper span, .application-wrapper .info-wrapper button, .application-wrapper .info-wrapper input, .application-wrapper .info-wrapper a, .application-wrapper .info-wrapper p {
       position: absolute; }
-  .application-wrapper .application-id {
+  .application-wrapper .application-type {
     left: 20px;
     color: #DDDDDD; }
+  .application-wrapper .application-id {
+    left: 120px;
+    color: #DDDDDD; }
   .application-wrapper .application-date {
-    left: 300px;
+    left: 360px;
     color: #DDDDDD; }
   .application-wrapper .application-state {
     right: 20px; }
-  .application-wrapper .application-hotel-name {
-    top: 40px;
+  .application-wrapper .application-hostel-name {
+    top: 50px;
     font-size: 18px;
     color: #5B6E79; }
+  .application-wrapper .application-hostel-address {
+    top: 75px; }
+  .application-wrapper .application-hostel-introduction {
+    width: 70%;
+    top: 105px;
+    font-size: 14px;
+    color: #DDDDDD;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; }
   .application-wrapper .application-person {
     bottom: 20px;
     font-size: 18px; }

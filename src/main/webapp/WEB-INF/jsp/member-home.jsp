@@ -43,14 +43,45 @@
 </main>
 
 <script>
-    var checkIn = new Flatpickr($("#check-in-date")[0], {
+
+    Date.prototype.addDays = function(days) {
+        var dat = new Date(this.valueOf());
+        dat.setDate(dat.getDate() + days);
+        return dat;
+    }
+
+    var startDatePickr = new Flatpickr($("#check-in-date")[0], {
         minDate: new Date(),
+        defaultDate: new Date(),
+        onChange: function(selectedDates, dateStr, instance) {
+            changeEnd();
+        },
     });
 
 
-    var checkOut = new Flatpickr($("#check-out-date")[0], {
-        minDate: new Date(),
+    var endDatePickr = new Flatpickr($("#check-out-date")[0], {
+        minDate: new Date().addDays(1),
+        defaultDate: new Date().addDays(1),
+        onChange: function(selectedDates, dateStr, instance) {
+            changeStart();
+        },
     });
+
+    function changeEnd() {
+        var startDate = new Date($("#check-in-date")[0].value);
+        var endDate = new Date($("#check-out-date")[0].value);
+        if (startDate >= endDate) {
+            endDatePickr.setDate(startDate.addDays(1));
+        }
+    }
+
+    function changeStart() {
+        var startDate = new Date($("#check-in-date")[0].value);
+        var endDate = new Date($("#check-out-date")[0].value);
+        if (startDate >= endDate) {
+            startDatePickr.setDate(endDate.addDays(-1));
+        }
+    }
 
 </script>
 

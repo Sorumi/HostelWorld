@@ -27,7 +27,7 @@ public class Application {
 
     private String checkedTime;
 
-    private int hostelID;
+    private String hostelID;
 
     private String name;
 
@@ -77,11 +77,11 @@ public class Application {
         this.checkedTime = checkedTime;
     }
 
-    public int getHostelID() {
+    public String getHostelID() {
         return hostelID;
     }
 
-    public void setHostelID(int hostelID) {
+    public void setHostelID(String hostelID) {
         this.hostelID = hostelID;
     }
 

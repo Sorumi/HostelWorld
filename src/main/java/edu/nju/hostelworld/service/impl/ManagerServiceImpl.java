@@ -5,12 +5,14 @@ import edu.nju.hostelworld.model.Manager;
 import edu.nju.hostelworld.service.ManagerService;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Sorumi on 17/2/11.
  */
+@Service
 public class ManagerServiceImpl implements ManagerService {
 
     @Autowired

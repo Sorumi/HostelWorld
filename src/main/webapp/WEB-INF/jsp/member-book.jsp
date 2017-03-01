@@ -77,9 +77,9 @@
                                         </div>
                                     </div>
                                     <div class="room-name">${room.name}</div>
-                                    <div class="room-price">${room.price} 元</div>
+                                    <div class="room-price">￥ <span class="money">${room.price}</span></div>
                                     <div class="room-quantity">${room.quantity}</div>
-                                    <div class="room-total">${room.total} 元</div>
+                                    <div class="room-total">￥ <span class="money">${room.total}</span></div>
                                 </div>
                             </c:forEach>
                         </div>
@@ -90,17 +90,17 @@
             <div class="price-wrapper">
                 <div class="row">
                     <label for="origin-price">原价</label>
-                    <span id="origin-price">${orderBean.bookOrder.originPrice}元</span>
+                    <span id="origin-price">￥ <span class="money">${orderBean.bookOrder.originPrice}</span></span>
                     <div class="clear-fix"></div>
                 </div>
                 <div class="row">
                     <label for="discount">优惠</label>
-                    <span id="discount">-70元</span>
+                    <span id="discount">￥ <span class="money">-${orderBean.bookOrder.totalPrice - orderBean.bookOrder.originPrice}</span></span>
                     <div class="clear-fix"></div>
                 </div>
                 <div class="row">
                     <label for="total-price">总价</label>
-                    <span id="total-price">${orderBean.bookOrder.totalPrice}元</span>
+                    <span id="total-price">￥ <span class="money">${orderBean.bookOrder.totalPrice}</span></span>
                     <div class="clear-fix"></div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     <div class="book-submit">
                         <button class="major-button">确认</button>
                         <div class="clear-fix"></div>
-                        <p>使用余额 ${orderBean.member.money}元</p>
+                        <p>使用余额 ￥ <span class="money">${orderBean.member.money}</span></p>
                         <div class="clear-fix"></div>
                     </div>
                 </c:when>
@@ -120,7 +120,7 @@
                     <div class="book-submit">
                         <button class="major-button-disabled" disabled="disabled">确认</button>
                         <div class="clear-fix"></div>
-                        <p>余额 ${orderBean.member.money}元 不足</p>
+                        <p>余额 ￥ <span class="money">${orderBean.member.money}</span> 不足</p>
                         <div class="clear-fix"></div>
                     </div>
                 </c:otherwise>
@@ -131,5 +131,8 @@
     </div>
 </main>
 
+<script>
+    $(".money").number( true, 2 );
+</script>
 
 <%@ include file="include/footer.jsp" %>

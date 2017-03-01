@@ -186,10 +186,24 @@ header {
   background-color: rgba(255, 255, 255, 0.5);
 
   .title {
+    float: left;
     display: block;
     font-family: $theme-font-family;
     font-size: 32px;
     color: $theme-color;
+  }
+
+  .nav {
+    float: right;
+    a {
+      margin: 0 10px;
+      line-height: 40px;
+      font-size: 16px;
+      color: $theme-color;
+      &:hover {
+        opacity: 0.6;
+      }
+    }
   }
 }
 
@@ -225,6 +239,10 @@ nav {
 
 main {
   padding: 30px 0 100px;
+}
+
+input#submit-button {
+  cursor: pointer;
 }
 
 form.search-large {
@@ -642,10 +660,9 @@ form.search-small {
     width: 700px;
     height: 200px;
     font-size: 14px;
-    span, button, input, a {
+    > span, button, input, a {
       position: absolute;
     }
-
 
     .order-id {
       left: 20px;
@@ -728,25 +745,39 @@ form.search-small {
     width: 700px;
     height: 200px;
     font-size: 14px;
-    span, button, input {
+    span, button, input, a, p {
       position: absolute;
     }
   }
-  .application-id {
+  .application-type {
     left: 20px;
     color: $gray-color-light;
   }
+  .application-id {
+    left: 120px;
+    color: $gray-color-light;
+  }
   .application-date {
-    left: 300px;
+    left: 360px;
     color: $gray-color-light;
   }
   .application-state {
     right: 20px;
   }
-  .application-hotel-name {
-    top: 40px;
+  .application-hostel-name {
+    top: 50px;
     font-size: 18px;
     color: $theme-font-color;
+  }
+  .application-hostel-address {
+    top: 75px;
+  }
+  .application-hostel-introduction {
+    width: 70%;
+    top: 105px;
+    font-size: 14px;
+    color: $gray-color-light;
+    @include line-wrap(2);
   }
   .application-person {
     bottom: 20px;

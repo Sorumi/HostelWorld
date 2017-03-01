@@ -15,7 +15,7 @@
     <div class="container card">
         <h1 class="title">会员注册</h1>
 
-        <form action="/register" method="post" autocomplete="off">
+        <form action="/register" method="post" autocomplete="off" id="register-form">
             <table>
                 <tr>
                     <td>
@@ -23,6 +23,7 @@
                     </td>
                     <td>
                         <input type="text" id="username" name="username" value="${memberRegisterBean.username}">
+                        <span class="alert"></span>
                     </td>
                 </tr>
                 <tr>
@@ -31,6 +32,7 @@
                     </td>
                     <td>
                         <input type="password" id="password" name="password" value="${memberRegisterBean.password}">
+                        <span class="alert"></span>
                     </td>
                 </tr>
 
@@ -40,6 +42,7 @@
                     </td>
                     <td>
                         <input type="password" id="confirm-password" name="confirmPassword" value="${memberRegisterBean.confirmPassword}">
+                        <span class="alert"></span>
                     </td>
                 </tr>
 
@@ -49,15 +52,45 @@
                     </td>
                     <td>
                         <input type="text" id="name" name="name" value="${memberRegisterBean.name}">
+                        <span class="alert"></span>
                     </td>
                 </tr>
             </table>
             <p class="alert">${alert}</p>
-            <input type="submit" class="major-button" value="注册"/>
+            <input id="submit-button" class="major-button" value="注册"/>
             <a href="/login" class="minor-button">登录</a>
 
         </form>
     </div>
 </main>
+
+<script>
+    //validate
+    $("#submit-button").click(function () {
+        var username = $("#username").val();
+        var usernameAlert = $("#username + .alert");
+        var isUsername = username != "";
+        usernameAlert.text(isUsername ? "" : "请输入用户名！");
+
+        var password = $("#password").val();
+        var passwordAlert = $("#password + .alert");
+        var isPassword = password != "";
+        passwordAlert.text(isPassword ? "" : "请输入密码！");
+
+        var confirmPassword = $("#confirm-password").val();
+        var confirmPasswordAlert = $("#confirm-password + .alert");
+        var isConfirmPassword = password == confirmPassword;
+        confirmPasswordAlert.text(isConfirmPassword ? "" : "与密码不一致！");
+
+        var name = $("#name").val();
+        var nameAlert = $("#name + .alert");
+        var isName = name != "";
+        nameAlert.text(isName ? "" : "请输入名称！");
+
+        if (isUsername && isPassword && isConfirmPassword && isName) {
+            $("#register-form").submit();
+        }
+    });
+</script>
 
 <%@ include file="include/footer.jsp" %>

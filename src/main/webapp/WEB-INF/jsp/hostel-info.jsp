@@ -37,8 +37,8 @@
                 </div>
             </div>
         </div>
-        <a class="major-button">管理</a>
-        <a class="minor-button">修改</a>
+        <a href="/hostel/order" class="major-button">管理</a>
+        <a href="/hostel/application/edit/add" class="minor-button">修改</a>
     </div>
 
 </main>

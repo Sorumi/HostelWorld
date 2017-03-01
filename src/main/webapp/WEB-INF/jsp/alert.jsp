@@ -15,7 +15,7 @@
 </div>
 
 <main>
-    <div class="container card alert">
+    <div class="container card alert-page">
         <p>${alertMessage}</p>
     </div>
 </main>

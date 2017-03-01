@@ -23,8 +23,9 @@ public class MemberServiceImpl implements MemberService {
     private MemberDao memberDao;
 
     @Override
-    public MemberInfoBean convertToMemberInfoBean(Member member) {
+    public MemberInfoBean convertToMemberInfoBean(String memberID) {
         MemberInfoBean memberInfoBean = new MemberInfoBean();
+        Member member = findMemberByID(memberID);
         memberInfoBean.setMember(member);
         if (member.getAccount() != null) {
             memberInfoBean.setAccount(member.getAccount());

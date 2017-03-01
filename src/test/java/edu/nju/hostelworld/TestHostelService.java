@@ -64,4 +64,9 @@ public class TestHostelService extends TestCase {
         assertEquals(ResultMessage.SUCCESS, resultMessage);
     }
 
+    @Test
+    public void testFindKeyword() {
+        List list = hostelService.findHostelsByKeyword("");
+        assertEquals(2, list.size());
+    }
 }

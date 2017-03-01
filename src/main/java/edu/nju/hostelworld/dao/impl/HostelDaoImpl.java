@@ -74,8 +74,11 @@ public class HostelDaoImpl extends BaseDaoImpl implements HostelDao {
         List list = null;
         try {
             Session session = setUpSession();
-            String hql = "from Hostel where " + keyword + " like " + "'%" + value + "%'";
-            list = session.createQuery(hql).list();
+            String hql = "from Hostel where " + keyword + " like :value and state = :state";
+            Query query = session.createQuery(hql);
+            query.setParameter("value", "%" + value + "%");
+            query.setParameter("state", HostelState.Opening);
+            list = query.list();
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
