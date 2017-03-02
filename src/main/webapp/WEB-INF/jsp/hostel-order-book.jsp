@@ -86,9 +86,6 @@
                                     <div class="room-operation">
                                         <button type="button" class="minor-button">加入</button>
                                         <div class="quantity-select">
-                                                <%--<button class="minus">-</button>--%>
-                                                <%--<span>2</span>--%>
-                                                <%--<button class="add">+</button>--%>
                                             <input type="text" name="bookQuantity[${status.index}]">
                                         </div>
                                     </div>

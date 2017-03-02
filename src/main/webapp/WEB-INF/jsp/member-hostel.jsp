@@ -88,13 +88,17 @@
                                     <div class="room-price">￥ <span class="money">${room.price}</span></div>
                                     <div class="room-quantity">${room.availableQuantity}</div>
                                     <div class="room-operation">
-                                        <button type="button" class="minor-button">加入</button>
-                                        <div class="quantity-select">
-                                                <%--<button class="minus">-</button>--%>
-                                                <%--<span>2</span>--%>
-                                                <%--<button class="add">+</button>--%>
-                                            <input type="text" name="bookQuantity[${status.index}]">
-                                        </div>
+                                        <c:choose>
+                                            <c:when test="${room.availableQuantity > 0}">
+                                                <button type="button" class="add-button minor-button">加入</button>
+                                                <div class="number-picker quantity-select"
+                                                     name="bookQuantity[${status.index}]" min="0"
+                                                     max="${room.availableQuantity}"></div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="button" class="minor-button-disabled">已定完</button>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -103,13 +107,13 @@
                     </form>
                 </div>
             </div>
-            <div class="price-wrapper">
-                <div class="row">
-                    <label for="total-price">总价</label>
-                    <span id="total-price">￥ <span class="money">3000</span></span>
-                    <div class="clear-fix"></div>
-                </div>
-            </div>
+            <%--<div class="price-wrapper">--%>
+            <%--<div class="row">--%>
+            <%--<label for="total-price">总价</label>--%>
+            <%--<span id="total-price">￥ <span class="money">3000</span></span>--%>
+            <%--<div class="clear-fix"></div>--%>
+            <%--</div>--%>
+            <%--</div>--%>
 
             <div class="clear-fix"></div>
 
@@ -118,8 +122,24 @@
 </main>
 
 <script>
-    $(".money").number(true, 2 );
 
+    $(".money").number(true, 2);
+    //
+
+    function refreshButtons() {
+        $('.add-button').click(function () {
+            var button = $(this);
+            $(this).siblings('.number-picker').numberpicker({
+                'onDestroy': function () {
+                    button.show();
+//                    console.log("!!!");
+                }
+            });
+            $(this).hide();
+        });
+    }
+
+    //
     function refreshRoomStock() {
 
         var checkInDate = $("#check-in-date").val();
@@ -149,30 +169,48 @@
                         '<div class="room-operation title">操作</div>' +
                         '</div>');
                 for (var i = 0; i < data.length; i++) {
-                    $("#rooms").html($("#rooms").html() + '<div class="grid-row grid-row-line">' +
-                            '<div class="room-img">' +
-                            '<div class="room-img-wrapper">' +
-                            '<div class="img"></div>' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="room-name">' + data[i].name + '</div>' +
-                            '<div class="room-price">￥ <span class="money">' + data[i].price + '</span></div>' +
-                            '<div class="room-quantity">' + data[i].availableQuantity + '</div>' +
-                            '<div class="room-operation">' +
-                            '<button type="button" class="minor-button">加入</button>' +
-                            '<div class="quantity-select">' +
-                            '<input type="text" name="bookQuantity[' + i + ']">' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>')
+                    if (data[i].availableQuantity > 0) {
+                        $("#rooms").html($("#rooms").html() +
+                                '<div class="grid-row grid-row-line">' +
+                                '<div class="room-img">' +
+                                '<div class="room-img-wrapper">' +
+                                '<div class="img"></div>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="room-name">' + data[i].name + '</div>' +
+                                '<div class="room-price">￥ <span class="money">' + data[i].price + '</span></div>' +
+                                '<div class="room-quantity">' + data[i].availableQuantity + '</div>' +
+                                '<div class="room-operation">' +
+                                '<button type="button" class="add-button minor-button">加入</button>' +
+                                '<div class="number-picker quantity-select" name="bookQuantity[' + i + ']" min="0" max="' + data[i].availableQuantity + '"></div>' +
+                                '</div>' +
+                                '</div>');
+                    } else {
+                        $("#rooms").html($("#rooms").html() +
+                                '<div class="grid-row grid-row-line">' +
+                                '<div class="room-img">' +
+                                '<div class="room-img-wrapper">' +
+                                '<div class="img"></div>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="room-name">' + data[i].name + '</div>' +
+                                '<div class="room-price">￥ <span class="money">' + data[i].price + '</span></div>' +
+                                '<div class="room-quantity">' + data[i].availableQuantity + '</div>'+
+                                '<div class="room-operation">' +
+                                '<button type="button" class="minor-button-disabled">已定完</button>' +
+                                '</div>' +
+                                '</div>')
+
+                    }
 
                 }
-                $(".money").number( true, 2 );
+                refreshButtons();
+                $(".money").number(true, 2);
             }
         });
     }
 
-    Date.prototype.addDays = function(days) {
+    Date.prototype.addDays = function (days) {
         var dat = new Date(this.valueOf());
         dat.setDate(dat.getDate() + days);
         return dat;
@@ -181,7 +219,7 @@
     var startDatePickr = new Flatpickr($("#check-in-date")[0], {
         minDate: new Date(),
         defaultDate: new Date(),
-        onChange: function(selectedDates, dateStr, instance) {
+        onChange: function (selectedDates, dateStr, instance) {
             changeEnd();
             refreshRoomStock();
         },
@@ -191,9 +229,10 @@
     var endDatePickr = new Flatpickr($("#check-out-date")[0], {
         minDate: new Date().addDays(1),
         defaultDate: new Date().addDays(1),
-        onChange: function(selectedDates, dateStr, instance) {
+        onChange: function (selectedDates, dateStr, instance) {
             changeStart();
             refreshRoomStock();
+
         },
     });
 
@@ -213,6 +252,7 @@
         }
     }
 
+    refreshButtons();
 </script>
 
 <%@ include file="include/footer.jsp" %>

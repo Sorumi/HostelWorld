@@ -111,7 +111,8 @@ form.inline {
   font-size: 16px;
   color: #FFF;
   background-color: #B3B3B3;
-  border-radius: 5px; }
+  border-radius: 5px;
+  cursor: not-allowed; }
 
 .major-button-small {
   width: auto;
@@ -135,6 +136,18 @@ form.inline {
   border: solid 1px #00CCCC;
   border-radius: 5px; }
 
+.minor-button-disabled {
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 40px;
+  color: #B3B3B3;
+  background-color: transparent;
+  border: solid 1px #B3B3B3;
+  border-radius: 5px; }
+
 .minor-button-small {
   margin: 0 8px;
   padding: 2px 8px;
@@ -152,8 +165,14 @@ form.inline {
   text-align: center;
   color: #FFF;
   background-color: #00CCCC; }
-.quantity-select span {
-  margin: 0 16px; }
+.quantity-select button.np-button-disabled {
+  background-color: #B3B3B3; }
+.quantity-select input {
+  margin: 0 16px;
+  border: none;
+  width: 30px;
+  text-align: center;
+  background-color: transparent; }
 
 .alert {
   margin: 10px 0;
@@ -588,7 +607,7 @@ form.search-small {
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-  padding-left: 10px;
+  padding-left: 0;
   padding-right: 10px; }
 .room-wrapper .check-out-date-column {
   width: 27%;
@@ -600,7 +619,7 @@ form.search-small {
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-  padding-left: 10px;
+  padding-left: 0;
   padding-right: 10px; }
 .room-wrapper .submit-column {
   float: right;

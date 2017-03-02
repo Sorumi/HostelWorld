@@ -27,6 +27,7 @@
     <script src="<%= basePath %>/js/jquery-3.1.1.min.js"></script>
     <script src="<%= basePath %>/js/jquery.number.js"></script>
     <script src="<%= basePath %>/js/flatpickr.min.js"></script>
+    <script src="<%= basePath %>/js/number-picker.js"></script>
 </head>
 <body>
 

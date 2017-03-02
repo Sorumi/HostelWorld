@@ -46,6 +46,7 @@ form.inline {
   color: $white-color;
   background-color: $gray-color;
   border-radius: $radius;
+  cursor: not-allowed;
 }
 
 .major-button-small {
@@ -71,7 +72,18 @@ form.inline {
   border: solid 1px $theme-color;
   border-radius: $radius;
 }
-
+.minor-button-disabled {
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 40px;
+  color: $gray-color;
+  background-color: transparent;
+  border: solid 1px $gray-color;
+  border-radius: $radius;
+}
 .minor-button-small {
   margin: 0 8px;
   padding: 2px 8px;
@@ -86,15 +98,21 @@ form.inline {
   button {
     width: 22px;
     height: 22px;
-
     border-radius: 11px;
     font-size: 14px;
     text-align: center;
     color: $white-color;
     background-color: $theme-color;
   }
-  span {
+  button.np-button-disabled {
+    background-color: $gray-color;
+  }
+  input {
     margin: 0 16px;
+    border: none;
+    width: 30px;
+    text-align: center;
+    background-color: transparent;
   }
 }
 
@@ -497,10 +515,10 @@ form.search-small {
     @include col(310, 1000, $first: true);
   }
   .check-in-date-column {
-    @include col(270, 1000);
+    @include col(270, 1000, $first: true);
   }
   .check-out-date-column {
-    @include col(270, 1000);
+    @include col(270, 1000, $first: true);
   }
   .submit-column {
     float: right;
@@ -642,6 +660,7 @@ form.search-small {
 .left-nav {
   float: left;
 }
+
 .order-wrapper {
   width: 100%;
   margin: 30px 0;
@@ -717,6 +736,7 @@ form.search-small {
     }
   }
 }
+
 .book-order {
   .hostel-address {
     display: block;
@@ -724,6 +744,7 @@ form.search-small {
     color: $gray-color-light;
   }
 }
+
 .order-info {
   .hostel-address, .member-contact {
     display: block;

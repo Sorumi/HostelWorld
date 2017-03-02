@@ -46,11 +46,7 @@
                         <label for="people-quantity">入住人数</label>
                     </div>
                     <div class="grid-content">
-                        <div id="people-quantity" class="quantity-select">
-                            <button class="minus">-</button>
-                            <span>2</span>
-                            <button class="add">+</button>
-                            <input type="text" name="bookOrder.peopleQuantity" width="30">
+                        <div id="people-quantity" class="quantity-select" name="bookOrder.peopleQuantity" min="1" default="1">
                         </div>
                     </div>
                 </div>
@@ -95,7 +91,8 @@
                 </div>
                 <div class="row">
                     <label for="discount">优惠</label>
-                    <span id="discount">￥ <span class="money">-${orderBean.bookOrder.totalPrice - orderBean.bookOrder.originPrice}</span></span>
+                    <span id="discount">￥ <span
+                            class="money">-${orderBean.bookOrder.totalPrice - orderBean.bookOrder.originPrice}</span></span>
                     <div class="clear-fix"></div>
                 </div>
                 <div class="row">
@@ -132,7 +129,9 @@
 </main>
 
 <script>
-    $(".money").number( true, 2 );
+    $(".money").number(true, 2);
+
+    $('#people-quantity').numberpicker();
 </script>
 
 <%@ include file="include/footer.jsp" %>
