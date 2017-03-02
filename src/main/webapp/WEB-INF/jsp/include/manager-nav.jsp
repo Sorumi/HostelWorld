@@ -13,6 +13,7 @@
     <div class="container">
         <a href="/admin/application">申请管理</a>
         <a href="/admin/order">预定管理</a>
+        <a href="/admin/level">等级管理</a>
         <a href="/admin/hostel">酒店统计</a>
         <a href="/admin/member">会员统计</a>
         <a href="/admin/statistic">财务统计</a>

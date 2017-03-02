@@ -1,7 +1,6 @@
 package edu.nju.hostelworld.controller;
 
 import edu.nju.hostelworld.Bean.OrderBean;
-import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.service.OrderService;
 import edu.nju.hostelworld.util.OrderState;
 import edu.nju.hostelworld.util.ResultMessage;

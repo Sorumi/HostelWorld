@@ -90,6 +90,8 @@ input[type="button"], input[type="submit"] {
 
 form.inline {
   display: inline-block; }
+  form.inline > div {
+    display: inline-block; }
 
 .major-button {
   display: inline-block;
@@ -146,7 +148,8 @@ form.inline {
   color: #B3B3B3;
   background-color: transparent;
   border: solid 1px #B3B3B3;
-  border-radius: 5px; }
+  border-radius: 5px;
+  cursor: not-allowed; }
 
 .minor-button-small {
   margin: 0 8px;
@@ -872,6 +875,39 @@ form.search-small {
   .application-wrapper .info-button {
     right: 20px;
     bottom: 20px; }
+
+.level-list {
+  width: 100%; }
+  .level-list > .grid-row > div {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center; }
+  .level-list .grid-row > form {
+    width: 100%; }
+    .level-list .grid-row > form > div {
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center; }
+  .level-list .level-num {
+    width: 20%;
+    font-size: 14px; }
+  .level-list .level-points {
+    width: 20%;
+    font-size: 14px; }
+  .level-list .level-discount {
+    width: 20%;
+    font-size: 14px;
+    color: #FF2C14; }
+  .level-list .level-operation {
+    width: 40%; }
+  .level-list input {
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    border: solid 1px #DDDDDD; }
+  .level-list .title {
+    font-size: 14px;
+    color: #DDDDDD; }
 
 .alert p {
   margin: 100px 0;
