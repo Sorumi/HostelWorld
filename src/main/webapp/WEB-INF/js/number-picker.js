@@ -37,6 +37,7 @@
                 numInput.val(defaultNum);
                 var num = numInput.val();
 
+
                 if (name) {
                     numInput.attr('name', name);
                 }
@@ -56,18 +57,19 @@
                         addButton.removeClass(disableClass);
                     }
 
+                    settings.onChange(num);
                 }
 
                 subButton.bind('click', function () {
                     if (num - 1 == settings.numberToDestroy) {
                         $this.html('');
                         settings.onDestroy();
-            }
+                    }
                     if (!(num - 1 < min)) {
                         num--;
                         numInput.val(num);
                         numDidChange();
-                        settings.onChange(num);
+                        // settings.onChange(num);
                     }
 
 
@@ -78,7 +80,7 @@
                         num++;
                         numInput.val(num);
                         numDidChange();
-                        settings.onChange(num);
+                        // settings.onChange(num);
                     }
                 });
 

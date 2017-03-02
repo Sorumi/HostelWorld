@@ -63,11 +63,9 @@
                         <div class="vertical-label-input submit-column">
                             <div>
                                 <div class="label-fix"></div>
-                                <input id="submit" class="major-button" type="submit" value="预定">
-                                <%--<button id="search" class="major-button" type="button">搜索</button>--%>
+                                <button id="submit-button" class="major-button-disabled" type="submit" disabled="disabled">预定</button>
                             </div>
                         </div>
-
 
                         <div id="rooms" class="room-list grid">
                             <div class="grid-row grid-row-line">
@@ -78,7 +76,7 @@
                                 <div class="room-operation title">操作</div>
                             </div>
                             <c:forEach var="room" items="${memberHostelInfoBean.roomStocks}" varStatus="status">
-                                <div class="grid-row grid-row-line">
+                                <div class="grid-row grid-row-line room">
                                     <div class="room-img">
                                         <div class="room-img-wrapper">
                                             <div class="img"></div>
@@ -103,17 +101,16 @@
                                 </div>
                             </c:forEach>
                         </div>
-                        <%--<input id="submit" class="major-button" type="submit" value="预定">--%>
                     </form>
                 </div>
             </div>
-            <%--<div class="price-wrapper">--%>
-            <%--<div class="row">--%>
-            <%--<label for="total-price">总价</label>--%>
-            <%--<span id="total-price">￥ <span class="money">3000</span></span>--%>
-            <%--<div class="clear-fix"></div>--%>
-            <%--</div>--%>
-            <%--</div>--%>
+            <div class="price-wrapper">
+                <div class="row">
+                    <label for="total-price">总价</label>
+                    <span id="total-price">￥ <span class="money">0</span></span>
+                    <div class="clear-fix"></div>
+                </div>
+            </div>
 
             <div class="clear-fix"></div>
 
@@ -124,18 +121,44 @@
 <script>
 
     $(".money").number(true, 2);
+
+    function calculateTotal() {
+        var rooms = $('.room');
+        var total = 0;
+        for (var i = 0; i < rooms.length; i++) {
+            var room = rooms[i];
+
+            var price = $(room).find('.room-price .money').text();
+            var quantity = $(room).find('.number-picker input').val();
+            if (quantity != undefined) {
+                total += price * quantity;
+            }
+        }
+        $('#total-price .money').text(total).number(true, 2);
+
+        var button = $("#submit-button");
+        if (total > 0) {
+            button.addClass('major-button').removeClass('major-button-disabled').removeAttr('disabled');
+        } else {
+            button.addClass('major-button-disabled').removeClass('major-button').attr('disabled', 'disabled');
+        }
+    }
+
     //
 
     function refreshButtons() {
         $('.add-button').click(function () {
             var button = $(this);
             $(this).siblings('.number-picker').numberpicker({
+                'onChange': function () {
+                    calculateTotal();
+                },
                 'onDestroy': function () {
                     button.show();
-//                    console.log("!!!");
                 }
             });
             $(this).hide();
+            calculateTotal();
         });
     }
 
@@ -171,7 +194,7 @@
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].availableQuantity > 0) {
                         $("#rooms").html($("#rooms").html() +
-                                '<div class="grid-row grid-row-line">' +
+                                '<div class="grid-row grid-row-line room">' +
                                 '<div class="room-img">' +
                                 '<div class="room-img-wrapper">' +
                                 '<div class="img"></div>' +
@@ -187,7 +210,7 @@
                                 '</div>');
                     } else {
                         $("#rooms").html($("#rooms").html() +
-                                '<div class="grid-row grid-row-line">' +
+                                '<div class="grid-row grid-row-line room-wrapper">' +
                                 '<div class="room-img">' +
                                 '<div class="room-img-wrapper">' +
                                 '<div class="img"></div>' +
@@ -195,12 +218,11 @@
                                 '</div>' +
                                 '<div class="room-name">' + data[i].name + '</div>' +
                                 '<div class="room-price">￥ <span class="money">' + data[i].price + '</span></div>' +
-                                '<div class="room-quantity">' + data[i].availableQuantity + '</div>'+
+                                '<div class="room-quantity">' + data[i].availableQuantity + '</div>' +
                                 '<div class="room-operation">' +
                                 '<button type="button" class="minor-button-disabled">已定完</button>' +
                                 '</div>' +
-                                '</div>')
-
+                                '</div>');
                     }
 
                 }
