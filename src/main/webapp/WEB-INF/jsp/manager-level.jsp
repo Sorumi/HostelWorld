@@ -29,7 +29,7 @@
                     <div class="level-operation title">操作</div>
                 </div>
                 <c:forEach var="level" items="${levelList}" varStatus="status">
-                    <div id="level-1" class="grid-row level">
+                    <div id="level-${status.index+1}" class="grid-row level">
                         <div class="level-num">${level.ID}</div>
                         <div class="level-points">${level.points}</div>
                         <div class="level-discount">${level.discount}</div>
@@ -75,7 +75,6 @@
             parent.find('.cancel-button').click(function () {
                 console.log('cancel' + num);
                 var newParent = $(this).parents('.level');
-//                var num = parent.find('.level-num').text();
                 newParent.html('<div class="level-num">' + num + '</div>' +
                         ' <div class="level-points">' + points + '</div>' +
                         '<div class="level-discount">' + discount + '</div>' +
@@ -89,6 +88,7 @@
                     $('#level-' + num).find('.level-operation').append(
                             '<button type="button" class="minor-button-small delete-button">删除</button>'
                     );
+                    refreshDeleteButtons();
                 }
 
                 refreshEditButtons();
@@ -118,8 +118,44 @@
                 return;
             }
 
-            var form = parent.find('form');
-            form.submit();
+
+            var data = {
+                "ID": num,
+                "points": points,
+                "discount": discount,
+            };
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: "/admin/level/" + num + "/add",
+                data: JSON.stringify(data),
+
+                complete: function (data) {
+                    console.log(data.responseText);
+                    if (data.responseText == 'SUCCESS') {
+                        parent.html('<div class="level-num">' + num + '</div>' +
+                                ' <div class="level-points">' + points + '</div>' +
+                                '<div class="level-discount">' + discount + '</div>' +
+                                '<div class="level-operation">' +
+                                '<button type="button" class="major-button-small edit-button">编辑</button>' +
+                                '</div>');
+
+                        var list = $('.level-list');
+                        var length = list.children('.level').length;
+                        if (num == length) {
+                            $('#level-' + num).find('.level-operation').append(
+                                    '<button type="button" class="minor-button-small delete-button">删除</button>'
+                            );
+                            refreshDeleteButtons();
+                        }
+
+                        refreshEditButtons();
+
+                    }
+                }
+            });
         });
     }
 
@@ -139,6 +175,17 @@
                     console.log(data);
                     if (data.responseText == 'SUCCESS') {
                         parent.remove();
+
+                        num--;
+                        var lastLevel = $('#level-' + num).find('.level-operation');
+
+                        if (lastLevel.find('.cancel-button').length <= 0) {
+                            lastLevel.append(
+                                    '<button type="button" class="minor-button-small delete-button">删除</button>'
+                            );
+                            refreshDeleteButtons();
+                        }
+
                     }
                 }
 
@@ -157,7 +204,7 @@
         var list = $('.level-list');
         var num = list.children('.level').length + 1;
 
-        $('#delete-form').remove();
+        $('.delete-button').remove();
         list.append('<div id="level-' + num + '" class="grid-row level">' +
                 ' <form action="/level/' + num + '/add" class="inline">' +
                 '<div class="level-num">' + num + '</div>' +
@@ -183,6 +230,7 @@
                 lastLevel.append(
                         '<button type="button" class="minor-button-small delete-button">删除</button>'
                 );
+                refreshDeleteButtons();
             }
         });
     });

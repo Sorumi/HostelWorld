@@ -46,4 +46,18 @@ public class ManagerLevelController {
         ResultMessage resultMessage = levelService.deleteLevel(id);
         return resultMessage.toString();
     }
+
+    @RequestMapping(value = "/level/{id}/add", method = RequestMethod.POST)
+    @ResponseBody
+    public String levelAdd(@RequestBody Level level ,@PathVariable("id") int id, ModelMap model) {
+        level.setID(id);
+        Level oldLevel = levelService.findLevelByID(id);
+        ResultMessage resultMessage;
+        if (oldLevel == null) {
+            resultMessage = levelService.addLevel(level);
+        } else {
+            resultMessage = levelService.updateLevel(level);
+        }
+        return resultMessage.toString();
+    }
 }
