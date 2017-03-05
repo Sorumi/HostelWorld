@@ -12,7 +12,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://"
             + request.getServerName() + ":" + request.getServerPort()
-            + path ;
+            + path;
     request.setAttribute("basePath", basePath);
 %>
 
@@ -38,25 +38,37 @@
 
 <header>
     <div class="container">
-        <a class="title" href="${basePath}/home">Hostel World</a>
+        <a class="title"
+                <c:choose>
+                    <c:when test="${hostel != null}">
+                        href="${basePath}/hostel/home"
+                    </c:when>
+                    <c:when test="${manager != null}">
+                        href="${basePath}/manager/application"
+                    </c:when>
+                    <c:otherwise>
+                        href="${basePath}/home"
+                    </c:otherwise>
+                </c:choose>
+        >Hostel World</a>
         <div class="nav">
             <div class="nav">
-                <c:if test="${member == null && hostel == null && manager == null}" >
+                <c:if test="${member == null && hostel == null && manager == null}">
                     <a href="${basePath}/hostel/register">旅舍注册</a>
                     <a href="${basePath}/hostel/login">旅舍登录</a>
 
                     <a href="${basePath}/register">注册</a>
                     <a href="${basePath}/login">登录</a>
                 </c:if>
-                <c:if test="${member != null}" >
+                <c:if test="${member != null}">
                     <a href="${basePath}/logout">注销</a>
                     <a href="${basePath}/info">个人</a>
                 </c:if>
-                <c:if test="${hostel != null}" >
+                <c:if test="${hostel != null}">
                     <a href="${basePath}/hostel/logout">注销</a>
                     <a href="${basePath}/hostel/room">管理</a>
                 </c:if>
-                <c:if test="${manager != null}" >
+                <c:if test="${manager != null}">
                     <a href="${basePath}/admin/logout">注销</a>
                 </c:if>
             </div>

@@ -159,7 +159,7 @@ public class MemberServiceImpl implements MemberService {
         if (resultMessage != ResultMessage.SUCCESS) {
             return resultMessage;
         }
-        return accountService.deposit(member.getAccount(), 1000);
+        return financeRecordService.addDepositFinanceRecord(member.getID(), 1000);
     }
 
     public ResultMessage pause(String ID) {

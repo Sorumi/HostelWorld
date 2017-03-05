@@ -9,12 +9,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 
 /**
  * Created by Sorumi on 17/2/2.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = {"/applicationContext.xml"})
 public class TestAppDao extends TestCase {
 
@@ -25,7 +27,7 @@ public class TestAppDao extends TestCase {
     public void testUpdate() {
         App app = new App();
         app.setID("0");
-        app.setMoney(100);
+        app.setMoney(1);
         app.setCommission(0.1);
 
         ResultMessage resultMessage = appDao.updateApp(app);

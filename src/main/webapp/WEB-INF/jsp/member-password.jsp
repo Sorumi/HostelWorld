@@ -49,7 +49,7 @@
             </div>
             <p class="alert">${alert}</p>
             <button id="submit-button" type="button" class="major-button">确认</button>
-            <button type="button" onclick="history.back()" class="minor-button">取消</button>
+            <a href="${basePath}/info" class="minor-button">取消</a>
         </form>
     </div>
 </main>

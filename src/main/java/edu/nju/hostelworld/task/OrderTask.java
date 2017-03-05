@@ -19,10 +19,10 @@ public class OrderTask {
     @Autowired
     OrderService orderService;
 
-    @Scheduled(cron = "0 0 0 * * ?")
-//    @Scheduled(fixedRate = 60 * 10 * 1000)
+//    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(fixedRate = 60 * 10 * 1000)
     public void expiredOrder() {
-        System.out.println(LocalDateTime.now() + "expireOrders");
+        System.out.println(LocalDateTime.now() + " expire orders");
         orderService.expireOrders();
     }
 

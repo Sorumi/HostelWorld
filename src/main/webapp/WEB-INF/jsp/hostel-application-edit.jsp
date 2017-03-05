@@ -48,7 +48,7 @@
                                 </button>
                             </div>
                             <div id="image">
-                                <input type="file" id="image-file" name="image" accept="image/*" style="display: none">
+                                <input type="file" id="image-file" name="image" accept="image/png, image/jpeg, image/gif" style="display: none">
                                 <input type="hidden" id="image-change" name="imageChanged" value="0">
                             </div>
 

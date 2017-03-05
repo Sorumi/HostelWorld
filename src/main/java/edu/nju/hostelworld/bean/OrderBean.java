@@ -20,6 +20,8 @@ public class OrderBean {
 
     private Member member;
 
+    private String today;
+
     public BookOrder getBookOrder() {
         return bookOrder;
     }
@@ -52,4 +54,11 @@ public class OrderBean {
         this.member = member;
     }
 
+    public String getToday() {
+        return today;
+    }
+
+    public void setToday(String today) {
+        this.today = today;
+    }
 }

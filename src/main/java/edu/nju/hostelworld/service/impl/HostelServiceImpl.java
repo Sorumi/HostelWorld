@@ -129,7 +129,7 @@ public class HostelServiceImpl implements HostelService {
                 double minPrice = hostelRoom.getPrice();
                 for (RoomStockBean roomStockBean : rooms) {
                     hostelRoom = findHostelRoomByID(roomStockBean.getID());
-                    if (hostelRoom.getPrice() > minPrice) {
+                    if (hostelRoom.getPrice() < minPrice) {
                         minPrice = hostelRoom.getPrice();
                     }
                 }

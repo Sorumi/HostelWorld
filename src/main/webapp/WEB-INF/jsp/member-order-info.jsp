@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="room-name">${room.name}</div>
                                 <div class="room-price">￥ <span class="money">${room.price}</span></div>
-                                <div class="room-quantity">${room.quantity}</div>
+                                <div class="room-quantity">${room.quantity} × ${room.day} 天 = ${room.totalQuantity}</div>
                                 <div class="room-total">￥ <span class="money">${room.total}</span></div>
                             </div>
                         </c:forEach>
@@ -201,7 +201,7 @@
 
         <div class="clear-fix"></div>
         <div class="book-submit">
-            <button class="major-button" onclick="history.back()">返回</button>
+            <a href="${basePath}/order" class="major-button">返回</a>
             <c:if test="${order.bookOrder.state == 'UnCheckIn'}">
                 <form action="${basePath}/order/${order.bookOrder.ID}/cancel" method="post" class="inline">
                     <button type="submit" class="minor-button">取消预订</button>

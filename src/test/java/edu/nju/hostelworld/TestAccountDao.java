@@ -12,12 +12,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 
 /**
  * Created by Sorumi on 17/2/2.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = {"/applicationContext.xml"})
 public class TestAccountDao extends TestCase {
 
@@ -30,8 +32,8 @@ public class TestAccountDao extends TestCase {
     @Test
     public void testAdd() {
         Account account = new Account();
-        account.setAccount("12345678901234567891");
-        account.setMoney(300);
+        account.setAccount("12345678901234567892");
+        account.setMoney(900);
         accountDao.addAccount(account);
 
     }

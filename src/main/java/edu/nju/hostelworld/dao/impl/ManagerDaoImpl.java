@@ -1,9 +1,11 @@
 package edu.nju.hostelworld.dao.impl;
 
 import edu.nju.hostelworld.dao.ManagerDao;
+import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.Manager;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
@@ -36,8 +38,10 @@ public class ManagerDaoImpl extends BaseDaoImpl implements ManagerDao {
         Manager manager = null;
         try {
             Session session = setUpSession();
-            String hql = "from Manager where username = " + username;
-            List list = session.createQuery(hql).list();
+            String hql = "from Manager where username = :username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            List list = query.list();
             manager = list.size() == 0 ? null : (Manager) list.get(0);
             commitAndClose(session);
         } catch (DataAccessException e) {

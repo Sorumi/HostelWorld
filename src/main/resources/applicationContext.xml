@@ -51,6 +51,8 @@
             </props>
         </property>
     </bean>
+
+
     <!--<Bean id="hibernateTemplateMysql" class="org.springframework.orm.hibernate5.HibernateTemplate">-->
     <!--<property name="sessionFactory" ref="sessionFactory"></property>-->
     <!--</Bean>-->

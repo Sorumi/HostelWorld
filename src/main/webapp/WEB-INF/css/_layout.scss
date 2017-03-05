@@ -754,6 +754,9 @@ form.search-small {
   .check-out-date-column {
     @include col(270, 1000, $first: true);
   }
+  .day-column {
+    @include col(270, 1000, $first: true);
+  }
   .submit-column {
     float: right;
     @include col(150, 1000, $last: true);
@@ -762,7 +765,7 @@ form.search-small {
     width: 100%;
     margin-bottom: 20px;
   }
-  #check-in-date, #check-out-date {
+  #check-in-date, #check-out-date, #day {
     width: 100%;
   }
   #submit {
@@ -872,7 +875,7 @@ form.search-small {
   * {
     float: right;
   }
-  button {
+  button, a {
     margin-left: 10px;
   }
   p {
@@ -1156,6 +1159,9 @@ form.search-small {
   @include row();
 }
 
+.hint {
+  margin: 30px 0;
+}
 .select-row {
   margin: 10px 0;
   > span {

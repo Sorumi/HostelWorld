@@ -22,7 +22,7 @@
     <div class="container hostel-info">
         <h3 class="hostel-name">${hostel.name}</h3>
         <span class="tag tag-green-current">${hostel.city.name}</span>
-        <span class="hostel-address">地址:${hostel.address}</span>
+        <span class="hostel-address">${hostel.address}</span>
         <div class="grid">
             <div class="grid-row grid-row-line">
                 <div class="grid-label">

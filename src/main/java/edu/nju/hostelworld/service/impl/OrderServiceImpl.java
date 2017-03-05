@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -45,6 +46,9 @@ public class OrderServiceImpl implements OrderService {
     public OrderBean generateOrder(MemberHostelInfoBean memberHostelInfoBean, Member member) {
         List<RoomStockBean> roomStocks = memberHostelInfoBean.getRoomStocks();
 
+        LocalDate checkInDate = LocalDate.parse(memberHostelInfoBean.getCheckInDate());
+        LocalDate checkOutDate = LocalDate.parse(memberHostelInfoBean.getCheckOutDate());
+        int days = Math.toIntExact(ChronoUnit.DAYS.between(checkInDate, checkOutDate));
         double price = 0;
         List<OrderRoomBean> orderRooms = new ArrayList<>();
         for (int i = 0; i < memberHostelInfoBean.getBookQuantity().size(); i++) {
@@ -56,10 +60,13 @@ public class OrderServiceImpl implements OrderService {
                 orderRoomBean.setName(roomStockBean.getName());
                 orderRoomBean.setPrice(roomStockBean.getPrice());
                 orderRoomBean.setQuantity(quantity);
-                orderRoomBean.setTotal(roomStockBean.getPrice() * quantity);
+                orderRoomBean.setDay(days);
+                int totalQuantity = quantity * days;
+                orderRoomBean.setTotalQuantity(totalQuantity);
+                orderRoomBean.setTotal(roomStockBean.getPrice() * totalQuantity);
                 orderRoomBean.setImageType(roomStockBean.getImageType());
                 orderRooms.add(orderRoomBean);
-                price += roomStockBean.getPrice() * quantity;
+                price += roomStockBean.getPrice() * totalQuantity;
             }
         }
         OrderBean orderBean = new OrderBean();
@@ -79,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
         orderBean.setRooms(orderRooms);
         orderBean.setHostel(memberHostelInfoBean.getHostel());
         orderBean.setMember(member);
-
+        orderBean.setToday(LocalDate.now().toString());
         return orderBean;
     }
 
@@ -87,6 +94,9 @@ public class OrderServiceImpl implements OrderService {
     public OrderBean generateOrder(HostelBookOrderBean hostelBookOrderBean, Hostel hostel) {
         List<RoomStockBean> roomStocks = hostelBookOrderBean.getRoomStocks();
 
+        LocalDate checkInDate = LocalDate.parse(hostelBookOrderBean.getCheckInDate());
+        LocalDate checkOutDate = LocalDate.parse(hostelBookOrderBean.getCheckOutDate());
+        int days = Math.toIntExact(ChronoUnit.DAYS.between(checkInDate, checkOutDate));
         double price = 0;
         List<OrderRoomBean> orderRooms = new ArrayList<>();
         for (int i = 0; i < hostelBookOrderBean.getBookQuantity().size(); i++) {
@@ -98,10 +108,13 @@ public class OrderServiceImpl implements OrderService {
                 orderRoomBean.setName(roomStockBean.getName());
                 orderRoomBean.setPrice(roomStockBean.getPrice());
                 orderRoomBean.setQuantity(quantity);
-                orderRoomBean.setTotal(roomStockBean.getPrice() * quantity);
+                orderRoomBean.setDay(days);
+                int totalQuantity = quantity * days;
+                orderRoomBean.setTotalQuantity(totalQuantity);
+                orderRoomBean.setTotal(roomStockBean.getPrice() * totalQuantity);
                 orderRoomBean.setImageType(roomStockBean.getImageType());
                 orderRooms.add(orderRoomBean);
-                price += roomStockBean.getPrice() * quantity;
+                price += roomStockBean.getPrice() * totalQuantity;
             }
         }
 
@@ -114,6 +127,7 @@ public class OrderServiceImpl implements OrderService {
         bookOrder.setCheckInDate(hostelBookOrderBean.getCheckInDate());
         bookOrder.setCheckOutDate(hostelBookOrderBean.getCheckOutDate());
         bookOrder.setOriginPrice(price);
+        bookOrder.setDiscount(1);
         bookOrder.setTotalPrice(price);
         bookOrder.setAccountPrice(price);
 
@@ -203,11 +217,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResultMessage checkInOrder(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
-        if (bookOrder.getState() == OrderState.UnCheckIn) { // && LocalDate.parse(bookOrder.getCheckInDate()).equals(LocalDate.now())) {
+        if (bookOrder.getState() == OrderState.UnCheckIn && LocalDate.parse(bookOrder.getCheckInDate()).equals(LocalDate.now())) {
             bookOrder.setState(OrderState.CheckIn);
             bookOrder.setCheckInTime(DateAndTimeUtil.timeStringWithHyphen(LocalDateTime.now()));
             ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
-            if (resultMessage == ResultMessage.SUCCESS && bookOrder.getMemberID() != null) {
+            if (bookOrder.getMemberID() != null) {
+                return resultMessage;
+            } else if (resultMessage == ResultMessage.SUCCESS) {
                 return memberService.addPoint(bookOrder.getMemberID(), (int) bookOrder.getTotalPrice());
             }
 
@@ -218,7 +234,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResultMessage checkOutOrder(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
-        if (bookOrder.getState() == OrderState.CheckIn) { // && LocalDate.parse(bookOrder.getCheckOutDate()).equals(LocalDate.now())) {
+        if (bookOrder.getState() == OrderState.CheckIn && LocalDate.parse(bookOrder.getCheckOutDate()).equals(LocalDate.now())) {
             bookOrder.setState(OrderState.CheckOut);
             bookOrder.setCheckOutTime(DateAndTimeUtil.timeStringWithHyphen(LocalDateTime.now()));
             ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
@@ -389,6 +405,10 @@ public class OrderServiceImpl implements OrderService {
     private OrderBean orderToOrderBean(BookOrder bookOrder) {
         OrderBean orderBean = new OrderBean();
 
+        LocalDate checkInDate = LocalDate.parse(bookOrder.getCheckInDate());
+        LocalDate checkOutDate = LocalDate.parse(bookOrder.getCheckOutDate());
+        int days = Math.toIntExact(ChronoUnit.DAYS.between(checkInDate, checkOutDate));
+
         List<OrderRoom> orderRooms = orderRoomDao.findOrderRoomsByOrderID(bookOrder.getID());
         List<OrderRoomBean> orderRoomBeans = new ArrayList<>();
 
@@ -399,8 +419,12 @@ public class OrderServiceImpl implements OrderService {
             orderRoomBean.setName(hostelRoom.getName());
             orderRoomBean.setPrice(hostelRoom.getPrice());
             orderRoomBean.setQuantity(orderRoom.getQuantity());
-            orderRoomBean.setTotal(hostelRoom.getPrice() * orderRoom.getQuantity());
+            orderRoomBean.setDay(days);
+            int totalQuantity = orderRoom.getQuantity() * days;
+            orderRoomBean.setTotalQuantity(totalQuantity);
+            orderRoomBean.setTotal(hostelRoom.getPrice() * totalQuantity);
             orderRoomBean.setImageType(hostelRoom.getImageType());
+
             orderRoomBeans.add(orderRoomBean);
         }
 
@@ -415,6 +439,7 @@ public class OrderServiceImpl implements OrderService {
         }
         orderBean.setBookOrder(bookOrder);
         orderBean.setRooms(orderRoomBeans);
+        orderBean.setToday(LocalDate.now().toString());
 
         return orderBean;
     }

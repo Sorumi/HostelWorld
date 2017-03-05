@@ -15,7 +15,7 @@
         <div class="absolute-card left-card">
             <div class="card-container">
                 <h1>旅舍登录</h1>
-                <form action="${basePath}/hostel/login" method="post" id="login-form">
+                <form action="${basePath}/hostel/login" method="post" id="login-form" autocomplete="off">
                     <div class="grid">
                         <div class="grid-row">
                             <div class="grid-label">

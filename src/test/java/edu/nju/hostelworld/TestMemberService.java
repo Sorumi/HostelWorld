@@ -1,7 +1,9 @@
 package edu.nju.hostelworld;
 
 import edu.nju.hostelworld.model.Level;
+import edu.nju.hostelworld.model.Manager;
 import edu.nju.hostelworld.model.Member;
+import edu.nju.hostelworld.service.ManagerService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.util.ResultMessage;
 import junit.framework.TestCase;
@@ -10,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -17,11 +20,16 @@ import java.util.List;
  * Created by Sorumi on 17/2/2.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = {"/applicationContext.xml"})
+
 public class TestMemberService extends TestCase {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private ManagerService managerService;
 
     @Test
     public void testAdd() {
@@ -64,6 +72,15 @@ public class TestMemberService extends TestCase {
     public void testPause() {
         ResultMessage resultMessage = memberService.pauseMembers();
         resultMessage = memberService.stopMembers();
+    }
+
+    @Test
+    public void testManager() {
+        Manager manager = new Manager();
+        manager.setUsername("admin");
+        manager.setPassword("123456");
+        manager.setName("admin");
+        managerService.addManager(manager);
     }
 
 }

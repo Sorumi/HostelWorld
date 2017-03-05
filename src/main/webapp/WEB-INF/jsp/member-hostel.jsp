@@ -64,6 +64,13 @@
                             </div>
                         </div>
 
+                        <div class="vertical-label-input check-out-date-column">
+                            <div>
+                                <label for="day">天数</label>
+                                <span id="day">1</span>
+                            </div>
+                        </div>
+
                         <div class="vertical-label-input submit-column">
                             <div>
                                 <div class="label-fix"></div>
@@ -132,6 +139,7 @@
 
     function calculateTotal() {
         var rooms = $('.room');
+        var day = $('#day').text();
         var total = 0;
         for (var i = 0; i < rooms.length; i++) {
             var room = rooms[i];
@@ -139,7 +147,7 @@
             var price = $(room).find('.room-price .money').text();
             var quantity = $(room).find('.number-picker input').val();
             if (quantity != undefined) {
-                total += price * quantity;
+                total += price * quantity * day;
             }
         }
         $('#total-price .money').text(total).number(true, 2);
@@ -205,7 +213,7 @@
                                 '<div class="grid-row grid-row-line room">' +
                                 '<div class="room-img">' +
                                 '<div class="room-img-wrapper">' +
-                                '<div class="img"></div>' +
+                                '<div class="img" style="background-image: url(${basePath}/static/images/hostelroom/${memberHostelInfoBean.hostel.ID}/' + data[i].id + '.' + data[i].imageType + ')"></div>' +
                                 '</div>' +
                                 '</div>' +
                                 '<div class="room-name">' + data[i].name + '</div>' +
@@ -221,7 +229,7 @@
                                 '<div class="grid-row grid-row-line room-wrapper">' +
                                 '<div class="room-img">' +
                                 '<div class="room-img-wrapper">' +
-                                '<div class="img"></div>' +
+                                '<div class="img" style="background-image: url(${basePath}/static/images/hostelroom/${memberHostelInfoBean.hostel.ID}/' + data[i].id + '.' + data[i].imageType + ')"></div>' +
                                 '</div>' +
                                 '</div>' +
                                 '<div class="room-name">' + data[i].name + '</div>' +
@@ -251,7 +259,9 @@
         defaultDate: new Date(),
         onChange: function (selectedDates, dateStr, instance) {
             changeEnd();
+            refreshDay();
             refreshRoomStock();
+            calculateTotal();
         },
     });
 
@@ -261,8 +271,9 @@
         defaultDate: new Date().addDays(1),
         onChange: function (selectedDates, dateStr, instance) {
             changeStart();
+            refreshDay();
             refreshRoomStock();
-
+            calculateTotal()
         },
     });
 
@@ -282,7 +293,15 @@
         }
     }
 
-    refreshButtons();
+    function refreshDay() {
+        var startDate = new Date($("#check-in-date")[0].value);
+        var endDate = new Date($("#check-out-date")[0].value);
+
+        var difference = Math.floor((endDate - startDate) / (1000*60*60*24));
+        $('#day').text(difference);
+    }
+
+    refreshRoomStock();
 </script>
 
 <%@ include file="include/footer.jsp" %>

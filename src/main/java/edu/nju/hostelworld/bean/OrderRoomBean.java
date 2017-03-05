@@ -13,6 +13,10 @@ public class OrderRoomBean {
 
     private int quantity;
 
+    private int day;
+
+    private int totalQuantity;
+
     private double total;
 
     private String imageType;
@@ -47,6 +51,22 @@ public class OrderRoomBean {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 
     public double getTotal() {

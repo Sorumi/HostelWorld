@@ -25,7 +25,7 @@
                 <div class="grid-row">
                     <div class="level-num title">等级</div>
                     <div class="level-points title">需要消费金额</div>
-                    <div class="level-discount title">积分</div>
+                    <div class="level-discount title">优惠折扣</div>
                     <div class="level-operation title">操作</div>
                 </div>
                 <c:forEach var="level" items="${levelList}" varStatus="status">

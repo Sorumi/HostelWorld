@@ -37,6 +37,7 @@
                     <div class="grid-content">
                         <div id="date">
                             <span id="check-in-date">${orderBean.bookOrder.checkInDate}</span>
+                            <span> - </span>
                             <span id="check-out-date">${orderBean.bookOrder.checkOutDate}</span>
                         </div>
                     </div>
@@ -78,7 +79,7 @@
                                     </div>
                                     <div class="room-name">${room.name}</div>
                                     <div class="room-price">￥ <span class="money">${room.price}</span></div>
-                                    <div class="room-quantity">${room.quantity}</div>
+                                    <div class="room-quantity">${room.quantity} × ${room.day} 天 = ${room.totalQuantity}</div>
                                     <div class="room-total">￥ <span class="money">${room.total}</span></div>
                                 </div>
                             </c:forEach>

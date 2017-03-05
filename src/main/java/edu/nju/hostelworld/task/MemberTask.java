@@ -19,10 +19,10 @@ public class MemberTask {
     @Autowired
     private MemberService memberService;
 
-    @Scheduled(cron = "0 0 0 * * ?")
-//    @Scheduled(fixedRate = 60 * 10 * 1000)
+//    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(fixedRate = 60 * 10 * 1000)
     public void pauseMember() {
-        System.out.println(LocalDateTime.now() + "Members");
+        System.out.println(LocalDateTime.now() + " pause members");
         memberService.pauseMembers();
         memberService.stopMembers();
     }

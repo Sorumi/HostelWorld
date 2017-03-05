@@ -17,7 +17,7 @@
 <main>
     <div class="container card book-order">
         <h1 class="title">非会员入住</h1>
-        <form action="${basePath}/hostel/order/book" method="post" id="book-form">
+        <form action="${basePath}/hostel/order/book" method="post" id="book-form" autocomplete="off ">
             <div class="grid">
                 <div class="grid-row ">
                     <div class="grid-label">
@@ -39,10 +39,12 @@
                 </div>
                 <div class="grid-row ">
                     <div class="grid-label">
-                        <label for="peopleQuantity">入住人数</label>
+                        <label for="people-quantity">入住人数</label>
                     </div>
                     <div class="grid-content">
-                        <input id="peopleQuantity" type="text" name="peopleQuantity">
+                        <%--<input id="peopleQuantity" type="text" name="peopleQuantity">--%>
+                        <div id="people-quantity" class="quantity-select" name="peopleQuantity" min="1" default="1">
+                        </div>
                     </div>
                 </div>
                 <div class="grid-row ">
@@ -63,6 +65,12 @@
                                 <label for="check-out-date">退房日期</label>
                                 <input id="check-out-date" name="checkOutDate" type="text"
                                        value="${hostelBookOrderBean.checkInDate}">
+                            </div>
+                        </div>
+                        <div class="vertical-label-input check-out-date-column">
+                            <div>
+                                <label for="day">天数</label>
+                                <span id="day">1</span>
                             </div>
                         </div>
                         <div id="rooms" class="room-list grid">
@@ -130,8 +138,13 @@
 <script>
     $(".money").number(true, 2);
 
+
+    $('#people-quantity').numberpicker();
+
     function calculateTotal() {
         var rooms = $('.room');
+        var day = $('#day').text();
+        console.log(day);
         var total = 0;
         for (var i = 0; i < rooms.length; i++) {
             var room = rooms[i];
@@ -139,7 +152,7 @@
             var price = $(room).find('.room-price .money').text();
             var quantity = $(room).find('.number-picker input').val();
             if (quantity != undefined) {
-                total += price * quantity;
+                total += price * quantity * day;
             }
         }
         $('#total-price .money').text(total).number(true, 2);
@@ -201,7 +214,7 @@
                                 '<div class="grid-row grid-row-line room">' +
                                 '<div class="room-img">' +
                                 '<div class="room-img-wrapper">' +
-                                '<div class="img"></div>' +
+                                '<div class="img" style="background-image: url(${basePath}/static/images/hostelroom/${hostel.ID}/' + data[i].id + '.' + data[i].imageType + ')"></div>' +
                                 '</div>' +
                                 '</div>' +
                                 '<div class="room-name">' + data[i].name + '</div>' +
@@ -247,7 +260,9 @@
         defaultDate: new Date(),
         onChange: function (selectedDates, dateStr, instance) {
             changeEnd();
+            refreshDay();
             refreshRoomStock();
+            calculateTotal();
         },
     });
 
@@ -257,7 +272,10 @@
         defaultDate: new Date().addDays(1),
         onChange: function (selectedDates, dateStr, instance) {
             changeStart();
+            refreshDay();
             refreshRoomStock();
+            calculateTotal()
+
         },
     });
 
@@ -277,7 +295,14 @@
         }
     }
 
-    refreshButtons();
+    function refreshDay() {
+        var startDate = new Date($("#check-in-date")[0].value);
+        var endDate = new Date($("#check-out-date")[0].value);
+        var difference = Math.floor((endDate - startDate) / (1000*60*60*24));
+        $('#day').text(difference);
+    }
+
+    refreshRoomStock();
 
     //validate
     $("#submit-button").click(function () {

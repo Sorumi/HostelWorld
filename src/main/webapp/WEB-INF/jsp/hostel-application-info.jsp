@@ -120,7 +120,10 @@
                 </div>
             </div>
         </div>
-        <button class="minor-button" type="button" onclick="history.back()">返回</button>
+        <div class="book-submit">
+        <a href="${basePath}/hostel/application" class="minor-button">返回</a>
+            <div class="clear-fix"></div>
+        </div>
         <%--<div class="book-submit">--%>
         <%--<button class="major-button">通过</button>--%>
         <%--<button class="minor-button">拒绝</button>--%>

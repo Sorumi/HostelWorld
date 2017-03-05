@@ -1,9 +1,6 @@
 package edu.nju.hostelworld.controller;
 
-import edu.nju.hostelworld.bean.AlertBean;
-import edu.nju.hostelworld.bean.HostelRoomListBean;
-import edu.nju.hostelworld.bean.HostelSearchRoomBean;
-import edu.nju.hostelworld.bean.SearchRoomJsonBean;
+import edu.nju.hostelworld.bean.*;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.HostelRoom;
 import edu.nju.hostelworld.service.HostelService;
@@ -62,7 +59,7 @@ public class HostelRoomController {
     @RequestMapping(value = "/{id}/roomstock", method = RequestMethod.POST)
     @ResponseBody
     public List hostelRoomStocks(@RequestBody SearchRoomJsonBean searchRoomJsonBean) {
-        List roomStocks = hostelService.getRoomStockByDate(searchRoomJsonBean.getHostelID(),
+        List<RoomStockBean> roomStocks = hostelService.getRoomStockByDate(searchRoomJsonBean.getHostelID(),
                 LocalDate.parse(searchRoomJsonBean.getDate()));
         return roomStocks;
     }

@@ -4,6 +4,7 @@ import edu.nju.hostelworld.bean.AlertBean;
 import edu.nju.hostelworld.bean.OrderBean;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.Member;
+import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.service.OrderService;
 import edu.nju.hostelworld.util.OrderState;
 import edu.nju.hostelworld.util.ResultMessage;
@@ -25,6 +26,9 @@ public class MemberOrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private MemberService memberService;
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String orderList(@RequestParam(value = "state", required = false) String state, ModelMap model) {
@@ -102,7 +106,14 @@ public class MemberOrderController {
 
         model.addAttribute("alertBean", alertBean);
 
-        return "alert-href";
+        updateSessionMember(member.getID(), model);
 
+        return "alert-href";
+    }
+
+
+    private void updateSessionMember(String memberID, ModelMap model) {
+        Member member = memberService.findMemberByID(memberID);
+        model.addAttribute("member", member);
     }
 }

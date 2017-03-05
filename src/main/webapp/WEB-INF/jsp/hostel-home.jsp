@@ -19,16 +19,24 @@
 <main>
     <div class="container card">
         <c:if test="${hostelInfoBean.openApplication.state == 'Unchecked'}">
-            <span>您的申请正在审核中！</span>
-            <a href="${basePath}/hostel/application/${hostelInfoBean.openApplication.ID}" class="major-button-small">查看</a>
+            <div class="hint">
+                <span>您的申请正在审核中！</span>
+                <a href="${basePath}/hostel/application/${hostelInfoBean.openApplication.ID}"
+                   class="major-button-small">查看</a>
+            </div>
         </c:if>
         <c:if test="${hostelInfoBean.openApplication.state == 'Failed'}">
-            <span>您的申请未通过！</span>
-            <a href="${basePath}/hostel/application/${hostelInfoBean.openApplication.ID}" class="major-button-small">查看</a>
+            <div class="hint">
+                <span>您的申请未通过！</span>
+                <a href="${basePath}/hostel/application/${hostelInfoBean.openApplication.ID}"
+                   class="major-button-small">查看</a>
+            </div>
         </c:if>
 
         <c:if test="${hostelInfoBean.openApplication == null || hostelInfoBean.openApplication.state == 'Failed'}">
-            <a href="${basePath}/hostel/application/open/add" class="major-button">申请开店</a>
+            <div class="hint">
+                <a href="${basePath}/hostel/application/open/add" class="major-button">申请开店</a>
+            </div>
         </c:if>
     </div>
 </main>

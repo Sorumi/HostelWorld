@@ -80,9 +80,6 @@
                             </c:when>
                             <c:otherwise>
                                 <span id="accounted" class="tag tag-red-current">未结算</span>
-                                <form action="${basePath}/admin/order/${order.bookOrder.ID}/account" method="post" class="inline">
-                                    <button type="submit" class="major-button-small">结算</button>
-                                </form>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -108,7 +105,7 @@
                         <c:choose>
                             <c:when test="${order.bookOrder.checkInTime == null}">
                                 <span>未入住</span>
-                                <c:if test="${order.bookOrder.state == 'UnCheckIn'}">
+                                <c:if test="${order.bookOrder.state == 'UnCheckIn' && order.today == order.bookOrder.checkInDate}">
                                     <form action="${basePath}/hostel/order/${order.bookOrder.ID}/checkin" method="post"
                                           class="inline">
                                         <button type="submit" class="major-button-small">登记入住</button>
@@ -134,7 +131,7 @@
                         <c:choose>
                             <c:when test="${order.bookOrder.checkOutTime == null}">
                                 <span>未退房</span>
-                                <c:if test="${order.bookOrder.state == 'CheckIn' && order.bookOrder.checkInTime != null}">
+                                <c:if test="${order.bookOrder.state == 'CheckIn' && order.bookOrder.checkInTime != null && order.today >= order.bookOrder.checkOutDate}">
                                     <form action="${basePath}/hostel/order/${order.bookOrder.ID}/checkout" method="post"
                                           class="inline">
                                         <button type="submit" class="major-button-small">登记退房</button>
@@ -186,7 +183,7 @@
                                 </div>
                                 <div class="room-name">${room.name}</div>
                                 <div class="room-price">￥ <span class="money">${room.price}</span></div>
-                                <div class="room-quantity">${room.quantity}</div>
+                                <div class="room-quantity">${room.quantity} × ${room.day} 天 = ${room.totalQuantity}</div>
                                 <div class="room-total">￥ <span class="money">${room.total}</span></div>
                             </div>
                         </c:forEach>
@@ -253,7 +250,7 @@
                     <button type="submit" class="minor-button">取消预订</button>
                 </form>
             </c:if>
-            <button class="major-button" onclick="history.back()">返回</button>
+            <a href="${basePath}/hostel/order" class="major-button">返回</a>
         </div>
         <div class="clear-fix"></div>
     </div>

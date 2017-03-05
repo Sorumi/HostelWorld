@@ -12,6 +12,7 @@ import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -53,7 +54,7 @@ public class FinanceRecordServiceImpl implements FinanceRecordService {
     public ResultMessage addExpireFinanceRecord(BookOrder bookOrder) {
         FinanceRecord financeRecord = new FinanceRecord();
         financeRecord.setType(FinanceType.Expire);
-        LocalDateTime time = LocalDateTime.parse(bookOrder.getCheckInDate());
+        LocalDateTime time = LocalDate.parse(bookOrder.getCheckInDate()).plusDays(1).atTime(0, 0);
         financeRecord.setTime(DateAndTimeUtil.timeStringWithHyphen(time));
         financeRecord.setOrderID(bookOrder.getID());
         financeRecord.setMemberID(bookOrder.getMemberID());

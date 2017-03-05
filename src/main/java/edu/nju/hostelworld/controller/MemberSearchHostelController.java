@@ -152,6 +152,7 @@ public class MemberSearchHostelController {
         if (model.get("member") == null) {
             return "redirect:/login";
         }
+        Member member = (Member) model.get("member");
 
         if (orderBean.getBookOrder().getPeopleQuantity() <= 0) {
             return "redirect:/home";
@@ -164,6 +165,8 @@ public class MemberSearchHostelController {
         oldBean.getBookOrder().setPeopleQuantity(orderBean.getBookOrder().getPeopleQuantity());
 
         String orderID = orderService.addNewOrder(oldBean);
+
+        updateSessionMember(member.getID(), model);
 
         if (orderID != null) {
             AlertBean alertBean = new AlertBean();
@@ -182,7 +185,11 @@ public class MemberSearchHostelController {
 
             return "alert";
         }
+    }
 
+    private void updateSessionMember(String memberID, ModelMap model) {
+        Member member = memberService.findMemberByID(memberID);
+        model.addAttribute("member", member);
     }
 
 }

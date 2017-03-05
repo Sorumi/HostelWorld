@@ -96,7 +96,7 @@
                     $("#rooms").html($("#rooms").html() + '<div class="grid-row grid-row-line">' +
                             '<div class="room-img">' +
                             '<div class="room-img-wrapper">' +
-                            '<div class="img"></div>' +
+                            '<div class="img" style="background-image: url(${basePath}/static/images/hostelroom/${hostel.ID}/' + data[i].id + '.' + data[i].imageType + ')"></div>' +
                             '</div>' +
                             '</div>' +
                             '<div class="room-name">' + data[i].name + '</div>' +

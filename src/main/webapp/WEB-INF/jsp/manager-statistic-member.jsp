@@ -50,7 +50,7 @@
 </script>
 
 <script>
-
+    $("#member-select").select2();
 
     $(".money").number(true, 2);
 
@@ -125,8 +125,9 @@
                 lineColor: '#DDDDDD',
                 zooming: true,
                 zoomTo: [0, 15],
-                minValue: data.time,
-                step: 'day',
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" ,"Aug" ,"Sep", "Oct", "Nov", "Dec"],
+//                minValue: data.time,
+//                step: 'month',
                 tick: {
                     lineColor: '#888888'
                 },
@@ -136,10 +137,10 @@
                 item: {
                     fontColor: '#888888'
                 },
-                transform: {
-                    type: 'date',
-                    all: '%M %d'
-                }
+//                transform: {
+//                    type: 'date',
+//                    all: '%M'
+//                }
             },
             scaleY: {
                 minorTicks: 1,

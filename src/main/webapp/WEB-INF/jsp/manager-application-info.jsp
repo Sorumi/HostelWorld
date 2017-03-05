@@ -129,7 +129,7 @@
                     <button type="submit" class="minor-button">拒绝</button>
                 </form>
             </c:if>
-            <button type="button" class="minor-button" onclick="history.back()">返回</button>
+            <a href="${basePath}/admin/application" class="minor-button">返回</a>
 
             <div class="clear-fix"></div>
         </div>
