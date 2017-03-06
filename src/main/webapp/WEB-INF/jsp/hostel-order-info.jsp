@@ -88,7 +88,8 @@
                             <c:when test="${order.bookOrder.checkInTime == null}">
                                 <span>未入住</span>
                                 <c:if test="${order.bookOrder.state == 'UnCheckIn'}">
-                                    <form action="/hostel/order/${order.bookOrder.ID}/checkin" method="post" class="inline">
+                                    <form action="${basePath}/hostel/order/${order.bookOrder.ID}/checkin" method="post"
+                                          class="inline">
                                         <button type="submit" class="major-button-small">登记入住</button>
                                     </form>
                                 </c:if>
@@ -113,7 +114,8 @@
                             <c:when test="${order.bookOrder.checkOutTime == null}">
                                 <span>未退房</span>
                                 <c:if test="${order.bookOrder.state == 'CheckIn' && order.bookOrder.checkInTime != null}">
-                                    <form action="/hostel/order/${order.bookOrder.ID}/checkout" method="post" class="inline">
+                                    <form action="${basePath}/hostel/order/${order.bookOrder.ID}/checkout" method="post"
+                                          class="inline">
                                         <button type="submit" class="major-button-small">登记退房</button>
                                     </form>
                                 </c:if>
@@ -176,9 +178,17 @@
                 <div class="clear-fix"></div>
             </div>
             <div class="row">
-                <label for="discount">优惠</label>
-                <span id="discount">-￥ <span
-                        class="money">-${order.bookOrder.originPrice - order.bookOrder.totalPrice}</span></span>
+                <label for="discount">折扣</label>
+                <span id="discount">
+                    <c:choose>
+                        <c:when test="${order.bookOrder.discount} < 1">
+                            <span class="money">${order.bookOrder.discount}</span>
+                        </c:when>
+                        <c:otherwise>
+                            无
+                        </c:otherwise>
+                    </c:choose>
+                </span>
                 <div class="clear-fix"></div>
             </div>
             <div class="row">
@@ -192,7 +202,7 @@
 
         <div class="book-submit">
             <c:if test="${order.bookOrder.memberID == null && order.bookOrder.state == 'UnCheckIn'}">
-                <form action="/hostel/order/${order.bookOrder.ID}/cancel" method="post" class="inline">
+                <form action="${basePath}/hostel/order/${order.bookOrder.ID}/cancel" method="post" class="inline">
                     <button type="submit" class="minor-button">取消预订</button>
                 </form>
             </c:if>

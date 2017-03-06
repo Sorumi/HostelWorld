@@ -40,6 +40,8 @@ public class BookOrder {
 
     private double totalPrice;
 
+    private double discount;
+
     private boolean accounted;
 
     private String notMemberName;
@@ -148,6 +150,14 @@ public class BookOrder {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public boolean isAccounted() {

@@ -17,7 +17,7 @@
 <main>
     <div class="container card plan-edit">
         <h1 class="title">发布计划</h1>
-        <form action="/hostel/plan/add" method="post" autocomplete="off" id="add-form">
+        <form action="${basePath}/hostel/plan/add" method="post" autocomplete="off" id="add-form">
             <div class="grid">
                 <div class="grid-row">
                     <div class="grid-label">
@@ -65,7 +65,7 @@
             </div>
             <p>${alert}</p>
             <button class="major-button" type="button" id="submit-button">确认</button>
-            <a href="/hostel/plan" class="minor-button">取消</a>
+            <a href="${basePath}/hostel/plan" class="minor-button">取消</a>
         </form>
     </div>
 </main>

@@ -1,7 +1,7 @@
 package edu.nju.hostelworld.controller;
 
-import edu.nju.hostelworld.Bean.MemberInfoBean;
-import edu.nju.hostelworld.Bean.OrderBean;
+import edu.nju.hostelworld.bean.MemberInfoBean;
+import edu.nju.hostelworld.bean.OrderBean;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.util.OrderState;

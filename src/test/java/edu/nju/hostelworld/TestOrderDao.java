@@ -30,7 +30,11 @@ public class TestOrderDao extends TestCase {
 
     @Test
     public void testFind() {
-        List list = orderDao.findOrderByOrderState(OrderState.Cancelled);
-        assertEquals(2, list.size());
+//        long count = orderDao.countMemberOrdersByStateAndDate("0000001", OrderState.Cancelled, "cancelledTime", "2017-02");
+//        assertEquals(3, count);
+
+        long count = orderDao.countHostelOrdersByStateAndDate("0000001", null, "bookedTime", "2017-03-01");
+        assertEquals(4, count);
     }
+
 }

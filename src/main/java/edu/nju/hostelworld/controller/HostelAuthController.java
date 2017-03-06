@@ -1,6 +1,6 @@
 package edu.nju.hostelworld.controller;
 
-import edu.nju.hostelworld.Bean.HostelRegisterBean;
+import edu.nju.hostelworld.bean.HostelRegisterBean;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.util.ResultMessage;

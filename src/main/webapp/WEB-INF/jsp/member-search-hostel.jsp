@@ -16,7 +16,7 @@
 
 <main>
     <div class="container">
-        <form class="search-small" action="/search" method="get">
+        <form class="search-small" action="${basePath}/search" method="get">
 
             <div class="row">
                 <div class="keyword-column">
@@ -61,7 +61,7 @@
                                     <div class="img"></div>
                                 </div>
                                 <div class="info-wrapper">
-                                    <a href="/search/${hostel.ID}" class="title">${hostel.name}</a>
+                                    <a href="${basePath}/search/${hostel.ID}" class="title">${hostel.name}</a>
                                     <p class="address">地址:${hostel.address}</p>
                                     <p class="intro">${hostel.introduction}</p>
                                     <p class="price">价格</p>

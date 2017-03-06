@@ -15,7 +15,7 @@
     <div class="container card">
         <h1 class="title">旅舍注册</h1>
 
-        <form action="/hostel/register" method="post" autocomplete="off" id="register-form">
+        <form action="${basePath}/hostel/register" method="post" autocomplete="off" id="register-form">
             <table>
                 <tr>
                     <td>
@@ -48,7 +48,7 @@
 
             <p class="alert">${alert}</p>
             <input id="submit-button" class="major-button" value="注册"/>
-            <a href="/hostel/login" class="minor-button">登录</a>
+            <a href="${basePath}/hostel/login" class="minor-button">登录</a>
         </form>
     </div>
 </main>

@@ -4,6 +4,7 @@ import edu.nju.hostelworld.dao.LevelDao;
 import edu.nju.hostelworld.model.Level;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
@@ -54,6 +55,23 @@ public class LevelDaoImpl extends BaseDaoImpl implements LevelDao {
             e.printStackTrace();
         }
         return level;
+    }
+
+    @Override
+    public Level findLevelByPoints(int points) {
+        int id = 0;
+        try {
+            Session session = setUpSession();
+            String hql = "select max(id) from Level where points <= :value";
+            Query query = session.createQuery(hql);
+            query.setParameter("value", points);
+            List list = query.list();
+            id = list.get(0) != null ? (int)list.get(0) : 0;
+            commitAndClose(session);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return findLevelByID(id);
     }
 
     @Override

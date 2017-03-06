@@ -19,35 +19,35 @@
         <div class="card order-search">
             <h1 class="title">预定管理</h1>
             <div class="tags">
-                <a href="/admin/order" class="tag tag-yellow
+                <a href="${basePath}/admin/order" class="tag tag-yellow
                 <c:if test="${orderState == null}">
                     tag-yellow-current
                 </c:if>">全部</a>
-                <a href="/admin/order?state=UnCheckIn" class="tag tag-orange
+                <a href="${basePath}/admin/order?state=UnCheckIn" class="tag tag-orange
                 <c:if test="${orderState == 'UnCheckIn'}">
                     tag-orange-current
                 </c:if>
                 ">未入住</a>
 
-                <a href="/admin/order?state=CheckIn" class="tag tag-blue
+                <a href="${basePath}/admin/order?state=CheckIn" class="tag tag-blue
                 <c:if test="${orderState == 'CheckIn'}">
                     tag-blue-current
                 </c:if>
                 ">已入住</a>
 
-                <a href="/admin/order?state=CheckOut" class="tag tag-green
+                <a href="${basePath}/admin/order?state=CheckOut" class="tag tag-green
                 <c:if test="${orderState == 'CheckOut'}">
                     tag-green-current
                 </c:if>
                 ">已退房</a>
 
-                <a href="/admin/order?state=Cancelled" class="tag tag-pink
+                <a href="${basePath}/admin/order?state=Cancelled" class="tag tag-pink
                 <c:if test="${orderState == 'Cancelled'}">
                     tag-pink-current
                 </c:if>
                 ">已退订</a>
 
-                <a href="/admin/order?state=Expired" class="tag tag-purple
+                <a href="${basePath}/admin/order?state=Expired" class="tag tag-purple
                 <c:if test="${orderState == 'Expired'}">
                     tag-purple-current
                 </c:if>
@@ -86,7 +86,7 @@
                             </c:otherwise>
                         </c:choose>
                     </c:if>
-                    <a href="/admin/order/${order.bookOrder.ID}" class="major-button info-button">详情</a>
+                    <a href="${basePath}/admin/order/${order.bookOrder.ID}" class="major-button info-button">详情</a>
                 </div>
             </div>
         </c:forEach>

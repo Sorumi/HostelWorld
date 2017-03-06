@@ -23,25 +23,25 @@
                         <c:if test="${applicationType == null}">
                             class="current"
                         </c:if>
-                        href="/hostel/application">全部申请</a>
+                        href="${basePath}/hostel/application">全部申请</a>
                 <a
                         <c:if test="${applicationType == 'Open'}">
                             class="current"
                         </c:if>
-                        href="/hostel/application?type=Open">开店申请</a>
+                        href="${basePath}/hostel/application?type=Open">开店申请</a>
                 <a
                         <c:if test="${applicationType == 'Edit'}">
                             class="current"
                         </c:if>
-                        href="/hostel/application?type=Edit">修改申请</a>
+                        href="${basePath}/hostel/application?type=Edit">修改申请</a>
             </div>
         </div>
         <div class="right-buttons">
             <c:if test="${hostel.state == 'Unopened'}">
-                <a href="/hostel/application/open/add" class="major-button-small">申请开店</a>
+                <a href="${basePath}/hostel/application/open/add" class="major-button-small">申请开店</a>
             </c:if>
             <c:if test="${hostel.state == 'Opening'}">
-                <a href="/hostel/application/edit/add" class="major-button-small">申请修改</a>
+                <a href="${basePath}/hostel/application/edit/add" class="major-button-small">申请修改</a>
             </c:if>
         </div>
         <div class="clear-fix"></div>
@@ -58,7 +58,7 @@
                     <span class="application-hostel-name">${application.name}</span>
                     <span class="application-hostel-address">${application.address}</span>
                     <p class="application-hostel-introduction">${application.introduction}</p>
-                    <a href="/hostel/application/${application.ID}" class="major-button info-button">详情</a>
+                    <a href="${basePath}/hostel/application/${application.ID}" class="major-button info-button">详情</a>
                 </div>
             </c:forEach>
         </div>

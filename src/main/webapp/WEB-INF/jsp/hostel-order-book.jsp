@@ -17,7 +17,7 @@
 <main>
     <div class="container card book-order">
         <h1 class="title">非会员入住</h1>
-        <form action="/hostel/order/book" method="post" id="book-form">
+        <form action="${basePath}/hostel/order/book" method="post" id="book-form">
             <div class="grid">
                 <div class="grid-row ">
                     <div class="grid-label">

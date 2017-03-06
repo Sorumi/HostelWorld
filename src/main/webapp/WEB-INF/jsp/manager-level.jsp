@@ -24,7 +24,7 @@
             <div class="grid level-list">
                 <div class="grid-row">
                     <div class="level-num title">等级</div>
-                    <div class="level-points title">需要点数</div>
+                    <div class="level-points title">需要消费金额</div>
                     <div class="level-discount title">积分</div>
                     <div class="level-operation title">操作</div>
                 </div>
@@ -36,7 +36,7 @@
                         <div class="level-operation">
                             <button type="button" class="major-button-small edit-button">编辑</button>
                             <c:if test="${status.last}">
-                                <%--<form action="/admin/level/${level.ID}/" method="post" class="inline" id="delete-form">--%>
+                                <%--<form action="${basePath}/admin/level/${level.ID}/" method="post" class="inline" id="delete-form">--%>
                                 <%--<input type="hidden" name="_method" value="DELETE">--%>
                                 <button type="button" class="minor-button-small delete-button">删除</button>
                                 <%--</form>--%>
@@ -60,7 +60,7 @@
             var points = parent.find('.level-points').text();
             var discount = parent.find('.level-discount').text();
 
-            parent.html('<form action="/admin/level/' + num + '/edit" class="inline">' +
+            parent.html('<form action="${basePath}/admin/level/' + num + '/edit" class="inline">' +
                     '<div class="level-num">' + num + '</div>' +
                     '<div class="level-points"><input type="text" name="points" value="' + points + '"></div>' +
                     '<div class="level-discount"><input type="text" name="discount" value="' + discount + '"></div>' +
@@ -206,7 +206,7 @@
 
         $('.delete-button').remove();
         list.append('<div id="level-' + num + '" class="grid-row level">' +
-                ' <form action="/level/' + num + '/add" class="inline">' +
+                ' <form action="${basePath}/level/' + num + '/add" class="inline">' +
                 '<div class="level-num">' + num + '</div>' +
                 ' <div class="level-points"><input type="text" name="points" value=""></div>' +
                 '<div class="level-discount"><input type="text" name="discount" value=""></div>' +

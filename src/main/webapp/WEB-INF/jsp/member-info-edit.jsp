@@ -17,7 +17,7 @@
 <main>
     <div class="container card member-info">
         <h1 class="title">修改个人资料</h1>
-        <form action="/info/edit" method="post" autocomplete="off" id="edit-form">
+        <form action="${basePath}/info/edit" method="post" autocomplete="off" id="edit-form">
             <div class="grid">
                 <div class="grid-row">
                     <div class="grid-label">
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <button class="major-button" type="button" id="submit-button">保存</button>
-            <a href="/info" class="minor-button">取消</a>
+            <a href="${basePath}/info" class="minor-button">取消</a>
         </form>
     </div>
 </main>

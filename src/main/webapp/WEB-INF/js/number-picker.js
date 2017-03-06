@@ -36,7 +36,7 @@
                 var numInput = $(this).children('.np-number');
                 numInput.val(defaultNum);
                 var num = numInput.val();
-
+                num = Number(num);
 
                 if (name) {
                     numInput.attr('name', name);

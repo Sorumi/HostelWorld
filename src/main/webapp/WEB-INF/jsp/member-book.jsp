@@ -17,7 +17,7 @@
 <main>
     <div class="container card book-order">
         <h1 class="title">订单预定</h1>
-        <form action="/book/submit" method="post">
+        <form action="${basePath}/book/submit" method="post">
             <div class="grid">
                 <div class="grid-row grid-row-line">
                     <div class="grid-label">
@@ -90,9 +90,17 @@
                     <div class="clear-fix"></div>
                 </div>
                 <div class="row">
-                    <label for="discount">优惠</label>
-                    <span id="discount">￥ <span
-                            class="money">-${orderBean.bookOrder.totalPrice - orderBean.bookOrder.originPrice}</span></span>
+                    <label for="discount">折扣</label>
+                    <span id="discount">
+                         <c:choose>
+                             <c:when test="${order.bookOrder.discount} < 1">
+                                 <span class="money">${order.bookOrder.discount}</span>
+                             </c:when>
+                             <c:otherwise>
+                                 无
+                             </c:otherwise>
+                         </c:choose>
+                    </span>
                     <div class="clear-fix"></div>
                 </div>
                 <div class="row">

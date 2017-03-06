@@ -41,9 +41,9 @@
                     <label for="rooms">房间列表</label>
                 </div>
                 <div class="grid-content room-wrapper">
-                    <form action="/book" method="post">
+                    <form action="${basePath}/book" method="post">
                         <input type="hidden" value="${memberHostelInfoBean.hostel.ID}">
-                        <%--<form action="/search/${memberHostelInfoBean.hostel.ID}" method="get">--%>
+                        <%--<form action="${basePath}/search/${memberHostelInfoBean.hostel.ID}" method="get">--%>
                         <div class="vertical-label-input check-in-date-column">
                             <div>
                                 <label for="check-in-date">入住日期</label>

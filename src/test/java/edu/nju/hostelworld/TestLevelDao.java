@@ -2,6 +2,7 @@ package edu.nju.hostelworld;
 
 import edu.nju.hostelworld.dao.LevelDao;
 import edu.nju.hostelworld.model.Level;
+import edu.nju.hostelworld.service.LevelService;
 import edu.nju.hostelworld.util.ResultMessage;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -22,6 +23,9 @@ public class TestLevelDao extends TestCase {
     @Autowired
     private LevelDao levelDao;
 
+    @Autowired
+    private LevelService levelService;
+
     @Test
     public void testAdd() {
         Level level = new Level();
@@ -34,8 +38,14 @@ public class TestLevelDao extends TestCase {
 
     @Test
     public void testFind() {
-        List list = levelDao.findAllLevels();
-        assertEquals(1, list.size());
+        Level level = levelDao.findLevelByPoints(0);
+        assertEquals(0, level.getID());
+    }
+
+    @Test
+    public void testFindByPoints() {
+        Level level = levelService.findLevelByPoints(0);
+        assertEquals(0, level.getID());
     }
 
 

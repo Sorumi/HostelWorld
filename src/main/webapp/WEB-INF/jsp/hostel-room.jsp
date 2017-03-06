@@ -18,8 +18,8 @@
     <div class="container card hostel-room">
         <h1 class="title">房间管理</h1>
         <div class="sub-nav">
-            <a class="current" href="/hostel/room">房间查看</a>
-            <a href="/hostel/plan">历史计划</a>
+            <a class="current" href="${basePath}/hostel/room">房间查看</a>
+            <a href="${basePath}/hostel/plan">历史计划</a>
         </div>
 
         <div class="room-wrapper">

@@ -19,38 +19,38 @@
         <div class="card order-search">
             <h1 class="title">预定管理</h1>
             <div class="right-buttons">
-                <a href="/hostel/order/book" class="major-button-small">非会员入住</a>
+                <a href="${basePath}/hostel/order/book" class="major-button-small">非会员入住</a>
             </div>
             <div class="tags left-nav">
-                <a href="/hostel/order" class="tag tag-yellow
+                <a href="${basePath}/hostel/order" class="tag tag-yellow
                 <c:if test="${orderState == null}">
                     tag-yellow-current
                 </c:if>">全部</a>
-                <a href="/hostel/order?state=UnCheckIn" class="tag tag-orange
+                <a href="${basePath}/hostel/order?state=UnCheckIn" class="tag tag-orange
                 <c:if test="${orderState == 'UnCheckIn'}">
                     tag-orange-current
                 </c:if>
                 ">未入住</a>
 
-                <a href="/hostel/order?state=CheckIn" class="tag tag-blue
+                <a href="${basePath}/hostel/order?state=CheckIn" class="tag tag-blue
                 <c:if test="${orderState == 'CheckIn'}">
                     tag-blue-current
                 </c:if>
                 ">已入住</a>
 
-                <a href="/hostel/order?state=CheckOut" class="tag tag-green
+                <a href="${basePath}/hostel/order?state=CheckOut" class="tag tag-green
                 <c:if test="${orderState == 'CheckOut'}">
                     tag-green-current
                 </c:if>
                 ">已退房</a>
 
-                <a href="/hostel/order?state=Cancelled" class="tag tag-pink
+                <a href="${basePath}/hostel/order?state=Cancelled" class="tag tag-pink
                 <c:if test="${orderState == 'Cancelled'}">
                     tag-pink-current
                 </c:if>
                 ">已退订</a>
 
-                <a href="/hostel/order?state=Expired" class="tag tag-purple
+                <a href="${basePath}/hostel/order?state=Expired" class="tag tag-purple
                 <c:if test="${orderState == 'Expired'}">
                     tag-purple-current
                 </c:if>
@@ -89,7 +89,7 @@
                         </c:choose>
                     </c:if>
                     <span class="order-price">￥ <span class="money">${order.bookOrder.totalPrice}</span></span>
-                    <a href="/hostel/order/${order.bookOrder.ID}" class="major-button info-button">详情</a>
+                    <a href="${basePath}/hostel/order/${order.bookOrder.ID}" class="major-button info-button">详情</a>
                 </div>
             </div>
         </c:forEach>

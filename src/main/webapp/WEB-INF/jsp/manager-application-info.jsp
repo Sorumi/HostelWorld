@@ -96,10 +96,10 @@
         </div>
         <div class="book-submit">
             <c:if test="${applicationBean.application.state == 'Unchecked'}">
-                <form action="/admin/application/${applicationBean.application.ID}/pass" method="post">
+                <form action="${basePath}/admin/application/${applicationBean.application.ID}/pass" method="post">
                     <button type="submit" class="major-button">通过</button>
                 </form>
-                <form action="/admin/application/${applicationBean.application.ID}/fail" method="post">
+                <form action="${basePath}/admin/application/${applicationBean.application.ID}/fail" method="post">
                     <button type="submit" class="minor-button">拒绝</button>
                 </form>
             </c:if>

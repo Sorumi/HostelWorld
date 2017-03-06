@@ -1,6 +1,6 @@
 package edu.nju.hostelworld.controller;
 
-import edu.nju.hostelworld.Bean.*;
+import edu.nju.hostelworld.bean.*;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.MemberService;

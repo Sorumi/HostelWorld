@@ -1,5 +1,6 @@
 package edu.nju.hostelworld;
 
+import edu.nju.hostelworld.model.Level;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.service.MemberService;
 import junit.framework.TestCase;
@@ -41,6 +42,12 @@ public class TestMemberService extends TestCase {
     public void testFindAllMembers() {
         List members = memberService.findAllMembers();
         assertEquals(members.size(), 2);
+    }
+
+    @Test
+    public void testLevel() {
+        Level level = memberService.findLevelByMemberID("0000001");
+        System.out.println(level.getID());
     }
 
 }

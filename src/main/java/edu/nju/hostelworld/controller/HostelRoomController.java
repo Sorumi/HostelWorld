@@ -1,8 +1,8 @@
 package edu.nju.hostelworld.controller;
 
-import edu.nju.hostelworld.Bean.HostelRoomListBean;
-import edu.nju.hostelworld.Bean.HostelSearchRoomBean;
-import edu.nju.hostelworld.Bean.SearchRoomJsonBean;
+import edu.nju.hostelworld.bean.HostelRoomListBean;
+import edu.nju.hostelworld.bean.HostelSearchRoomBean;
+import edu.nju.hostelworld.bean.SearchRoomJsonBean;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.HostelRoom;
 import edu.nju.hostelworld.service.HostelService;

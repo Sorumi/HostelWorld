@@ -97,5 +97,80 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
         return list;
     }
 
+    public long countOrdersByStateAndDate(OrderState orderState, String dateField, String date) {
+        long count = 0;
+        try {
+            Session session = setUpSession();
+            String hql;
+            Query query;
+            if (orderState == null) {
+                hql = "select count(*) from BookOrder where " + dateField + " like CONCAT(:date,'%')";
+                query = session.createQuery(hql);
+                query.setParameter("date", date);
+            } else {
+                hql = "select count(*) from BookOrder where state = :state and " + dateField + " like CONCAT(:date,'%')";
+                query = session.createQuery(hql);
+                query.setParameter("state", orderState);
+                query.setParameter("date", date);
+            }
+            count = (Long) query.uniqueResult();
+            commitAndClose(session);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public long countMemberOrdersByStateAndDate(String memberID, OrderState orderState, String dateField, String date) {
+        long count = 0;
+        try {
+            Session session = setUpSession();
+            String hql;
+            Query query;
+            if (orderState == null) {
+                hql = "select count(*) from BookOrder where memberID = :memberID and " + dateField + " like CONCAT(:date,'%')";
+                query = session.createQuery(hql);
+                query.setParameter("memberID", memberID);
+                query.setParameter("date", date);
+            } else {
+                hql = "select count(*) from BookOrder where memberID = :memberID and state = :state and " + dateField + " like CONCAT(:date,'%')";
+                query = session.createQuery(hql);
+                query.setParameter("memberID", memberID);
+                query.setParameter("state", orderState);
+                query.setParameter("date", date);
+            }
+            count = (Long) query.uniqueResult();
+            commitAndClose(session);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public long countHostelOrdersByStateAndDate(String hostelID, OrderState orderState, String dateField, String date) {
+        long count = 0;
+        try {
+            Session session = setUpSession();
+            String hql;
+            Query query;
+            if (orderState == null) {
+                hql = "select count(*) from BookOrder where hostelID = :hostelID and " + dateField + " like CONCAT(:date,'%')";
+                query = session.createQuery(hql);
+                query.setParameter("hostelID", hostelID);
+                query.setParameter("date", date);
+            } else {
+                hql = "select count(*) from BookOrder where hostelID = :hostelID and state = :state and " + dateField + " like CONCAT(:date,'%')";
+                query = session.createQuery(hql);
+                query.setParameter("hostelID", hostelID);
+                query.setParameter("state", orderState);
+                query.setParameter("date", date);
+            }
+            count = (Long) query.uniqueResult();
+            commitAndClose(session);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 
 }

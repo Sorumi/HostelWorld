@@ -15,7 +15,7 @@
     <div class="container card">
         <h1 class="title">管理员登录</h1>
 
-        <form action="/admin/login" method="post" id="login-form">
+        <form action="${basePath}/admin/login" method="post" id="login-form">
             <table>
                 <tr>
                     <td>

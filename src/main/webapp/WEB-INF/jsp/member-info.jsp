@@ -49,7 +49,7 @@
                     <label for="password">密码</label>
                 </div>
                 <div class="grid-content">
-                    <a href="/password" id="password" class="major-button-small">
+                    <a href="${basePath}/password" id="password" class="major-button-small">
                         修改密码
                     </a>
                 </div>
@@ -61,17 +61,17 @@
                 <div class="grid-content">
                     <span id="state" class="tag tag-${memberInfoBean.member.state.color}-current">${memberInfoBean.member.state.name}</span>
                     <c:if test="${memberInfoBean.member.state == 'Inactive'}">
-                        <form action="/info/activate" method="post" class="inline">
+                        <form action="${basePath}/info/activate" method="post" class="inline">
                             <button type="submit" class="major-button-small">激活</button>
                         </form>
                     </c:if>
                     <c:if test="${memberInfoBean.member.state == 'Pause'}">
-                        <form action="/info/resume" method="post" class="line">
+                        <form action="${basePath}/info/resume" method="post" class="line">
                             <button type="submit" class="major-button-small">恢复</button>
                         </form>
                     </c:if>
                     <c:if test="${memberInfoBean.member.state == 'Normal'}">
-                        <form action="/info/stop" method="post" class="inline">
+                        <form action="${basePath}/info/stop" method="post" class="inline">
                             <button type="submit" class="major-button-small">停止</button>
                         </form>
                     </c:if>
@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <a href="/info/edit" class="major-button">修改</a>
+        <a href="${basePath}/info/edit" class="major-button">修改</a>
     </div>
 </main>
 

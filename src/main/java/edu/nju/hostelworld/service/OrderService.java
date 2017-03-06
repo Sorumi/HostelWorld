@@ -1,8 +1,8 @@
 package edu.nju.hostelworld.service;
 
-import edu.nju.hostelworld.Bean.HostelBookOrderBean;
-import edu.nju.hostelworld.Bean.MemberHostelInfoBean;
-import edu.nju.hostelworld.Bean.OrderBean;
+import edu.nju.hostelworld.bean.HostelBookOrderBean;
+import edu.nju.hostelworld.bean.MemberHostelInfoBean;
+import edu.nju.hostelworld.bean.OrderBean;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.util.OrderState;
@@ -44,4 +44,9 @@ public interface OrderService {
 
     public List<OrderBean> findHostelOrders(String hostelID, OrderState orderState);
 
+    public int[] countOrdersByStateAndMonth(OrderState orderState, String month);
+
+    public int[] countMemberOrdersByStateAndYear(String memberID, OrderState orderState, String year);
+
+    public int[] countHostelOrdersByStateAndMonth(String hostelID, OrderState orderState, String month);
 }

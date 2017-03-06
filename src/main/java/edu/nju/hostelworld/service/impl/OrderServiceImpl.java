@@ -1,6 +1,6 @@
 package edu.nju.hostelworld.service.impl;
 
-import edu.nju.hostelworld.Bean.*;
+import edu.nju.hostelworld.bean.*;
 import edu.nju.hostelworld.dao.OrderDao;
 import edu.nju.hostelworld.dao.OrderRoomDao;
 import edu.nju.hostelworld.model.*;
@@ -68,7 +68,10 @@ public class OrderServiceImpl implements OrderService {
         bookOrder.setCheckInDate(memberHostelInfoBean.getCheckInDate());
         bookOrder.setCheckOutDate(memberHostelInfoBean.getCheckOutDate());
         bookOrder.setOriginPrice(price);
-        bookOrder.setTotalPrice(price);
+        double discount = memberService.findLevelByMemberID(member.getID()).getDiscount();
+        bookOrder.setDiscount(discount);
+        bookOrder.setTotalPrice(price * discount);
+
 
         orderBean.setBookOrder(bookOrder);
         orderBean.setRooms(orderRooms);
@@ -270,6 +273,44 @@ public class OrderServiceImpl implements OrderService {
         return ordersToOrderBeans(bookOrders);
     }
 
+    @Override
+    public int[] countOrdersByStateAndMonth(OrderState orderState, String month) {
+
+        String field = fieldOfOrderState(orderState);
+        LocalDate date = LocalDate.parse(month + "-01");
+        LocalDate endDate = date.plusMonths(1);
+        int dayCount = date.lengthOfMonth();
+        int counts[] = new int[dayCount];
+        for (int i = 0; date.isBefore(endDate); date = date.plusDays(1), i++) {
+            int count = Math.toIntExact(orderDao.countOrdersByStateAndDate(orderState, field, date.toString()));
+            counts[i] = count;
+        }
+        return counts;
+    }
+
+    @Override
+    public int[] countMemberOrdersByStateAndYear(String memberID, OrderState orderState, String year) {
+        return new int[0];
+    }
+
+    @Override
+    public int[] countHostelOrdersByStateAndMonth(String hostelID, OrderState orderState, String month) {
+        String field = fieldOfOrderState(orderState);
+        if (orderState != OrderState.Expired) {
+            orderState = null;
+        }
+        LocalDate date = LocalDate.parse(month + "-01");
+        LocalDate endDate = date.plusMonths(1);
+        int dayCount = date.lengthOfMonth();
+        int counts[] = new int[dayCount];
+        for (int i = 0; date.isBefore(endDate); date = date.plusDays(1), i++) {
+            int count = Math.toIntExact(orderDao.countHostelOrdersByStateAndDate(hostelID, orderState, field, date.toString()));
+            counts[i] = count;
+        }
+        return counts;
+
+    }
+
     private String generateOrderID() {
         String date = DateAndTimeUtil.dateStringWithOutSeparator(LocalDate.now());
         int count = Math.toIntExact(orderDao.countOrdersByBookedDate(date));
@@ -321,5 +362,23 @@ public class OrderServiceImpl implements OrderService {
         public int compare(OrderBean o1, OrderBean o2) {
             return -o1.getBookOrder().getBookedTime().compareTo(o2.getBookOrder().getBookedTime());
         }
+    }
+
+    private String fieldOfOrderState(OrderState orderState) {
+        if (orderState != null) {
+            switch (orderState) {
+                case UnCheckIn:
+                    return "bookedTime";
+                case CheckIn:
+                    return "checkInTime";
+                case CheckOut:
+                    return "checkOutTime";
+                case Cancelled:
+                    return "cancelledTime";
+                case Expired:
+                    return "checkInDate";
+            }
+        }
+        return "bookedTime";
     }
 }

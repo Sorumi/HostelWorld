@@ -15,7 +15,7 @@
 
 <main>
     <div class="container">
-        <form class="search-large" action="/search" method="get">
+        <form class="search-large" action="${basePath}/search" method="get">
             <input id="keyword" name="keyword" type="text"/>
             <div class="row">
                 <div class="check-in-date-column">

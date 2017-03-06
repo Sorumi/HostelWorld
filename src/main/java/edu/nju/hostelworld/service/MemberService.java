@@ -1,6 +1,7 @@
 package edu.nju.hostelworld.service;
 
-import edu.nju.hostelworld.Bean.MemberInfoBean;
+import edu.nju.hostelworld.bean.MemberInfoBean;
+import edu.nju.hostelworld.model.Level;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.util.ResultMessage;
 
@@ -24,6 +25,8 @@ public interface MemberService {
     public ResultMessage checkMember(String username, String password);
 
     public List<Member> findAllMembers();
+
+    public Level findLevelByMemberID(String memberID);
 
     public ResultMessage updateMoney(String ID, double money);
 

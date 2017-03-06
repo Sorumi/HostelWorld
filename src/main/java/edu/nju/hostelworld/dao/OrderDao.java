@@ -26,4 +26,10 @@ public interface OrderDao {
     public List<BookOrder> findMemberOrders(String memberID, OrderState orderState);
 
     public List<BookOrder> findHostelOrders(String hostelID, OrderState orderState);
+
+    public long countOrdersByStateAndDate(OrderState orderState, String dateField, String date);
+
+    public long countMemberOrdersByStateAndDate(String memberID, OrderState orderState, String dateField, String date);
+
+    public long countHostelOrdersByStateAndDate(String memberID, OrderState orderState, String dateField, String date);
 }

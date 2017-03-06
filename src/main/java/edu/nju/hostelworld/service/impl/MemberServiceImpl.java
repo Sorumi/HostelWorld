@@ -1,10 +1,15 @@
 package edu.nju.hostelworld.service.impl;
 
-import edu.nju.hostelworld.Bean.MemberInfoBean;
+import edu.nju.hostelworld.bean.MemberInfoBean;
 import edu.nju.hostelworld.dao.MemberDao;
+import edu.nju.hostelworld.dao.OrderDao;
+import edu.nju.hostelworld.model.BookOrder;
+import edu.nju.hostelworld.model.Level;
 import edu.nju.hostelworld.model.Member;
+import edu.nju.hostelworld.service.LevelService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.util.MemberState;
+import edu.nju.hostelworld.util.OrderState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +27,12 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberDao memberDao;
 
+    @Autowired
+    private OrderDao orderDao;
+
+    @Autowired
+    private LevelService levelService;
+
     @Override
     public MemberInfoBean convertToMemberInfoBean(String memberID) {
         MemberInfoBean memberInfoBean = new MemberInfoBean();
@@ -30,6 +41,15 @@ public class MemberServiceImpl implements MemberService {
         if (member.getAccount() != null) {
             memberInfoBean.setAccount(member.getAccount());
         }
+        double purchasedAmount = 0;
+        List<BookOrder> orders = orderDao.findMemberOrders(memberID, OrderState.CheckOut);
+        List<BookOrder> orders1 = orderDao.findMemberOrders(memberID, OrderState.CheckIn);
+        orders.addAll(orders1);
+        for (BookOrder order:orders) {
+            purchasedAmount += order.getTotalPrice();
+        }
+        memberInfoBean.setPurchasedAmount(purchasedAmount);
+        memberInfoBean.setLevel(findLevelByMemberID(memberID).getID());
         return memberInfoBean;
     }
 
@@ -65,6 +85,18 @@ public class MemberServiceImpl implements MemberService {
 
     public List<Member> findAllMembers() {
         return memberDao.findAllMembers();
+    }
+
+    @Override
+    public Level findLevelByMemberID(String memberID) {
+        double purchasedAmount = 0;
+        List<BookOrder> orders = orderDao.findMemberOrders(memberID, OrderState.CheckOut);
+        for (BookOrder order:orders) {
+            purchasedAmount += order.getTotalPrice();
+        }
+
+        Level level = levelService.findLevelByPoints((int)purchasedAmount);
+        return level;
     }
 
     public ResultMessage updateMoney(String ID, double money) {

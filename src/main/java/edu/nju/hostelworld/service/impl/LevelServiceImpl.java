@@ -41,6 +41,18 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
+    public Level findLevelByPoints(int points) {
+        Level level = levelDao.findLevelByPoints(points);
+        if (level == null) {
+            level = new Level();
+            level.setID(0);
+            level.setPoints(0);
+            level.setDiscount(1);
+        }
+        return level;
+    }
+
+    @Override
     public List<Level> findAllLevels() {
         return levelDao.findAllLevels();
     }

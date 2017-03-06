@@ -7,6 +7,7 @@ import edu.nju.hostelworld.util.ResultMessage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -79,8 +80,10 @@ public class MemberDaoImpl extends BaseDaoImpl implements MemberDao {
         Member member = null;
         try {
             Session session = setUpSession();
-            String hql = "from Member where username = " + username;
-            List list = session.createQuery(hql).list();
+            String hql = "from Member where username = :username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            List list = query.list();
             member = list.size() == 0 ? null : (Member) list.get(0);
             commitAndClose(session);
         } catch (DataAccessException e) {

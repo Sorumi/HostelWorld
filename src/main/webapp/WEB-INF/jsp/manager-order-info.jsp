@@ -90,7 +90,7 @@
                             </c:when>
                             <c:otherwise>
                                 <span id="accounted" class="tag tag-red-current">未结算</span>
-                                <form action="/admin/order/${order.bookOrder.ID}/account" method="post" class="inline">
+                                <form action="${basePath}/admin/order/${order.bookOrder.ID}/account" method="post" class="inline">
                                     <button type="submit" class="major-button-small">结算</button>
                                 </form>
                             </c:otherwise>
@@ -196,9 +196,17 @@
                 <div class="clear-fix"></div>
             </div>
             <div class="row">
-                <label for="discount">优惠</label>
-                <span id="discount">-￥ <span
-                        class="money">-${order.bookOrder.originPrice - order.bookOrder.totalPrice}</span></span>
+                <label for="discount">折扣</label>
+                <span id="discount">
+                     <c:choose>
+                         <c:when test="${order.bookOrder.discount} < 1">
+                             <span class="money">${order.bookOrder.discount}</span>
+                         </c:when>
+                         <c:otherwise>
+                             无
+                         </c:otherwise>
+                     </c:choose>
+                </span>
                 <div class="clear-fix"></div>
             </div>
             <div class="row">

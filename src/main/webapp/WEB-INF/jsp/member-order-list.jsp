@@ -19,35 +19,35 @@
         <div class="card order-search">
             <h1 class="title">预定管理</h1>
             <div class="tags">
-                <a href="/order" class="tag tag-yellow
+                <a href="${basePath}/order" class="tag tag-yellow
                 <c:if test="${orderState == null}">
                     tag-yellow-current
                 </c:if>">全部</a>
-                <a href="/order?state=UnCheckIn" class="tag tag-orange
+                <a href="${basePath}/order?state=UnCheckIn" class="tag tag-orange
                 <c:if test="${orderState == 'UnCheckIn'}">
                     tag-orange-current
                 </c:if>
                 ">未入住</a>
 
-                <a href="/order?state=CheckIn" class="tag tag-blue
+                <a href="${basePath}/order?state=CheckIn" class="tag tag-blue
                 <c:if test="${orderState == 'CheckIn'}">
                     tag-blue-current
                 </c:if>
                 ">已入住</a>
 
-                <a href="/order?state=CheckOut" class="tag tag-green
+                <a href="${basePath}/order?state=CheckOut" class="tag tag-green
                 <c:if test="${orderState == 'CheckOut'}">
                     tag-green-current
                 </c:if>
                 ">已退房</a>
 
-                <a href="/order?state=Cancelled" class="tag tag-pink
+                <a href="${basePath}/order?state=Cancelled" class="tag tag-pink
                 <c:if test="${orderState == 'Cancelled'}">
                     tag-pink-current
                 </c:if>
                 ">已退订</a>
 
-                <a href="/order?state=Expired" class="tag tag-purple
+                <a href="${basePath}/order?state=Expired" class="tag tag-purple
                 <c:if test="${orderState == 'Expired'}">
                     tag-purple-current
                 </c:if>
@@ -73,7 +73,7 @@
                         </c:forEach>
                     </span>
                     <span class="order-price">￥ <span class="money">${order.bookOrder.totalPrice}</span></span>
-                    <a href="/order/${order.bookOrder.ID}" class="major-button info-button">详情</a>
+                    <a href="${basePath}/order/${order.bookOrder.ID}" class="major-button info-button">详情</a>
                 </div>
             </div>
         </c:forEach>

@@ -15,7 +15,7 @@
     <div class="container card">
         <h1 class="title">会员注册</h1>
 
-        <form action="/register" method="post" autocomplete="off" id="register-form">
+        <form action="${basePath}/register" method="post" autocomplete="off" id="register-form">
             <table>
                 <tr>
                     <td>
@@ -58,7 +58,7 @@
             </table>
             <p class="alert">${alert}</p>
             <input id="submit-button" class="major-button" value="注册"/>
-            <a href="/login" class="minor-button">登录</a>
+            <a href="${basePath}/login" class="minor-button">登录</a>
 
         </form>
     </div>

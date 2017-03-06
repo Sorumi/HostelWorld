@@ -25,12 +25,12 @@
                 </div>
                 <div class="grid-content">
                     <%--<c:choose>--%>
-                        <%--<c:when test="${order.bookOrder.ID == null}">--%>
-                            <%--<span id="id">非会员</span>--%>
-                        <%--</c:when>--%>
-                        <%--<c:otherwise>--%>
-                            <span id="id">${order.bookOrder.ID}</span>
-                        <%--</c:otherwise>--%>
+                    <%--<c:when test="${order.bookOrder.ID == null}">--%>
+                    <%--<span id="id">非会员</span>--%>
+                    <%--</c:when>--%>
+                    <%--<c:otherwise>--%>
+                    <span id="id">${order.bookOrder.ID}</span>
+                    <%--</c:otherwise>--%>
                     <%--</c:choose>--%>
                 </div>
             </div>
@@ -55,15 +55,15 @@
             </div>
 
             <%--<div class="grid-row">--%>
-                <%--<div class="grid-label">--%>
-                    <%--<label for="member">会员信息</label>--%>
-                <%--</div>--%>
-                <%--<div class="grid-content">--%>
-                    <%--<div id="member" class="member-info">--%>
-                        <%--<span class="member-name">会员名称</span>--%>
-                        <%--<span class="member-contact">联系方式</span>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
+            <%--<div class="grid-label">--%>
+            <%--<label for="member">会员信息</label>--%>
+            <%--</div>--%>
+            <%--<div class="grid-content">--%>
+            <%--<div id="member" class="member-info">--%>
+            <%--<span class="member-name">会员名称</span>--%>
+            <%--<span class="member-contact">联系方式</span>--%>
+            <%--</div>--%>
+            <%--</div>--%>
             <%--</div>--%>
 
             <div class="grid-row">
@@ -71,7 +71,8 @@
                     <label for="state">订单状态</label>
                 </div>
                 <div class="grid-content">
-                    <span id="state" class="tag tag-${order.bookOrder.state.color}-current">${order.bookOrder.state.name}</span>
+                    <span id="state"
+                          class="tag tag-${order.bookOrder.state.color}-current">${order.bookOrder.state.name}</span>
                 </div>
             </div>
 
@@ -174,8 +175,17 @@
                 <div class="clear-fix"></div>
             </div>
             <div class="row">
-                <label for="discount">优惠</label>
-                <span id="discount">-￥ <span class="money">-${order.bookOrder.originPrice - order.bookOrder.totalPrice}</span></span>
+                <label for="discount">折扣</label>
+                <span id="discount">
+                    <c:choose>
+                        <c:when test="${order.bookOrder.discount} < 1">
+                            <span class="money">${order.bookOrder.discount}</span>
+                        </c:when>
+                        <c:otherwise>
+                            无
+                        </c:otherwise>
+                    </c:choose>
+                </span>
                 <div class="clear-fix"></div>
             </div>
             <div class="row">
@@ -189,7 +199,7 @@
         <div class="book-submit">
             <button class="major-button" onclick="history.back()">返回</button>
             <c:if test="${order.bookOrder.state == 'UnCheckIn'}">
-                <form action="/order/${order.bookOrder.ID}/cancel" method="post" class="inline">
+                <form action="${basePath}/order/${order.bookOrder.ID}/cancel" method="post" class="inline">
                     <button type="submit" class="minor-button">取消预订</button>
                 </form>
             </c:if>
@@ -199,6 +209,6 @@
 </main>
 
 <script>
-    $(".money").number( true, 2 );
+    $(".money").number(true, 2);
 </script>
 <%@ include file="include/footer.jsp" %>

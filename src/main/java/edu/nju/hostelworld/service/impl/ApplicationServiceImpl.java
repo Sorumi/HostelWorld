@@ -1,6 +1,6 @@
 package edu.nju.hostelworld.service.impl;
 
-import edu.nju.hostelworld.Bean.ApplicationBean;
+import edu.nju.hostelworld.bean.ApplicationBean;
 import edu.nju.hostelworld.dao.ApplicationDao;
 import edu.nju.hostelworld.model.App;
 import edu.nju.hostelworld.model.Application;

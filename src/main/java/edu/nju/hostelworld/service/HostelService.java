@@ -1,6 +1,6 @@
 package edu.nju.hostelworld.service;
 
-import edu.nju.hostelworld.Bean.RoomStockBean;
+import edu.nju.hostelworld.bean.RoomStockBean;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.HostelRoom;
 import edu.nju.hostelworld.util.ResultMessage;

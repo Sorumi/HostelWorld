@@ -26,17 +26,17 @@
                         <c:if test="${applicationType == null}">
                             class="current"
                         </c:if>
-                        href="/admin/application">全部申请</a>
+                        href="${basePath}/admin/application">全部申请</a>
                 <a
                         <c:if test="${applicationType == 'Open'}">
                             class="current"
                         </c:if>
-                        href="/admin/application?type=Open">开店申请</a>
+                        href="${basePath}/admin/application?type=Open">开店申请</a>
                 <a
                         <c:if test="${applicationType == 'Edit'}">
                             class="current"
                         </c:if>
-                        href="/admin/application?type=Edit">修改申请</a>
+                        href="${basePath}/admin/application?type=Edit">修改申请</a>
             </div>
         </div>
 
@@ -53,7 +53,7 @@
                     <span class="application-hostel-name">${application.name}</span>
                     <span class="application-hostel-address">${application.address}</span>
                     <p class="application-hostel-introduction">${application.introduction}</p>
-                    <a href="/admin/application/${application.ID}" class="major-button info-button">详情</a>
+                    <a href="${basePath}/admin/application/${application.ID}" class="major-button info-button">详情</a>
                 </div>
             </c:forEach>
         </div>

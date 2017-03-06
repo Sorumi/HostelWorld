@@ -18,5 +18,7 @@ public interface LevelService {
 
     public Level findLevelByID(int ID);
 
+    public Level findLevelByPoints(int points);
+
     public List<Level> findAllLevels();
 }

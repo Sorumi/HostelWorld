@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<%--<form:form commandName="member" method="POST" action="/member/add">--%>
+<%--<form:form commandName="member" method="POST" action="${basePath}/member/add">--%>
     <%--<form:input path="name"/>--%>
     <%--<form:input path="ID"/>--%>
     <%--<input type="submit" value="Submit"/>--%>

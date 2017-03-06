@@ -9,8 +9,6 @@ public enum OrderState {
     CheckOut("已退房", "green"), // 已退房
     Cancelled("已退订", "pink"), // 已取消
     Expired("已过期", "purple"); // 已过期
-//    Accounted("已结算"); // 已结算
-
 
     private final String name;
     private final String color;

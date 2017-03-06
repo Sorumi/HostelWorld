@@ -20,7 +20,8 @@ public interface LevelDao {
 
     public Level findLevelByID(int ID);
 
-    public List<Level> findAllLevels();
+    public Level findLevelByPoints(int points);
 
+    public List<Level> findAllLevels();
 
 }

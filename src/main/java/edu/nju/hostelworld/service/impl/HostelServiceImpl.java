@@ -1,7 +1,7 @@
 package edu.nju.hostelworld.service.impl;
 
 
-import edu.nju.hostelworld.Bean.RoomStockBean;
+import edu.nju.hostelworld.bean.RoomStockBean;
 import edu.nju.hostelworld.dao.HostelDao;
 import edu.nju.hostelworld.dao.HostelRoomDao;
 import edu.nju.hostelworld.model.Hostel;
