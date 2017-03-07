@@ -75,7 +75,7 @@
             type: "POST",
             dataType: "json",
             contentType: "application/json",
-            url: "/hostel/${hostel.ID}/roomstock",
+            url:"${basePath}/hostel/${hostel.ID}/roomstock",
             data: JSON.stringify(data),
 
             success: function (data) {

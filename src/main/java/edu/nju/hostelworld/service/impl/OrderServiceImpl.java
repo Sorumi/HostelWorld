@@ -232,11 +232,24 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResultMessage expireOrder(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
-        if (bookOrder.getState() == OrderState.UnCheckIn && LocalDate.parse(bookOrder.getCheckInDate()).isAfter(LocalDate.now())) {
+        if (bookOrder.getState() == OrderState.UnCheckIn && LocalDate.parse(bookOrder.getCheckInDate()).isBefore(LocalDate.now())) {
             bookOrder.setState(OrderState.Expired);
             return orderDao.updateOrder(bookOrder);
         }
         return ResultMessage.FAILED;
+    }
+
+    @Override
+    public ResultMessage expireOrders() {
+        ResultMessage resultMessage = ResultMessage.SUCCESS;
+        List<BookOrder> list = orderDao.findOrderByOrderStateAndMaxDate(OrderState.UnCheckIn, "checkInDate", LocalDate.now().minusDays(1).toString());
+        for (BookOrder order : list) {
+            order.setState(OrderState.Expired);
+            resultMessage = orderDao.updateOrder(order);
+            System.out.print(resultMessage);
+            if (resultMessage == ResultMessage.FAILED) break;
+        }
+        return resultMessage;
     }
 
     @Override
@@ -274,41 +287,61 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int[] countOrdersByStateAndMonth(OrderState orderState, String month) {
+    public List<Integer> countOrdersByStateAndMonth(OrderState orderState, String month) {
 
         String field = fieldOfOrderState(orderState);
+        if (orderState == OrderState.UnCheckIn) orderState = null;
         LocalDate date = LocalDate.parse(month + "-01");
         LocalDate endDate = date.plusMonths(1);
-        int dayCount = date.lengthOfMonth();
-        int counts[] = new int[dayCount];
-        for (int i = 0; date.isBefore(endDate); date = date.plusDays(1), i++) {
-            int count = Math.toIntExact(orderDao.countOrdersByStateAndDate(orderState, field, date.toString()));
-            counts[i] = count;
+        LocalDate today = LocalDate.now();
+        List<Integer> counts = new ArrayList<>();
+        for (; date.isBefore(endDate); date = date.plusDays(1)) {
+            if (date.isAfter(today)) {
+                counts.add(null);
+            } else {
+                int count = Math.toIntExact(orderDao.countOrdersByStateAndDate(orderState, field, date.toString()));
+                counts.add(count);
+            }
         }
         return counts;
     }
 
     @Override
-    public int[] countMemberOrdersByStateAndYear(String memberID, OrderState orderState, String year) {
-        return new int[0];
+    public List<Integer> countMemberOrdersByStateAndYear(String memberID, OrderState orderState, String year) {
+        String field = fieldOfOrderState(orderState);
+        if (orderState == OrderState.UnCheckIn) orderState = null;
+        LocalDate date = LocalDate.parse(year + "-01-01");
+        LocalDate endDate = date.plusYears(1);
+        LocalDate today = LocalDate.now();
+        List<Integer> counts = new ArrayList<>();
+        for (; date.isBefore(endDate); date = date.plusMonths(1)) {
+            if (date.isAfter(today)) {
+                counts.add(null);
+            } else {
+                int count = Math.toIntExact(orderDao.countOrdersByStateAndDate(orderState, field, DateAndTimeUtil.monthStringWithHyphen(date)));
+                counts.add(count);
+            }
+        }
+        return counts;
     }
 
     @Override
-    public int[] countHostelOrdersByStateAndMonth(String hostelID, OrderState orderState, String month) {
+    public List<Integer> countHostelOrdersByStateAndMonth(String hostelID, OrderState orderState, String month) {
         String field = fieldOfOrderState(orderState);
-        if (orderState != OrderState.Expired) {
-            orderState = null;
-        }
+        if (orderState == OrderState.UnCheckIn) orderState = null;
         LocalDate date = LocalDate.parse(month + "-01");
         LocalDate endDate = date.plusMonths(1);
-        int dayCount = date.lengthOfMonth();
-        int counts[] = new int[dayCount];
-        for (int i = 0; date.isBefore(endDate); date = date.plusDays(1), i++) {
-            int count = Math.toIntExact(orderDao.countHostelOrdersByStateAndDate(hostelID, orderState, field, date.toString()));
-            counts[i] = count;
+        LocalDate today = LocalDate.now();
+        List<Integer> counts = new ArrayList<>();
+        for (; date.isBefore(endDate); date = date.plusDays(1)) {
+            if (date.isAfter(today)) {
+                counts.add(null);
+            } else {
+                int count = Math.toIntExact(orderDao.countHostelOrdersByStateAndDate(hostelID, orderState, field, date.toString()));
+                counts.add(count);
+            }
         }
         return counts;
-
     }
 
     private String generateOrderID() {

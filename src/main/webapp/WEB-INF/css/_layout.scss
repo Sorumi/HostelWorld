@@ -121,6 +121,27 @@ form.inline {
   }
 }
 
+.date-select {
+  button {
+    width: 22px;
+    height: 22px;
+    border-radius: 11px;
+    font-size: 18px;
+    text-align: center;
+    color: $white-color;
+    background-color: $theme-color;
+  }
+  button.button-disabled {
+    background-color: $gray-color;
+  }
+  input {
+    border: none;
+    width: 80px;
+    text-align: center;
+    background-color: transparent;
+  }
+}
+
 .alert {
   margin: 10px 0;
   font-size: 14px;
@@ -890,7 +911,38 @@ form.search-small {
   @include row();
 }
 
+.select-row {
+  span {
+    display: inline-block;
+    width: 50px;
+    font-size: 14px;
+    color: $gray-color;
+  }
+  div {
+    display: inline-block;
+  }
+}
+
 //.column {
 //  display: inline-block;
 //  //font-size: 0;
 //}
+
+// statistic
+
+//html, body {
+//  height:100%;
+//  width:100%;
+//  margin-left:10px;
+//  padding:0;
+//}
+#myChart {
+  //margin-left: -20px;
+  height:100%;
+  width:100%;
+  min-height:150px;
+}
+.zc-ref {
+  display:none;
+}
+

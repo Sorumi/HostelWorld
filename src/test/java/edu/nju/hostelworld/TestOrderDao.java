@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -33,8 +34,16 @@ public class TestOrderDao extends TestCase {
 //        long count = orderDao.countMemberOrdersByStateAndDate("0000001", OrderState.Cancelled, "cancelledTime", "2017-02");
 //        assertEquals(3, count);
 
-        long count = orderDao.countHostelOrdersByStateAndDate("0000001", null, "bookedTime", "2017-03-01");
-        assertEquals(4, count);
+//        long count = orderDao.countHostelOrdersByStateAndDate("0000001", null, "bookedTime", "2017-03-01");
+//        assertEquals(4, count);
+
+        long count = orderDao.countMemberOrdersByStateAndDate("0000001", null, "bookedTime", "2017-02");
+        System.out.print(count);
     }
 
+    @Test
+    public void testFindByDate() {
+        List list = orderDao.findOrderByOrderStateAndMaxDate(OrderState.UnCheckIn, "checkInDate", LocalDate.now().minusDays(1).toString());
+        assertEquals(3, list.size());
+    }
 }

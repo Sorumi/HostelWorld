@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ import java.util.Map;
 @SessionAttributes({"hostel"})
 public class HostelStatisticController {
 
-    @Autowired
+       @Autowired
     OrderService orderService;
 
     @RequestMapping(value = "/statistic", method = RequestMethod.GET)
@@ -44,7 +45,7 @@ public class HostelStatisticController {
         return "hostel-statistic";
     }
 
-    @RequestMapping(value = "/statistic/{month}", method = RequestMethod.POST)
+    @RequestMapping(value = "/statistic/{month}", method = RequestMethod.GET)
     @ResponseBody
     public StatisticOrderBean statisticMonth(@PathVariable String month, ModelMap model) {
 
@@ -57,12 +58,19 @@ public class HostelStatisticController {
             return null;
         }
 
-        int[] booked = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), null, month);
-        int[] checkIn = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), OrderState.CheckIn, month);
-        int[] checkOut = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), OrderState.CheckOut, month);
-        int[] cancelled = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), OrderState.Cancelled, month);
-        int[] expired = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), OrderState.Expired, month);
+        LocalDate date = LocalDate.parse(month + "-01");
+
+
+        ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
+        long time = date.atStartOfDay(zoneId).toEpochSecond() * 1000;
+
+        List<Integer> booked = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), null, month);
+        List<Integer> checkIn = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), OrderState.CheckIn, month);
+        List<Integer> checkOut = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), OrderState.CheckOut, month);
+        List<Integer> cancelled = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), OrderState.Cancelled, month);
+        List<Integer> expired = orderService.countHostelOrdersByStateAndMonth(hostel.getID(), OrderState.Expired, month);
         StatisticOrderBean statisticOrderBean = new StatisticOrderBean();
+        statisticOrderBean.setTime(time);
         statisticOrderBean.setBooked(booked);
         statisticOrderBean.setCheckIn(checkIn);
         statisticOrderBean.setCheckOut(checkOut);

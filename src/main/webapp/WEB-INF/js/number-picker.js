@@ -6,7 +6,7 @@
 
         var $this = this;
 
-        var html = '<button type="button" class="np-sub-button">-</button> <input class="np-number"> <button type="button" class="np-add-button">+</button>';
+        var html = '<button type="button" class="np-sub-button">-</button> <input class="np-number" readonly="readonly"> <button type="button" class="np-add-button">+</button>';
         var defaultSettings = {
             'numberToDestroy': 0,
             'onChange': function (num) {

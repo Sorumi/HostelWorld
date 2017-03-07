@@ -55,6 +55,31 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
         return findByFieldAndValue(BookOrder.class, "state", orderState);
     }
 
+    @Override
+    public List<BookOrder> findOrderByOrderStateAndMaxDate(OrderState orderState, String dateField, String date) {
+        List list = null;
+        try {
+            Session session = setUpSession();
+            String hql;
+            Query query;
+            if (orderState == null) {
+                hql = "from BookOrder where " + dateField + " like CONCAT(:date,'%')";
+                query = session.createQuery(hql);
+                query.setParameter("date", date);
+            } else {
+                hql = "from BookOrder where state = :state and " + dateField + " < CONCAT(:date)";
+                query = session.createQuery(hql);
+                query.setParameter("state", orderState);
+                query.setParameter("date", date);
+            }
+            list = query.list();
+            commitAndClose(session);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public List<BookOrder> findAllOrders() {
         return findAll(BookOrder.class);
     }

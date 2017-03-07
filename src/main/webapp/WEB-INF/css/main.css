@@ -177,6 +177,22 @@ form.inline {
   text-align: center;
   background-color: transparent; }
 
+.date-select button {
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  font-size: 18px;
+  text-align: center;
+  color: #FFF;
+  background-color: #00CCCC; }
+.date-select button.button-disabled {
+  background-color: #B3B3B3; }
+.date-select input {
+  border: none;
+  width: 80px;
+  text-align: center;
+  background-color: transparent; }
+
 .alert {
   margin: 10px 0;
   font-size: 14px;
@@ -915,5 +931,21 @@ form.search-small {
 
 .row {
   font-size: 0; }
+
+.select-row span {
+  display: inline-block;
+  width: 50px;
+  font-size: 14px;
+  color: #B3B3B3; }
+.select-row div {
+  display: inline-block; }
+
+#myChart {
+  height: 100%;
+  width: 100%;
+  min-height: 150px; }
+
+.zc-ref {
+  display: none; }
 
 /*# sourceMappingURL=main.css.map */

@@ -23,4 +23,9 @@ public class DateAndTimeUtil {
         return  date.format(formatter);
     }
 
+    public static String monthStringWithHyphen(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        return  date.format(formatter);
+    }
+
 }

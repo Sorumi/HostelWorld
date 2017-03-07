@@ -178,7 +178,7 @@
             type: "POST",
             dataType: "json",
             contentType: "application/json",
-            url: "/search/${memberHostelInfoBean.hostel.ID}/roomstock",
+            url:"${basePath}/search/${memberHostelInfoBean.hostel.ID}/roomstock",
             data: JSON.stringify(data),
 
             success: function (data) {

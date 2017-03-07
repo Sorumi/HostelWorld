@@ -1,58 +1,68 @@
 package edu.nju.hostelworld.bean;
 
+import java.util.List;
+
 /**
  * Created by Sorumi on 17/3/5.
  */
 public class StatisticOrderBean {
-    int[] booked;
+    List<Integer> booked;
 
-    int[] checkIn;
+    List<Integer> checkIn;
 
-    int[] checkOut;
+    List<Integer> checkOut;
 
-    int[] cancelled;
+    List<Integer> cancelled;
 
-    int[] expired;
+    List<Integer> expired;
 
     long time;
 
-    public int[] getBooked() {
+    public List<Integer> getBooked() {
         return booked;
     }
 
-    public void setBooked(int[] booked) {
+    public void setBooked(List<Integer> booked) {
         this.booked = booked;
     }
 
-    public int[] getCheckIn() {
+    public List<Integer> getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(int[] checkIn) {
+    public void setCheckIn(List<Integer> checkIn) {
         this.checkIn = checkIn;
     }
 
-    public int[] getCheckOut() {
+    public List<Integer> getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(int[] checkOut) {
+    public void setCheckOut(List<Integer> checkOut) {
         this.checkOut = checkOut;
     }
 
-    public int[] getCancelled() {
+    public List<Integer> getCancelled() {
         return cancelled;
     }
 
-    public void setCancelled(int[] cancelled) {
+    public void setCancelled(List<Integer> cancelled) {
         this.cancelled = cancelled;
     }
 
-    public int[] getExpired() {
+    public List<Integer> getExpired() {
         return expired;
     }
 
-    public void setExpired(int[] expired) {
+    public void setExpired(List<Integer> expired) {
         this.expired = expired;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

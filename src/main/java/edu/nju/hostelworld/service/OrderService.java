@@ -34,6 +34,8 @@ public interface OrderService {
 
     public ResultMessage expireOrder(String ID);
 
+    public ResultMessage expireOrders();
+
     public OrderBean findOrderByID(String ID);
 
     public List<OrderBean> findOrderByOrderState(OrderState orderState);
@@ -44,9 +46,9 @@ public interface OrderService {
 
     public List<OrderBean> findHostelOrders(String hostelID, OrderState orderState);
 
-    public int[] countOrdersByStateAndMonth(OrderState orderState, String month);
+    public List<Integer> countOrdersByStateAndMonth(OrderState orderState, String month);
 
-    public int[] countMemberOrdersByStateAndYear(String memberID, OrderState orderState, String year);
+    public List<Integer> countMemberOrdersByStateAndYear(String memberID, OrderState orderState, String year);
 
-    public int[] countHostelOrdersByStateAndMonth(String hostelID, OrderState orderState, String month);
+    public List<Integer> countHostelOrdersByStateAndMonth(String hostelID, OrderState orderState, String month);
 }

@@ -24,6 +24,7 @@
     <title>Hostel World</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/flatpickr.min.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="${basePath}/css/font-awesome.min.css"/>
 
     <script src="${basePath}/js/jquery-3.1.1.min.js"></script>
     <script src="${basePath}/js/jquery.number.js"></script>

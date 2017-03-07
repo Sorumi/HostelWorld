@@ -12,7 +12,7 @@
 
 <div class="top-fix"></div>
 
-<%@ include file="include/hostel-nav.jsp" %>
+<%@ include file="include/member-nav.jsp" %>
 
 
 <main>
@@ -20,8 +20,8 @@
         <div class="card level-management">
             <h1 class="title">信息统计</h1>
             <div class="select-row">
-                <span>月份</span>
-                <div class="month-picker date-select"></div>
+                <span>年份</span>
+                <div class="year-picker date-select"></div>
             </div>
             <div id="myChart">
             </div>
@@ -31,7 +31,7 @@
 
 <%----%>
 <script src="${basePath}/js/jquery-ui.min.js"></script>
-<script src="${basePath}/js/month-picker.js"></script>
+<script src="${basePath}/js/year-picker.js"></script>
 <script src="${basePath}/js/zingchart.min.js"></script>
 <script>
     zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
@@ -39,27 +39,26 @@
 </script>
 
 <script>
-    $('.month-picker').monthpicker({
-        'max': $.datepicker.formatDate("yy-mm", new Date()),
+    $('.year-picker').yearpicker({
+        'max': $.datepicker.formatDate("yy", new Date()),
         'onChange': function (date) {
-            console.log(date);
-            loadStatistics($.datepicker.formatDate("yy-mm", date));
+//            console.log(date);
+            loadStatistics(date);
         }
     });
 
-    function loadStatistics(month) {
-        var data = { "hostelID" : ${hostel.ID} };
+    function loadStatistics(year) {
+        var data = {"memberID": ${member.ID}};
 
         $.ajax({
             type: "GET",
             dataType: "json",
             contentType: "application/json",
-            url:"${basePath}/hostel/statistic/" + month,
+            url: "${basePath}/statistic/" + year,
             data: JSON.stringify(data),
 
             success: function (data) {
                 console.log(data);
-                console.log(data.booked);
 
                 refreshStatistic(data);
             }
@@ -107,8 +106,9 @@
                 lineColor: '#DDDDDD',
                 zooming: true,
                 zoomTo: [0, 15],
-                minValue: data.time,
-                step: 'day',
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" ,"Aug" ,"Sep", "Oct", "Nov", "Dec"],
+//                minValue: data.time,
+//                step: 'month',
                 tick: {
                     lineColor: '#888888'
                 },
@@ -118,10 +118,10 @@
                 item: {
                     fontColor: '#888888'
                 },
-                transform: {
-                    type: 'date',
-                    all: '%M %d'
-                }
+//                transform: {
+//                    type: 'date',
+//                    all: '%M'
+//                }
             },
             scaleY: {
                 minorTicks: 1,
@@ -262,7 +262,7 @@
         };
     }
 
-//    loadStatistics();
+    //    loadStatistics();
 </script>
 
 <%@ include file="include/footer.jsp" %>

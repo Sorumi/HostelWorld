@@ -14,7 +14,7 @@
         <a href="${basePath}/home">搜索酒店</a>
         <a href="${basePath}/order">预定管理</a>
         <a href="${basePath}/info">个人资料</a>
-        <a href="${basePath}/statistics">信息统计</a>
+        <a href="${basePath}/statistic">信息统计</a>
         <div class="clear-fix"></div>
     </div>
 </nav>

@@ -21,6 +21,8 @@ public interface OrderDao {
 
     public List<BookOrder> findOrderByOrderState(OrderState orderState);
 
+    public List<BookOrder> findOrderByOrderStateAndMaxDate(OrderState orderState, String dateField, String date);
+
     public List<BookOrder> findAllOrders();
 
     public List<BookOrder> findMemberOrders(String memberID, OrderState orderState);

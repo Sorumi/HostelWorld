@@ -129,7 +129,7 @@
                 type: "POST",
                 dataType: "json",
                 contentType: "application/json",
-                url: "/admin/level/" + num + "/add",
+                url:"${basePath}/admin/level/" + num + "/add",
                 data: JSON.stringify(data),
 
                 complete: function (data) {
@@ -168,7 +168,7 @@
                 type: "DELETE",
                 dataType: "json",
                 contentType: "application/json",
-                url: "/admin/level/" + num,
+                url:"${basePath}/admin/level/" + num,
                 data: {},
 
                 complete: function (data) {
