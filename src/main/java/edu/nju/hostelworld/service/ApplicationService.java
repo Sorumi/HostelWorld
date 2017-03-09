@@ -14,7 +14,7 @@ public interface ApplicationService {
 
     public ApplicationBean convertToApplicationBean(String ID);
 
-    public ResultMessage addApplication(Application application);
+    public String addApplication(Application application);
 
     public ResultMessage updateApplication(Application application);
 

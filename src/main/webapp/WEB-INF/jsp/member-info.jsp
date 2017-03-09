@@ -105,8 +105,10 @@
                 <div class="grid-content">
                     <span id="point">${memberInfoBean.member.point}</span>
                     <c:if test="${memberInfoBean.member.state == 'Normal'}">
-                        <button type="button" class="major-button-small">兑换金额￥ <span
-                                class="money">${memberInfoBean.member.point / 100}</span></button>
+                        <button id="exchange-button" type="button" class="major-button-small"
+                                data-mfp-src="#exchange-popup">
+                            兑换
+                        </button>
                     </c:if>
                 </div>
             </div>
@@ -177,19 +179,53 @@
 </div>
 
 
+<div id="exchange-popup" class="popup mfp-hide">
+    <form action="${basePath}/info/exchange" method="post" id="exchange-form">
+        <div class="money-popup">
+            <div class="popup-row">
+                <span>兑换积分</span>
+                <input id="exchange-point" type="text" name="point">
+            </div>
+
+            <div class="popup-row">
+                <span>可兑换金额</span>
+                <p>￥ <span id="exchange-money" class="money"></span></p>
+            </div>
+
+            <div class="popup-row">
+                <span>积分</span>
+                <p>${memberInfoBean.member.point}</p>
+            </div>
+
+            <div class="popup-buttons">
+                <button type="button" id="exchange-cancel" class="minor-button left popup-close">取消</button>
+                <button type="button" id="exchange-submit" class="major-button right">确定</button>
+                <div class="clear-fix"></div>
+                <span id="exchange-alert" class="alert"></span>
+            </div>
+        </div>
+    </form>
+</div>
+
+
 <script src="${basePath}/js/jquery.magnific-popup.min.js"></script>
 <script>
     $(".money").number(true, 2);
 
-//    $('#activate-button').magnificPopup({
-//        type: 'inline',
-//        midClick: true
-//    });
+    //    $('#activate-button').magnificPopup({
+    //        type: 'inline',
+    //        midClick: true
+    //    });
 
-        $('#deposit-button').magnificPopup({
-            type: 'inline',
-            midClick: true
-        });
+    $('#deposit-button').magnificPopup({
+        type: 'inline',
+        midClick: true
+    });
+
+    $('#exchange-button').magnificPopup({
+        type: 'inline',
+        midClick: true
+    });
 
     $('#deposit-submit').click(function () {
         var money = $('#deposit-money').val();
@@ -203,6 +239,35 @@
         }
 
     });
+
+
+    $('#exchange-point').on("change paste keyup", function() {
+        var point = $(this).val();
+        var pointAlert = $("#exchange-alert");
+        var pointReg = /^[0-9]+$/;
+        var isPoint = pointReg.test(point) && point <= ${memberInfoBean.member.point};
+        pointAlert.text(isPoint ? "" : "请输入正确的积分！");
+
+        if (isPoint) {
+            $('#exchange-money').text($(this).val() / 100).number(true, 2);
+        } else {
+            $('#exchange-money').text(0).number(true, 2);
+        }
+    });
+
+    $('#exchange-submit').click(function () {
+        var point = $('#exchange-point').val();
+        var pointAlert = $("#exchange-alert");
+        var pointReg = /^[0-9]+$/;
+        var isPoint = pointReg.test(point) && point <= ${memberInfoBean.member.point};
+        pointAlert.text(isPoint ? "" : "请输入正确的积分！");
+
+        if (isPoint) {
+            $('#exchange-form').submit();
+        }
+
+    });
+
 
     $('.popup-close').click(function () {
         $.magnificPopup.close();

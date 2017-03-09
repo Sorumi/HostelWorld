@@ -111,7 +111,6 @@ public class MemberInfoController {
             member = (Member) model.get("member");
         }
 
-        System.out.println(money);
 
         ResultMessage resultMessage = memberService.deposit(member.getID(), money);
 
@@ -122,6 +121,34 @@ public class MemberInfoController {
             alertBean.setButton("查看");
         } else {
             alertBean.setMessage("充值失败！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("info");
+
+        model.addAttribute("alertBean", alertBean);
+
+        updateSessionMember(member.getID(), model);
+        return "alert-href";
+    }
+
+    @RequestMapping(value = "/info/exchange", method = RequestMethod.POST)
+    public String exchange(@RequestParam int point, ModelMap model) {
+        Member member;
+        if (model.get("member") == null) {
+            return "redirect:/login";
+        } else {
+            member = (Member) model.get("member");
+        }
+
+        ResultMessage resultMessage = memberService.exchangeMoney(member.getID(), point);
+
+        AlertBean alertBean = new AlertBean();
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("兑换成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("兑换失败！");
             alertBean.setButton("返回");
         }
         alertBean.setUrl("info");

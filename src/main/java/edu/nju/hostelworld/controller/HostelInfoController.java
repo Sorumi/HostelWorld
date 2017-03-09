@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.bean.AlertBean;
 import edu.nju.hostelworld.bean.HostelInfoBean;
 import edu.nju.hostelworld.model.Application;
 import edu.nju.hostelworld.model.Hostel;
@@ -42,7 +43,7 @@ public class HostelInfoController {
         hostelInfoBean.setHostel(hostel);
         List<Application> list = applicationService.findApplicationsByHostelID(hostel.getID(), ApplicationType.Open);
         if (list != null && list.size() > 0) {
-            hostelInfoBean.setOpenApplication(list.get(list.size()-1));
+            hostelInfoBean.setOpenApplication(list.get(list.size() - 1));
         }
         model.addAttribute("hostelInfoBean", hostelInfoBean);
 
@@ -115,8 +116,15 @@ public class HostelInfoController {
         Hostel hostel = (Hostel) model.get("hostel");
         List<Application> applicationList = applicationService.findApplicationsByHostelID(hostel.getID(), ApplicationType.Open);
 
-        if (hostel.getState() != HostelState.Unopened || applicationList.get(applicationList.size()-1).getState() == ApplicationState.Passed) {
+        if (hostel.getState() != HostelState.Unopened) {
             return "redirect:/hostel/home";
+        }
+
+        if (applicationList.size() > 0) {
+            Application application = applicationList.get(applicationList.size() - 1);
+            if (application.getState() != ApplicationState.Failed) {
+                return "redirect:/hostel/home";
+            }
         }
 
         Application application = new Application();
@@ -137,18 +145,32 @@ public class HostelInfoController {
         Hostel hostel = (Hostel) model.get("hostel");
         List<Application> applicationList = applicationService.findApplicationsByHostelID(hostel.getID(), ApplicationType.Open);
 
-        if (hostel.getState() != HostelState.Unopened || applicationList.get(applicationList.size()-1).getState() == ApplicationState.Passed) {
+        if (hostel.getState() != HostelState.Unopened) {
             return "redirect:/hostel/home";
+        }
+
+        if (applicationList.size() > 0) {
+            Application a = applicationList.get(applicationList.size() - 1);
+            if (a.getState() != ApplicationState.Failed) {
+                return "redirect:/hostel/home";
+            }
         }
 
         application.setType(ApplicationType.Open);
         application.setHostelID(hostel.getID());
 
-        ResultMessage resultMessage = applicationService.addApplication(application);
-        if (resultMessage == ResultMessage.FAILED) {
-            model.addAttribute("alertMessage", "申请失败！");
+        String applicationID = applicationService.addApplication(application);
+        if (applicationID != null) {
+            AlertBean alertBean = new AlertBean();
+
+            alertBean.setMessage("申请成功！");
+            alertBean.setUrl("hostel/application/" + applicationID);
+            alertBean.setButton("查看");
+            model.addAttribute("alertBean", alertBean);
+
+            return "alert-href";
         } else {
-            model.addAttribute("alertMessage", "申请成功！");
+            model.addAttribute("alertMessage", "申请失败！");
         }
 
         return "alert";
@@ -193,12 +215,20 @@ public class HostelInfoController {
         application.setType(ApplicationType.Edit);
         application.setHostelID(hostel.getID());
 
-        ResultMessage resultMessage = applicationService.addApplication(application);
-        if (resultMessage == ResultMessage.FAILED) {
-            model.addAttribute("alertMessage", "申请失败！");
+        String applicationID = applicationService.addApplication(application);
+        if (applicationID != null) {
+            AlertBean alertBean = new AlertBean();
+
+            alertBean.setMessage("申请成功！");
+            alertBean.setUrl("hostel/application/" + applicationID);
+            alertBean.setButton("查看");
+            model.addAttribute("alertBean", alertBean);
+
+            return "alert-href";
         } else {
-            model.addAttribute("alertMessage", "申请成功！");
+            model.addAttribute("alertMessage", "申请失败！");
         }
+
 
         return "alert";
     }

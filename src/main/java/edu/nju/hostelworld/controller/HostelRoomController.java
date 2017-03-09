@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.bean.AlertBean;
 import edu.nju.hostelworld.bean.HostelRoomListBean;
 import edu.nju.hostelworld.bean.HostelSearchRoomBean;
 import edu.nju.hostelworld.bean.SearchRoomJsonBean;
@@ -124,7 +125,14 @@ public class HostelRoomController {
 
         ResultMessage resultMessage = hostelService.addHostelRoom(hostelRoom);
         if (resultMessage == ResultMessage.SUCCESS) {
-            model.addAttribute("alertMessage", "添加成功！");
+            AlertBean alertBean = new AlertBean();
+
+            alertBean.setMessage("添加成功！");
+            alertBean.setUrl("hostel/plan");
+            alertBean.setButton("查看");
+            model.addAttribute("alertBean", alertBean);
+
+            return "alert-href";
         } else {
             model.addAttribute("alertMessage", "添加失败！");
         }

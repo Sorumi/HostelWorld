@@ -226,7 +226,7 @@ public class HostelOrderController {
             session.removeAttribute("hostelBookOrderBean");
 
             alertBean.setMessage("预定成功！");
-            alertBean.setUrl("order/"+orderID);
+            alertBean.setUrl("hostel/order/"+orderID);
             alertBean.setButton("查看");
             model.addAttribute("alertBean", alertBean);
 

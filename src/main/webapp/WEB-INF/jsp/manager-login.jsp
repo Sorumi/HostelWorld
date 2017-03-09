@@ -9,40 +9,48 @@
 
 <%@ include file="include/header.jsp" %>
 
-<div class="top-fix"></div>
+<main class="auth">
+    <div class="container login">
 
-<main>
-    <div class="container card">
-        <h1 class="title">管理员登录</h1>
+        <div class="absolute-card left-card">
+            <div class="card-container">
+                <h1>管理员登录</h1>
+                <form action="${basePath}/admin/login" method="post" id="login-form">
+                    <div class="grid">
+                        <div class="grid-row">
+                            <div class="grid-label">
+                                <label for="username">用户名</label>
+                            </div>
+                            <div class="grid-content">
+                                <input type="text" id="username" name="username" value="${memberRegisterBean.username}"/>
+                                <p class="alert"></p>
+                            </div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="grid-label">
+                                <label for="password">密码</label>
+                            </div>
+                            <div class="grid-content">
+                                <input type="password" id="password" name="password" value="${memberRegisterBean.password}"/>
+                                <p class="alert"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="alert">${alert}</p>
+                    <button type="button" id="submit-button" class="major-button">登录</button>
+                </form>
+            </div>
+        </div>
 
-        <form action="${basePath}/admin/login" method="post" id="login-form">
-            <table>
-                <tr>
-                    <td>
-                        <label for="username">用户名</label>
-                    </td>
-                    <td>
-                        <input type="text" id="username" name="username" value="${memberRegisterBean.username}"/>
-                        <span class="alert"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="password">密码</label>
-                    </td>
-                    <td>
-                        <input type="password" id="password" name="password" value="${memberRegisterBean.password}"/>
-                        <span class="alert"></span>
-                    </td>
-                </tr>
-            </table>
-            <p class="alert">${alert}</p>
-            <input id="submit-button" class="major-button" value="登录"/>
-        </form>
+        <div class="absolute-card right-card">
+            <div class="card-container">
+                <h1 class="web-title">HostelWorld</h1>
+                <h2>Meet the world</h2>
+            </div>
+        </div>
+
     </div>
-</main>
-
-<script>
+</main><script>
     //validate
     $("#submit-button").click(function () {
         var username = $("#username").val();

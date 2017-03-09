@@ -47,8 +47,9 @@
             <div class="clear-fix"></div>
         </div>
 
-        <div class="application-wrapper">
-            <c:forEach var="application" items="${applicationList}">
+        <c:forEach var="application" items="${applicationList}">
+            <div class="application-wrapper">
+
                 <div class="application-img-wrapper">
                     <div class="img"></div>
                 </div>
@@ -62,8 +63,9 @@
                     <p class="application-hostel-introduction">${application.introduction}</p>
                     <a href="${basePath}/hostel/application/${application.ID}" class="major-button info-button">详情</a>
                 </div>
-            </c:forEach>
-        </div>
+
+            </div>
+        </c:forEach>
     </div>
 </main>
 

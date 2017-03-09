@@ -9,47 +9,57 @@
 
 <%@ include file="include/header.jsp" %>
 
-<div class="top-fix"></div>
 
-<main>
-    <div class="container card">
-        <h1 class="title">旅舍注册</h1>
+<main class="auth">
+    <div class="container register">
 
-        <form action="${basePath}/hostel/register" method="post" autocomplete="off" id="register-form">
-            <table>
-                <tr>
-                    <td>
-                        <label for="username">用户名</label>
-                    </td>
-                    <td>
-                        <input type="text" id="username" name="username" value="${hostelRegisterBean.username}">
-                        <span class="alert"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="password">密码</label>
-                    </td>
-                    <td>
-                        <input type="password" id="password" name="password" value="${hostelRegisterBean.password}">
-                        <span class="alert"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="confirm-password">确认密码</label>
-                    </td>
-                    <td>
-                        <input type="password" id="confirm-password" name="confirmPassword" value="${hostelRegisterBean.confirmPassword}">
-                        <span class="alert"></span>
-                    </td>
-                </tr>
-            </table>
+        <div class="absolute-card left-card">
+            <div class="card-container">
+                <h1 class="web-title">HostelWorld</h1>
+                <h2>Meet the world</h2>
+                <a href="${basePath}/hostel/login" class="minor-button">登录</a>
+            </div>
+        </div>
 
-            <p class="alert">${alert}</p>
-            <input id="submit-button" class="major-button" value="注册"/>
-            <a href="${basePath}/hostel/login" class="minor-button">登录</a>
-        </form>
+        <div class="absolute-card right-card">
+            <div class="card-container">
+                <h1>旅舍注册</h1>
+                <form action="${basePath}/hostel/register" method="post" autocomplete="off" id="register-form">
+                    <div class="grid">
+                        <div class="grid-row">
+                            <div class="grid-label">
+                                <label for="username">用户名</label>
+                            </div>
+                            <div class="grid-content">
+                                <input type="text" id="username" name="username" value="${hostelRegisterBean.username}">
+                                <p class="alert"></p>
+                            </div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="grid-label">
+                                <label for="password">密码</label>
+                            </div>
+                            <div class="grid-content">
+                                <input type="password" id="password" name="password" value="${hostelRegisterBean.password}">
+                                <p class="alert"></p>
+                            </div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="grid-label">
+                                <label for="confirm-password">确认密码</label>
+                            </div>
+                            <div class="grid-content">
+                                <input type="password" id="confirm-password" name="confirmPassword" value="${hostelRegisterBean.confirmPassword}">
+                                <p class="alert"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="alert">${alert}</p>
+                    <button id="submit-button" type="button" class="major-button">注册</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 </main>
 

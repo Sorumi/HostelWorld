@@ -1,20 +1,19 @@
 package edu.nju.hostelworld.service.impl;
 
 import edu.nju.hostelworld.bean.ApplicationBean;
+import edu.nju.hostelworld.bean.OrderBean;
 import edu.nju.hostelworld.dao.ApplicationDao;
 import edu.nju.hostelworld.model.App;
 import edu.nju.hostelworld.model.Application;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.service.ApplicationService;
 import edu.nju.hostelworld.service.HostelService;
-import edu.nju.hostelworld.util.ApplicationState;
-import edu.nju.hostelworld.util.ApplicationType;
-import edu.nju.hostelworld.util.DateAndTimeUtil;
-import edu.nju.hostelworld.util.ResultMessage;
+import edu.nju.hostelworld.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -39,12 +38,17 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ResultMessage addApplication(Application application) {
-
-        application.setID(generateApplicationID());
+    public String addApplication(Application application) {
+        String ID = generateApplicationID();
+        application.setID(ID);
         application.setState(ApplicationState.Unchecked);
         application.setAppliedTime(DateAndTimeUtil.timeStringWithHyphen(LocalDateTime.now()));
-        return applicationDao.addApplication(application);
+        ResultMessage resultMessage = applicationDao.addApplication(application);
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+            return ID;
+        }
+        return null;
     }
 
     @Override
@@ -74,6 +78,10 @@ public class ApplicationServiceImpl implements ApplicationService {
         hostel.setIntroduction(application.getIntroduction());
         hostel.setFacility(application.getFacility());
 
+        if (hostel.getState() == HostelState.Unopened) {
+            hostel.setState(HostelState.Opening);
+        }
+
         return hostelService.updateHostel(hostel);
     }
 
@@ -92,21 +100,33 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<Application> findAllApplications() {
-        return applicationDao.findAllApplications();
+        List<Application> applications = applicationDao.findAllApplications();
+        applications.sort(new ApplicationDateComparator());
+        return applications;
     }
 
     @Override
     public List<Application> findApplicationsByType(ApplicationType type) {
-        return applicationDao.findApplicationsByType(type);
+        List<Application> applications =  applicationDao.findApplicationsByType(type);
+        applications.sort(new ApplicationDateComparator());
+        return applications;
     }
 
     @Override
     public List<Application> findApplicationsByHostelID(String hostelID, ApplicationType type) {
-        return applicationDao.findApplicationsByHostelID(hostelID, type);
+        List<Application> applications =  applicationDao.findApplicationsByHostelID(hostelID, type);
+        applications.sort(new ApplicationDateComparator());
+        return applications;
     }
 
     private String generateApplicationID() {
         int count = Math.toIntExact(applicationDao.countApplications());
         return String.format("%07d", count);
+    }
+
+    private class ApplicationDateComparator implements Comparator<Application> {
+        public int compare(Application a1, Application a2) {
+            return -a1.getAppliedTime().compareTo(a2.getAppliedTime());
+        }
     }
 }
