@@ -190,7 +190,7 @@ public class HostelInfoController {
             return "redirect:/hostel/home";
         }
 
-        application.setType(ApplicationType.Open);
+        application.setType(ApplicationType.Edit);
         application.setHostelID(hostel.getID());
 
         ResultMessage resultMessage = applicationService.addApplication(application);

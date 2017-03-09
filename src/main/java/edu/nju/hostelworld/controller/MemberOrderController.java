@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.bean.AlertBean;
 import edu.nju.hostelworld.bean.OrderBean;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.Member;
@@ -87,8 +88,21 @@ public class MemberOrderController {
         }
 
         ResultMessage resultMessage = orderService.cancelOrder(ID);
-        System.out.println(resultMessage);
 
-        return "redirect:/order/" + ID;
+        AlertBean alertBean = new AlertBean();
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("退订成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("退订失败！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("order/" + ID);
+
+        model.addAttribute("alertBean", alertBean);
+
+        return "alert-href";
+
     }
 }

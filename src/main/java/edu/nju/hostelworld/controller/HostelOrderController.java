@@ -95,9 +95,21 @@ public class HostelOrderController {
         }
 
         ResultMessage resultMessage = orderService.checkInOrder(ID);
-        System.out.println(resultMessage);
 
-        return "redirect:/hostel/order/" + ID;
+        AlertBean alertBean = new AlertBean();
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("入住成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("入住失败！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("/hostel/order/" + ID);
+
+        model.addAttribute("alertBean", alertBean);
+
+        return "alert-href";
     }
 
     @RequestMapping(value = "/order/{id}/checkout", method = RequestMethod.POST)
@@ -119,9 +131,20 @@ public class HostelOrderController {
         }
 
         ResultMessage resultMessage = orderService.checkOutOrder(ID);
-        System.out.println(resultMessage);
+        AlertBean alertBean = new AlertBean();
 
-        return "redirect:/hostel/order/" + ID;
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("退房成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("退房失败！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("/hostel/order/" + ID);
+
+        model.addAttribute("alertBean", alertBean);
+
+        return "alert-href";
     }
 
     @RequestMapping(value = "/order/{id}/cancel", method = RequestMethod.POST)
@@ -143,9 +166,20 @@ public class HostelOrderController {
         }
 
         ResultMessage resultMessage = orderService.cancelOrder(ID);
-        System.out.println(resultMessage);
+        AlertBean alertBean = new AlertBean();
 
-        return "redirect:/hostel/order/" + ID;
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("取消成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("取消失败！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("/hostel/order/" + ID);
+
+        model.addAttribute("alertBean", alertBean);
+
+        return "alert-href";
     }
 
     @RequestMapping(value = "/order/book", method = RequestMethod.GET)
@@ -183,16 +217,27 @@ public class HostelOrderController {
         hostelBookOrderBean.setRoomStocks(oldBean.getRoomStocks());
         //
         OrderBean orderBean = orderService.generateOrder(hostelBookOrderBean, hostel);
-        ResultMessage resultMessage = orderService.addNewOrder(orderBean);
-        if (resultMessage == ResultMessage.SUCCESS) {
+//        ResultMessage resultMessage = orderService.addNewOrder(orderBean);
+
+        String orderID = orderService.addNewOrder(orderBean);
+
+        if (orderID != null) {
+            AlertBean alertBean = new AlertBean();
             session.removeAttribute("hostelBookOrderBean");
 
-            model.addAttribute("alertMessage", "预订成功！");
+            alertBean.setMessage("预定成功！");
+            alertBean.setUrl("order/"+orderID);
+            alertBean.setButton("查看");
+            model.addAttribute("alertBean", alertBean);
+
+            return "alert-href";
         } else {
+
             model.addAttribute("alertMessage", "预订失败！");
+
+            return "alert";
         }
 
-        return "alert";
     }
 
     @RequestMapping(value = "/roomstock", method = RequestMethod.POST)

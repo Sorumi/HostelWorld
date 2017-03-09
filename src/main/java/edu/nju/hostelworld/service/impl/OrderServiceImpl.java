@@ -121,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResultMessage addNewOrder(OrderBean orderBean) {
+    public String addNewOrder(OrderBean orderBean) {
         ResultMessage resultMessage;
         String orderID = generateOrderID();
 
@@ -132,9 +132,10 @@ public class OrderServiceImpl implements OrderService {
         resultMessage = orderDao.addOrder(bookOrder);
 
         if (resultMessage == ResultMessage.FAILED) {
-            return resultMessage;
+            return null;
         }
         if (bookOrder.getMemberID() != null) {
+            memberService.resume(bookOrder.getMemberID());
             memberService.updateMoney(bookOrder.getMemberID(), -bookOrder.getTotalPrice());
         }
         appService.updateMoney(bookOrder.getTotalPrice());
@@ -154,7 +155,13 @@ public class OrderServiceImpl implements OrderService {
                     LocalDate.parse(bookOrder.getCheckInDate()),
                     LocalDate.parse(bookOrder.getCheckOutDate()));
         }
-        return resultMessage;
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+            return orderID;
+        } else {
+            return null;
+        }
+
     }
 
     @Override
@@ -246,7 +253,6 @@ public class OrderServiceImpl implements OrderService {
         for (BookOrder order : list) {
             order.setState(OrderState.Expired);
             resultMessage = orderDao.updateOrder(order);
-            System.out.print(resultMessage);
             if (resultMessage == ResultMessage.FAILED) break;
         }
         return resultMessage;

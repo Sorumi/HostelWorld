@@ -18,9 +18,7 @@
     <div class="container">
         <div class="card application-search">
             <h1 class="title">申请管理</h1>
-            <div class="right-buttons">
-                <button class="major-button-small">申请修改信息</button>
-            </div>
+
             <div class="sub-nav">
                 <a
                         <c:if test="${applicationType == null}">
@@ -38,10 +36,11 @@
                         </c:if>
                         href="${basePath}/admin/application?type=Edit">修改申请</a>
             </div>
+            <div class="clear-fix"></div>
         </div>
+        <c:forEach var="application" items="${applicationList}">
+            <div class="application-wrapper">
 
-        <div class="application-wrapper">
-            <c:forEach var="application" items="${applicationList}">
                 <div class="application-img-wrapper">
                     <div class="img"></div>
                 </div>
@@ -55,8 +54,9 @@
                     <p class="application-hostel-introduction">${application.introduction}</p>
                     <a href="${basePath}/admin/application/${application.ID}" class="major-button info-button">详情</a>
                 </div>
-            </c:forEach>
-        </div>
+
+            </div>
+        </c:forEach>
     </div>
 </main>
 

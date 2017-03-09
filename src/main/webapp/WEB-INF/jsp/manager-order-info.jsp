@@ -81,7 +81,7 @@
             <c:if test="${order.bookOrder.state == 'CheckOut'}">
                 <div class="grid-row">
                     <div class="grid-label">
-                        <label for="accounted">订单状态</label>
+                        <label for="accounted">结算状态</label>
                     </div>
                     <div class="grid-content">
                         <c:choose>
@@ -199,7 +199,7 @@
                 <label for="discount">折扣</label>
                 <span id="discount">
                      <c:choose>
-                         <c:when test="${order.bookOrder.discount} < 1">
+                         <c:when test="${order.bookOrder.discount < 1}">
                              <span class="money">${order.bookOrder.discount}</span>
                          </c:when>
                          <c:otherwise>

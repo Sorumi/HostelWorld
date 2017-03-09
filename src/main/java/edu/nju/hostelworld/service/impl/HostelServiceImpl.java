@@ -38,6 +38,11 @@ public class HostelServiceImpl implements HostelService {
     }
 
     @Override
+    public ResultMessage updateHostel(Hostel hostel) {
+        return hostelDao.updateHostel(hostel);
+    }
+
+    @Override
     public ResultMessage updateMoney(String ID, double money) {
         Hostel hostel = hostelDao.findHostelByID(ID);
         if (hostel == null) {
@@ -97,6 +102,28 @@ public class HostelServiceImpl implements HostelService {
         set.addAll(list2);
 
         return new ArrayList<Hostel>(set);
+    }
+
+    @Override
+    public List<Hostel> findHostelsByKeywordAndCheckDate(String value, LocalDate checkInDate, LocalDate checkOutDate) {
+        List<Hostel> list1 = hostelDao.findHostelByKeyword("address", value);
+        List<Hostel> list2 = hostelDao.findHostelByKeyword("name", value);
+
+        Set<Hostel> set = new HashSet();
+
+        set.addAll(list1);
+        set.addAll(list2);
+
+        List<Hostel> list = new ArrayList<Hostel>(set);
+
+        List<Hostel> result = new ArrayList<>();
+        for (Hostel hostel : list) {
+            List rooms = getRoomStockByCheckDate(hostel.getID(), checkInDate, checkOutDate);
+            if (rooms.size() > 0) {
+                result.add(hostel);
+            }
+        }
+        return result;
     }
 
     @Override

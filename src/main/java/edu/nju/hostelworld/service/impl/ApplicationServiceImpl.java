@@ -4,6 +4,7 @@ import edu.nju.hostelworld.bean.ApplicationBean;
 import edu.nju.hostelworld.dao.ApplicationDao;
 import edu.nju.hostelworld.model.App;
 import edu.nju.hostelworld.model.Application;
+import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.service.ApplicationService;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.util.ApplicationState;
@@ -61,7 +62,19 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = applicationDao.findApplicationByID(ID);
         application.setState(ApplicationState.Passed);
         application.setCheckedTime(DateAndTimeUtil.timeStringWithHyphen(LocalDateTime.now()));
-        return applicationDao.updateApplication(application);
+        ResultMessage resultMessage = applicationDao.updateApplication(application);
+
+        if (resultMessage != ResultMessage.SUCCESS) {
+            return resultMessage;
+        }
+
+        Hostel hostel = hostelService.findHostelByID(application.getHostelID());
+        hostel.setName(application.getName());
+        hostel.setAddress(application.getAddress());
+        hostel.setIntroduction(application.getIntroduction());
+        hostel.setFacility(application.getFacility());
+
+        return hostelService.updateHostel(hostel);
     }
 
     @Override

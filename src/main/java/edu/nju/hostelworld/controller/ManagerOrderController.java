@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.bean.AlertBean;
 import edu.nju.hostelworld.bean.OrderBean;
 import edu.nju.hostelworld.service.OrderService;
 import edu.nju.hostelworld.util.OrderState;
@@ -59,7 +60,7 @@ public class ManagerOrderController {
         return "manager-order-info";
     }
     @RequestMapping(value = "/order/{id}/account", method = RequestMethod.POST)
-    public String orderCheckIn(@PathVariable(value = "id") String ID, ModelMap model) {
+    public String orderAccount(@PathVariable(value = "id") String ID, ModelMap model) {
 
         if (model.get("manager") == null) {
             return "redirect:/admin/login";
@@ -74,7 +75,20 @@ public class ManagerOrderController {
         ResultMessage resultMessage = orderService.accountOrder(orderBean.getBookOrder().getID());
         System.out.println(resultMessage);
 
-        return "redirect:/admin/order/" + ID;
+        AlertBean alertBean = new AlertBean();
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("结算成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("结算失败！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("/admin/order/" + ID);
+
+        model.addAttribute("alertBean", alertBean);
+
+        return "alert-href";
     }
 
 

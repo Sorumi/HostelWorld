@@ -14,6 +14,8 @@ import java.util.List;
 public interface HostelService {
     public ResultMessage addHostel(Hostel hostel);
 
+    public ResultMessage updateHostel(Hostel hostel);
+
     public ResultMessage updateMoney(String ID, double money);
 
     public Hostel findHostelByID(String ID);
@@ -27,6 +29,8 @@ public interface HostelService {
     public List<Hostel> findAllOpeningHostels();
 
     public List<Hostel> findHostelsByKeyword(String value);
+
+    public List<Hostel> findHostelsByKeywordAndCheckDate(String value, LocalDate checkInDate, LocalDate checkOutDate);
 
     public ResultMessage addHostelRoom(HostelRoom hostelRoom);
 

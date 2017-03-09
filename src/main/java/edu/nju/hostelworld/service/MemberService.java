@@ -43,4 +43,8 @@ public interface MemberService {
     public ResultMessage deposit(String ID, double money);
 
     public ResultMessage exchangeMoney(String ID, int point);
+
+    public ResultMessage pauseMembers();
+
+    public ResultMessage stopMembers();
 }

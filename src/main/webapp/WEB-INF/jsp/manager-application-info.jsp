@@ -107,6 +107,7 @@
 
             <div class="clear-fix"></div>
         </div>
+        <div class="clear-fix"></div>
     </div>
 </main>
 

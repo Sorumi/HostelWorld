@@ -1,6 +1,7 @@
 package edu.nju.hostelworld.dao;
 
 import edu.nju.hostelworld.model.Member;
+import edu.nju.hostelworld.util.MemberState;
 import edu.nju.hostelworld.util.ResultMessage;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface MemberDao {
     public Member findMemberByUsername(String username);
 
     public List<Member> findAllMembers();
+
+    public List<Member> findMembersByStateAndMaxDate(MemberState memberState, String dateField, String date);
 }

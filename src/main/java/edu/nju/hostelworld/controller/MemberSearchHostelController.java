@@ -5,6 +5,7 @@ import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.service.OrderService;
+import edu.nju.hostelworld.util.MemberState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,8 +45,9 @@ public class MemberSearchHostelController {
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String searchHostel(SearchHostelBean searchHostelBean, ModelMap model) {
-
-        List hostels = hostelService.findHostelsByKeyword(searchHostelBean.getKeyword());
+        LocalDate checkInDate = LocalDate.parse(searchHostelBean.getCheckInDate());
+        LocalDate checkOutDate = LocalDate.parse(searchHostelBean.getCheckOutDate());
+        List hostels = hostelService.findHostelsByKeywordAndCheckDate(searchHostelBean.getKeyword(), checkInDate, checkOutDate);
 //        System.out.println(hostels.size());
         searchHostelBean.setHostels(hostels);
 
@@ -80,17 +82,16 @@ public class MemberSearchHostelController {
         memberHostelInfoBean.setRoomStocks(list);
         model.addAttribute("memberHostelInfoBean", memberHostelInfoBean);
 
-       return list;
+        return list;
     }
 
     @RequestMapping(value = "/book", method = RequestMethod.POST)
     public String book(MemberHostelInfoBean memberHostelInfoBean, HttpSession session, ModelMap model) {
-        Member member;
+
         if (model.get("member") == null) {
             return "redirect:/login";
-        } else {
-            member = (Member)model.get("member");
         }
+        Member member = (Member) model.get("member");
 
         if (memberHostelInfoBean.getBookQuantity() == null || memberHostelInfoBean.getBookQuantity().size() == 0) {
             return "redirect:/home";
@@ -99,6 +100,34 @@ public class MemberSearchHostelController {
         if (session.getAttribute("memberHostelInfoBean") == null) {
             return "redirect:/home";
         }
+
+        if (member.getState() == MemberState.Inactive) {
+            AlertBean alertBean = new AlertBean();
+
+            alertBean.setMessage("尚未激活账户！");
+            alertBean.setButton("前去激活");
+
+            alertBean.setUrl("info");
+
+            model.addAttribute("alertBean", alertBean);
+
+            return "alert-href";
+
+        } else if (member.getState() == MemberState.Stop) {
+
+            AlertBean alertBean = new AlertBean();
+
+            alertBean.setMessage("账户已停止！");
+            alertBean.setButton("查看");
+
+            alertBean.setUrl("info");
+
+            model.addAttribute("alertBean", alertBean);
+
+            return "alert-href";
+
+        }
+
         MemberHostelInfoBean oldBean = (MemberHostelInfoBean) session.getAttribute("memberHostelInfoBean");
 //        System.out.println(memberHostelInfoBean.getBookQuantity().size());
         if (!memberHostelInfoBean.getHostel().getID().equals(oldBean.getHostel().getID())) {
@@ -110,7 +139,6 @@ public class MemberSearchHostelController {
 
         OrderBean orderBean = orderService.generateOrder(oldBean, member);
         model.addAttribute("orderBean", orderBean);
-//        session.removeAttribute("memberHostelInfoBean");
 
         return "member-book";
     }
@@ -132,18 +160,26 @@ public class MemberSearchHostelController {
         OrderBean oldBean = (OrderBean) session.getAttribute("orderBean");
         oldBean.getBookOrder().setPeopleQuantity(orderBean.getBookOrder().getPeopleQuantity());
 
-        ResultMessage resultMessage = orderService.addNewOrder(oldBean);
+        String orderID = orderService.addNewOrder(oldBean);
 
-        if (resultMessage == ResultMessage.SUCCESS) {
+        if (orderID != null) {
+            AlertBean alertBean = new AlertBean();
             session.removeAttribute("memberHostelInfoBean");
             session.removeAttribute("orderBean");
 
-            model.addAttribute("alertMessage", "预订成功！");
+            alertBean.setMessage("预定成功！");
+            alertBean.setUrl("order/" + orderID);
+            alertBean.setButton("查看");
+            model.addAttribute("alertBean", alertBean);
+
+            return "alert-href";
         } else {
+
             model.addAttribute("alertMessage", "预订失败！");
+
+            return "alert";
         }
 
-        return "alert";
     }
 
 }

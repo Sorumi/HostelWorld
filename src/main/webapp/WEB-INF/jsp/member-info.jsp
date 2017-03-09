@@ -59,20 +59,30 @@
                     <label for="state">状态</label>
                 </div>
                 <div class="grid-content">
-                    <span id="state" class="tag tag-${memberInfoBean.member.state.color}-current">${memberInfoBean.member.state.name}</span>
+                    <span id="state"
+                          class="tag tag-${memberInfoBean.member.state.color}-current">${memberInfoBean.member.state.name}</span>
                     <c:if test="${memberInfoBean.member.state == 'Inactive'}">
-                        <form action="${basePath}/info/activate" method="post" class="inline">
-                            <button type="submit" class="major-button-small">激活</button>
-                        </form>
+                        <c:choose>
+                            <c:when test="${memberInfoBean.account == null}">
+                                <button type="button" class="major-button-small-disabled" disabled="disabled">激活
+                                </button>
+                                <span class="alert">填写银行卡号后可激活账户！</span>
+                            </c:when>
+                            <c:otherwise>
+                                <form action="${basePath}/info/activate" method="post" class="inline">
+                                    <button id="activate-button" type="submit" class="major-button-small">激活</button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
                     </c:if>
                     <c:if test="${memberInfoBean.member.state == 'Pause'}">
-                        <form action="${basePath}/info/resume" method="post" class="line">
-                            <button type="submit" class="major-button-small">恢复</button>
+                        <form action="${basePath}/info/resume" method="post" class="inline">
+                            <button id="resume-button" type="submit" class="major-button-small">恢复</button>
                         </form>
                     </c:if>
                     <c:if test="${memberInfoBean.member.state == 'Normal'}">
                         <form action="${basePath}/info/stop" method="post" class="inline">
-                            <button type="submit" class="major-button-small">停止</button>
+                            <button id="stop-button" type="submit" class="major-button-small">停止</button>
                         </form>
                     </c:if>
                     <%--<button class="major-button-small">激活/恢复/停止</button>--%>
@@ -84,7 +94,8 @@
                 </div>
                 <div class="grid-content">
                     <span id="level">${memberInfoBean.level}</span>
-                    <span class="purchased-amount">消费金额:￥ <span class="money">${memberInfoBean.purchasedAmount}</span></span>
+                    <span class="purchased-amount">消费金额:￥ <span
+                            class="money">${memberInfoBean.purchasedAmount}</span></span>
                 </div>
             </div>
             <div class="grid-row">
@@ -93,7 +104,10 @@
                 </div>
                 <div class="grid-content">
                     <span id="point">${memberInfoBean.member.point}</span>
-                    <button class="major-button-small">兑换金额￥ <span class="money">${memberInfoBean.member.point / 100}</span></button>
+                    <c:if test="${memberInfoBean.member.state == 'Normal'}">
+                        <button type="button" class="major-button-small">兑换金额￥ <span
+                                class="money">${memberInfoBean.member.point / 100}</span></button>
+                    </c:if>
                 </div>
             </div>
             <div class="grid-row">
@@ -102,7 +116,11 @@
                 </div>
                 <div class="grid-content">
                     <span id="money">￥ <span class="money">${memberInfoBean.member.money}</span></span>
-                    <button class="major-button-small">充值</button>
+                    <c:if test="${memberInfoBean.account != null}">
+                        <button id="deposit-button" type="button" class="major-button-small"
+                                data-mfp-src="#deposit-popup">充值
+                        </button>
+                    </c:if>
                 </div>
             </div>
             <div class="grid-row">
@@ -134,8 +152,62 @@
     </div>
 </main>
 
+
+<div id="deposit-popup" class="popup mfp-hide">
+    <form action="${basePath}/info/deposit" method="post" id="deposit-form">
+        <div class="money-popup">
+            <div class="popup-row">
+                <span>充值金额</span>
+                <input id="deposit-money" type="text" name="money">
+            </div>
+
+            <div class="popup-row">
+                <span>银行账户余额</span>
+                <p>￥ <span class="money">${memberInfoBean.accountMoney}</span></p>
+            </div>
+
+            <div class="popup-buttons">
+                <button type="button" id="deposit-cancel" class="minor-button left popup-close">取消</button>
+                <button type="button" id="deposit-submit" class="major-button right">确定</button>
+                <div class="clear-fix"></div>
+                <span id="deposit-alert" class="alert"></span>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="${basePath}/js/jquery.magnific-popup.min.js"></script>
 <script>
-    $(".money").number( true, 2 );
+    $(".money").number(true, 2);
+
+//    $('#activate-button').magnificPopup({
+//        type: 'inline',
+//        midClick: true
+//    });
+
+        $('#deposit-button').magnificPopup({
+            type: 'inline',
+            midClick: true
+        });
+
+    $('#deposit-submit').click(function () {
+        var money = $('#deposit-money').val();
+        var moneyAlert = $("#deposit-alert");
+        var moneyReg = /^[0-9]+(.[0-9]?[0-9]?)?$/;
+        var isMoney = moneyReg.test(money) && money <= ${memberInfoBean.accountMoney};
+        moneyAlert.text(isMoney ? "" : "请输入正确的数额！");
+
+        if (isMoney) {
+            $('#deposit-form').submit();
+        }
+
+    });
+
+    $('.popup-close').click(function () {
+        $.magnificPopup.close();
+    });
+
 </script>
 
 <%@ include file="include/footer.jsp" %>

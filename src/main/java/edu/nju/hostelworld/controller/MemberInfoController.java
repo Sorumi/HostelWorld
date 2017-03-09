@@ -1,18 +1,17 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.bean.AlertBean;
 import edu.nju.hostelworld.bean.MemberInfoBean;
 import edu.nju.hostelworld.bean.OrderBean;
 import edu.nju.hostelworld.model.Member;
+import edu.nju.hostelworld.service.AccountService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.util.OrderState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +27,9 @@ public class MemberInfoController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private AccountService accountService;
+
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String info(ModelMap model) {
         Member member;
@@ -36,8 +38,6 @@ public class MemberInfoController {
         } else {
             member = (Member) model.get("member");
         }
-        member = memberService.findMemberByID(member.getID());
-        model.addAttribute("member", member);
 
         MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member.getID());
         model.addAttribute("memberInfoBean", memberInfoBean);
@@ -66,19 +66,70 @@ public class MemberInfoController {
             member = (Member) model.get("member");
         }
 
+        member = memberService.findMemberByID(member.getID());
+
         String name = newMember.getName();
         String contact = newMember.getContact();
         String account = newMember.getAccount();
+
+        ResultMessage resultMessage = accountService.checkAccount(account);
+        if (resultMessage == ResultMessage.NOT_EXIST) {
+            model.addAttribute("alert", "不存在该银行账号!");
+            return "member-info-edit";
+        }
 
         member.setName(name);
         member.setContact(contact);
         member.setAccount(account);
 
-        ResultMessage resultMessage = memberService.updateMember(member);
-        if (resultMessage == ResultMessage.FAILED) {
-            return "member-info-edit";
+        resultMessage = memberService.updateMember(member);
+
+        AlertBean alertBean = new AlertBean();
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("修改成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("修改失败！");
+            alertBean.setButton("返回");
         }
-        return "redirect:/info";
+        alertBean.setUrl("info");
+
+        model.addAttribute("alertBean", alertBean);
+
+        updateSessionMember(member.getID(), model);
+        return "alert-href";
+    }
+
+    //    @ResponseBody
+    @RequestMapping(value = "/info/deposit", method = RequestMethod.POST)
+    public String deposit(@RequestParam double money, ModelMap model) {
+        Member member;
+        if (model.get("member") == null) {
+            return "redirect:/login";
+        } else {
+            member = (Member) model.get("member");
+        }
+
+        System.out.println(money);
+
+        ResultMessage resultMessage = memberService.deposit(member.getID(), money);
+
+        AlertBean alertBean = new AlertBean();
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("充值成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("充值失败！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("info");
+
+        model.addAttribute("alertBean", alertBean);
+
+        updateSessionMember(member.getID(), model);
+        return "alert-href";
     }
 
     @RequestMapping(value = "/info/activate", method = RequestMethod.POST)
@@ -92,10 +143,21 @@ public class MemberInfoController {
 
         ResultMessage resultMessage = memberService.activate(member.getID());
 
-//        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
-//        model.addAttribute("memberInfoBean", memberInfoBean);
+        AlertBean alertBean = new AlertBean();
 
-        return "redirect:/info";
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("激活成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("激活失败！账户不足1000元！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("info");
+
+        model.addAttribute("alertBean", alertBean);
+
+        updateSessionMember(member.getID(), model);
+        return "alert-href";
     }
 
 
@@ -110,10 +172,21 @@ public class MemberInfoController {
 
         ResultMessage resultMessage = memberService.resume(member.getID());
 
-//        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
-//        model.addAttribute("memberInfoBean", memberInfoBean);
+        AlertBean alertBean = new AlertBean();
 
-        return "redirect:/info";
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("恢复成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("恢复失败！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("info");
+
+        model.addAttribute("alertBean", alertBean);
+
+        updateSessionMember(member.getID(), model);
+        return "alert-href";
     }
 
     @RequestMapping(value = "/info/stop", method = RequestMethod.POST)
@@ -127,11 +200,25 @@ public class MemberInfoController {
 
         ResultMessage resultMessage = memberService.stop(member.getID());
 
-//        MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member);
-//        model.addAttribute("memberInfoBean", memberInfoBean);
+        AlertBean alertBean = new AlertBean();
 
-        return "redirect:/info";
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("停止成功！");
+            alertBean.setButton("查看");
+        } else {
+            alertBean.setMessage("停止失败！");
+            alertBean.setButton("返回");
+        }
+        alertBean.setUrl("info");
+
+        model.addAttribute("alertBean", alertBean);
+
+        updateSessionMember(member.getID(), model);
+        return "alert-href";
     }
 
-
+    private void updateSessionMember(String memberID, ModelMap model) {
+        Member member = memberService.findMemberByID(memberID);
+        model.addAttribute("member", member);
+    }
 }

@@ -20,7 +20,7 @@ public interface OrderService {
 
 //    public ResultMessage addOrder(BookOrder bookOrder);
 
-    public ResultMessage addNewOrder(OrderBean orderBean);
+    public String addNewOrder(OrderBean orderBean);
 
 //    public ResultMessage updateOrder(BookOrder order);
 

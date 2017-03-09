@@ -65,8 +65,9 @@
                     </div>
                 </div>
             </div>
+            <p class="alert">${alert}</p>
             <button class="major-button" type="button" id="submit-button">保存</button>
-            <a href="${basePath}/info" class="minor-button">取消</a>
+            <button onclick="window.history.back()" class="minor-button">取消</button>
         </form>
     </div>
 </main>

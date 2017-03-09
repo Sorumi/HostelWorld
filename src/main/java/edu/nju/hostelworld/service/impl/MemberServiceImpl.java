@@ -1,11 +1,14 @@
 package edu.nju.hostelworld.service.impl;
 
 import edu.nju.hostelworld.bean.MemberInfoBean;
+import edu.nju.hostelworld.dao.AccountDao;
 import edu.nju.hostelworld.dao.MemberDao;
 import edu.nju.hostelworld.dao.OrderDao;
+import edu.nju.hostelworld.model.Account;
 import edu.nju.hostelworld.model.BookOrder;
 import edu.nju.hostelworld.model.Level;
 import edu.nju.hostelworld.model.Member;
+import edu.nju.hostelworld.service.AccountService;
 import edu.nju.hostelworld.service.LevelService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.util.MemberState;
@@ -33,6 +36,9 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private LevelService levelService;
 
+    @Autowired
+    private AccountService accountService;
+
     @Override
     public MemberInfoBean convertToMemberInfoBean(String memberID) {
         MemberInfoBean memberInfoBean = new MemberInfoBean();
@@ -40,12 +46,16 @@ public class MemberServiceImpl implements MemberService {
         memberInfoBean.setMember(member);
         if (member.getAccount() != null) {
             memberInfoBean.setAccount(member.getAccount());
+            Account account = accountService.findAccount(member.getAccount());
+            if (account != null) {
+                memberInfoBean.setAccountMoney(account.getMoney());
+            }
         }
         double purchasedAmount = 0;
         List<BookOrder> orders = orderDao.findMemberOrders(memberID, OrderState.CheckOut);
         List<BookOrder> orders1 = orderDao.findMemberOrders(memberID, OrderState.CheckIn);
         orders.addAll(orders1);
-        for (BookOrder order:orders) {
+        for (BookOrder order : orders) {
             purchasedAmount += order.getTotalPrice();
         }
         memberInfoBean.setPurchasedAmount(purchasedAmount);
@@ -91,11 +101,11 @@ public class MemberServiceImpl implements MemberService {
     public Level findLevelByMemberID(String memberID) {
         double purchasedAmount = 0;
         List<BookOrder> orders = orderDao.findMemberOrders(memberID, OrderState.CheckOut);
-        for (BookOrder order:orders) {
+        for (BookOrder order : orders) {
             purchasedAmount += order.getTotalPrice();
         }
 
-        Level level = levelService.findLevelByPoints((int)purchasedAmount);
+        Level level = levelService.findLevelByPoints((int) purchasedAmount);
         return level;
     }
 
@@ -131,6 +141,12 @@ public class MemberServiceImpl implements MemberService {
             return ResultMessage.NOT_EXIST;
         } else if (member.getState() != MemberState.Inactive || member.getAccount() == null) {
             return ResultMessage.FAILED;
+        }
+
+        ResultMessage resultMessage = accountService.deposit(member.getAccount(), 1000);
+
+        if (resultMessage != ResultMessage.SUCCESS) {
+            return resultMessage;
         }
         member.setStartDate(LocalDate.now().toString());
         member.setState(MemberState.Normal);
@@ -190,7 +206,11 @@ public class MemberServiceImpl implements MemberService {
         }
 
         member.setMoney(member.getMoney() + money);
-        return memberDao.updateMember(member);
+        ResultMessage resultMessage = memberDao.updateMember(member);
+        if (resultMessage == ResultMessage.FAILED) {
+            return resultMessage;
+        }
+        return accountService.deposit(member.getAccount(), money);
     }
 
     public ResultMessage exchangeMoney(String ID, int point) {
@@ -208,6 +228,32 @@ public class MemberServiceImpl implements MemberService {
         member.setPoint(oldPoint - point);
         member.setMoney(member.getMoney() + (double) point * 0.01);
         return memberDao.updateMember(member);
+    }
+
+    public ResultMessage pauseMembers() {
+        ResultMessage resultMessage = ResultMessage.SUCCESS;
+        List<Member> list = memberDao.findMembersByStateAndMaxDate(MemberState.Normal, "startDate", LocalDate.now().minusYears(1).toString());
+        for (Member member : list) {
+            LocalDate date = LocalDate.parse(member.getStartDate()).plusYears(1);
+            member.setPauseDate(date.toString());
+            member.setState(MemberState.Pause);
+            resultMessage = memberDao.updateMember(member);
+            if (resultMessage == ResultMessage.FAILED) break;
+        }
+        return resultMessage;
+    }
+
+    public ResultMessage stopMembers() {
+        ResultMessage resultMessage = ResultMessage.SUCCESS;
+        List<Member> list = memberDao.findMembersByStateAndMaxDate(MemberState.Pause, "pauseDate", LocalDate.now().minusYears(1).toString());
+        for (Member member : list) {
+//            LocalDate date = LocalDate.parse(member.getStartDate()).plusYears(1);
+//            member.setPauseDate(date.toString());
+            member.setState(MemberState.Stop);
+            resultMessage = memberDao.updateMember(member);
+            if (resultMessage == ResultMessage.FAILED) break;
+        }
+        return resultMessage;
     }
 
     private String generateMemberID() {

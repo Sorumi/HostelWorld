@@ -93,8 +93,8 @@
                     <label for="discount">折扣</label>
                     <span id="discount">
                          <c:choose>
-                             <c:when test="${order.bookOrder.discount} < 1">
-                                 <span class="money">${order.bookOrder.discount}</span>
+                             <c:when test="${orderBean.bookOrder.discount < 1}">
+                                 <span class="money">${orderBean.bookOrder.discount}</span>
                              </c:when>
                              <c:otherwise>
                                  无

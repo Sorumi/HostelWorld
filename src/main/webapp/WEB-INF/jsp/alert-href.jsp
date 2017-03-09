@@ -16,7 +16,8 @@
 
 <main>
     <div class="container card alert-page">
-        <p id="alert-message">${alertMessage}</p>
+        <p id="alert-message">${alertBean.message}</p>
+        <a href="${basePath}/${alertBean.url}" id="alert-button" class="major-button">${alertBean.button}</a>
     </div>
 </main>
 

@@ -1,6 +1,8 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.bean.AlertBean;
 import edu.nju.hostelworld.bean.MemberRegisterBean;
+import edu.nju.hostelworld.bean.PasswordEditBean;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.util.ResultMessage;
@@ -138,14 +140,58 @@ public class MemberAuthController {
 
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session, ModelMap model) {
-//        boolean isLogin = model.containsAttribute("hostel");
-//        if (!isLogin) {
-//
-//        }
         session.removeAttribute("member");
         model.remove("member");
 
         return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/password", method = RequestMethod.GET)
+    public String passwordGet(ModelMap model) {
+        if (model.get("member") == null) {
+            return "redirect:/login";
+        }
+
+        return "member-password";
+    }
+
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
+    public String passwordPost(PasswordEditBean passwordEditBean, ModelMap model) {
+        if (model.get("member") == null) {
+            return "redirect:/login";
+        }
+
+        Member member = (Member) model.get("member");
+
+        String oldPassword = passwordEditBean.getOldPassword();
+        String newPassword = passwordEditBean.getNewPassword();
+        String confirmPassword = passwordEditBean.getConfirmPassword();
+
+        if (!isValid(oldPassword) || !isValid(newPassword) || !isValid(confirmPassword)) {
+            model.addAttribute("alert", "请将信息填写完整!");
+            return "member-password";
+        }
+        if (!oldPassword.equals(member.getPassword())) {
+            model.addAttribute("alert", "原密码不正确!");
+            return "member-password";
+        }
+
+        member.setPassword(newPassword);
+        ResultMessage resultMessage = memberService.updateMember(member);
+
+        AlertBean alertBean = new AlertBean();
+        if (resultMessage == ResultMessage.SUCCESS) {
+            alertBean.setMessage("修改成功！");
+        } else {
+            alertBean.setMessage("修改失败！");
+        }
+        alertBean.setUrl("info");
+        alertBean.setButton("返回");
+
+        model.addAttribute("alertBean", alertBean);
+        
+        return "alert-href";
+
     }
 
     private boolean isValid(String keyword) {

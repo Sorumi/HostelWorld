@@ -66,7 +66,7 @@ public class TestHostelService extends TestCase {
 
     @Test
     public void testFindKeyword() {
-        List list = hostelService.findHostelsByKeyword("");
-        assertEquals(2, list.size());
+        List list = hostelService.findHostelsByKeywordAndCheckDate("1", LocalDate.now().plusDays(30), LocalDate.now().plusDays(31));
+        assertEquals(0, list.size());
     }
 }
