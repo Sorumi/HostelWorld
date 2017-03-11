@@ -50,9 +50,7 @@
         </form>
 
         <div class="hostel-list">
-
-
-            <c:forEach var="hostel" items="${searchHostelBean.hostels}" varStatus="status">
+            <c:forEach var="hostelPriceBean" items="${searchHostelBean.hostels}" varStatus="status">
                 <c:choose>
                     <c:when test="${status.index%3 == 0}">
                         <div class="hostel-1">
@@ -61,10 +59,10 @@
                                     <div class="img"></div>
                                 </div>
                                 <div class="info-wrapper">
-                                    <a href="${basePath}/search/${hostel.ID}" class="title">${hostel.name}</a>
-                                    <p class="address">地址:${hostel.address}</p>
-                                    <p class="intro">${hostel.introduction}</p>
-                                    <p class="price">价格</p>
+                                    <a href="${basePath}/search/${hostelPriceBean.hostel.ID}" class="title">${hostelPriceBean.hostel.name}</a>
+                                    <p class="address">地址:${hostelPriceBean.hostel.address}</p>
+                                    <p class="intro">${hostelPriceBean.hostel.introduction}</p>
+                                    <p class="price">￥<span class="money">${hostelPriceBean.price}</span> 起</p>
                                 </div>
 
                             </div>
@@ -77,12 +75,11 @@
                                     <div class="img"></div>
                                 </div>
                                 <div class="info-wrapper">
-                                    <a href="#" class="title">${hostel.name}</a>
-                                    <p class="address">地址:${hostel.address}</p>
-                                    <p class="intro">${hostel.introduction}</p>
-                                    <p class="price">价格</p>
+                                    <a href="${basePath}/search/${hostelPriceBean.hostel.ID}" class="title">${hostelPriceBean.hostel.name}</a>
+                                    <p class="address">地址:${hostelPriceBean.hostel.address}</p>
+                                    <p class="intro">${hostelPriceBean.hostel.introduction}</p>
+                                    <p class="price">￥<span class="money">${hostelPriceBean.price}</span> 起</p>
                                 </div>
-
                             </div>
                         </div>
                     </c:when>
@@ -93,10 +90,10 @@
                                     <div class="img"></div>
                                 </div>
                                 <div class="info-wrapper">
-                                    <a href="#" class="title">${hostel.name}</a>
-                                    <p class="address">地址:${hostel.address}</p>
-                                    <p class="intro">${hostel.introduction}</p>
-                                    <p class="price">价格</p>
+                                    <a href="${basePath}/search/${hostelPriceBean.hostel.ID}" class="title">${hostelPriceBean.hostel.name}</a>
+                                    <p class="address">地址:${hostelPriceBean.hostel.address}</p>
+                                    <p class="intro">${hostelPriceBean.hostel.introduction}</p>
+                                    <p class="price">￥<span class="money">${hostelPriceBean.price}</span> 起</p>
                                 </div>
 
                             </div>
@@ -109,6 +106,7 @@
 </main>
 
 <script>
+    $(".money").number(true, 2);
 
     Date.prototype.addDays = function(days) {
         var dat = new Date(this.valueOf());

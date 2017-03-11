@@ -17,13 +17,40 @@
 
 <main>
     <div class="container">
-        <div class="card level-management">
-            <h1 class="title">信息统计</h1>
+        <div class="card statistic">
+            <h1 class="title">预定统计</h1>
             <div class="select-row">
                 <span>月份</span>
                 <div class="month-picker date-select"></div>
             </div>
             <div id="myChart">
+            </div>
+        </div>
+
+        <div class="card statistic">
+            <h1 class="title">财务统计</h1>
+            <div class="select-row">
+                <span>余额</span>
+                <div class="">￥ <div class="money">${hostel.money}</div></div>
+            </div>
+            <div class="grid finance-list">
+                <div class="grid-row">
+                    <div class="finance-time title">时间</div>
+                    <div class="finance-order title">订单编号</div>
+                    <div class="finance-event title">动作</div>
+                    <div class="finance-money-change title">变化金额</div>
+                    <div class="finance-money-result title">结果金额</div>
+                </div>
+                <c:forEach var="record" items="${financeRecords}">
+                    <div class="grid-row">
+                        <div class="finance-time">${record.financeRecord.time}</div>
+                        <div class="finance-order"><a href="${basePath}/hostel/order/${record.financeRecord.orderID}">${record.financeRecord.orderID}</a></div>
+                        <div class="finance-event"><span class="tag tag-${record.financeRecord.type.color}-current">${record.financeRecord.type.name}</span></div>
+                        <div class="finance-money-change">+ ￥<span class="money">${record.financeRecord.money}</span></div>
+                        <div class="finance-money-result">￥<span class="money">${record.resultMoney}</span></div>
+                    </div>
+                </c:forEach>
+
             </div>
         </div>
     </div>
@@ -39,6 +66,8 @@
 </script>
 
 <script>
+    $(".money").number( true, 2 );
+
     $('.month-picker').monthpicker({
         'max': $.datepicker.formatDate("yy-mm", new Date()),
         'onChange': function (date) {

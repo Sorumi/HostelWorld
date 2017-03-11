@@ -25,56 +25,19 @@ import java.util.List;
 public class MemberDaoImpl extends BaseDaoImpl implements MemberDao {
 
     public ResultMessage addMember(Member member) {
-        try {
-            Session session = setUpSession();
-            session.save(member);
-            commitAndClose(session);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultMessage.FAILED;
-        }
-        return ResultMessage.SUCCESS;
-
+        return add(member);
     }
 
     public ResultMessage updateMember(Member member) {
-        try {
-            Session session = setUpSession();
-            session.update(member);
-            commitAndClose(session);
-
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-            return ResultMessage.FAILED;
-        }
-        return ResultMessage.SUCCESS;
+        return update(member);
     }
 
     public long countMember() {
-        long count = 0;
-        try {
-            Session session = setUpSession();
-            String hql = "select count(*) from Member";
-            count = (Long) session.createQuery(hql).uniqueResult();
-            commitAndClose(session);
-
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        }
-        return count;
+        return count(Member.class);
     }
 
     public Member findMemberByID(String ID) {
-        Member member = null;
-        try {
-            Session session = setUpSession();
-            Object obj = session.get(Member.class, ID);
-            member = (Member) obj;
-            commitAndClose(session);
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        }
-        return member;
+        return (Member)findByID(Member.class, ID);
     }
 
     public Member findMemberByUsername(String username) {
@@ -94,17 +57,7 @@ public class MemberDaoImpl extends BaseDaoImpl implements MemberDao {
     }
 
     public List<Member> findAllMembers() {
-        List list = null;
-        try {
-            Session session = setUpSession();
-            String hql = "from Member";
-            list = session.createQuery(hql).list();
-//            list = hibernateTemplateMysql.find("from Member");
-            commitAndClose(session);
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        }
-        return list;
+        return findAll(Member.class);
     }
 
     @Override

@@ -47,7 +47,7 @@ public class MemberSearchHostelController {
     public String searchHostel(SearchHostelBean searchHostelBean, ModelMap model) {
         LocalDate checkInDate = LocalDate.parse(searchHostelBean.getCheckInDate());
         LocalDate checkOutDate = LocalDate.parse(searchHostelBean.getCheckOutDate());
-        List hostels = hostelService.findHostelsByKeywordAndCheckDate(searchHostelBean.getKeyword(), checkInDate, checkOutDate);
+        List<HostelPriceBean> hostels = hostelService.findHostelsByKeywordAndCheckDate(searchHostelBean.getKeyword(), checkInDate, checkOutDate);
 //        System.out.println(hostels.size());
         searchHostelBean.setHostels(hostels);
 

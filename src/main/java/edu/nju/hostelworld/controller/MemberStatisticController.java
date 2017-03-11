@@ -1,8 +1,11 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.bean.FinanceRecordBean;
 import edu.nju.hostelworld.bean.StatisticOrderBean;
+import edu.nju.hostelworld.model.FinanceRecord;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.Member;
+import edu.nju.hostelworld.service.FinanceRecordService;
 import edu.nju.hostelworld.service.OrderService;
 import edu.nju.hostelworld.util.HostelState;
 import edu.nju.hostelworld.util.OrderState;
@@ -25,7 +28,10 @@ import java.util.List;
 public class MemberStatisticController {
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
+
+    @Autowired
+    private FinanceRecordService financeRecordService;
 
     @RequestMapping(value = "/statistic", method = RequestMethod.GET)
     public String statisticGet(ModelMap model) {
@@ -33,8 +39,10 @@ public class MemberStatisticController {
         if (model.get("member") == null) {
             return "redirect:/login";
         }
-//        Member member = (Member) model.get("member");
+        Member member = (Member) model.get("member");
 
+        List<FinanceRecordBean> financeRecords = financeRecordService.findFinanceMemberRecords(member.getID());
+        model.addAttribute("financeRecords", financeRecords);
 
         return "member-statistic";
     }
@@ -48,14 +56,10 @@ public class MemberStatisticController {
         }
         Member member = (Member) model.get("member");
 
-
         LocalDate date = LocalDate.parse(year + "-01-01");
-
 
         ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
         long time = date.atStartOfDay(zoneId).toEpochSecond() * 1000;
-
-//        System.out.print(date + " " + time);
 
         List<Integer> booked = orderService.countMemberOrdersByStateAndYear(member.getID(), null, year);
         List<Integer> checkIn = orderService.countMemberOrdersByStateAndYear(member.getID(), OrderState.CheckIn, year);

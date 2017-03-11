@@ -46,7 +46,7 @@ public class TestOrderService extends TestCase {
 //        List<Integer> counts = orderService.countHostelOrdersByStateAndMonth("0000001", OrderState.CheckIn, "2017-02");
 //        assertEquals(28, counts.size());
 
-        List<Integer> yearCounts = orderService.countMemberOrdersByStateAndYear("0000001", OrderState.UnCheckIn, "2017");
+        List<Integer> yearCounts = orderService.countMemberOrdersByStateAndYear("0000001", OrderState.CheckIn, "2017");
         assertEquals(12, yearCounts.size());
         for (Integer i : yearCounts) {
             if (i != null) {

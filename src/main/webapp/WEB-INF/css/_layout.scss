@@ -273,6 +273,7 @@ main.auth {
     .alert {
       margin: 2px 0;
       height: 22px;
+      font-size: 14px;
       color: $red-color;
     }
   }
@@ -565,7 +566,10 @@ form.search-small {
 
   .grid-row {
     margin: 30px 0;
-
+    .title {
+      font-size: 14px;
+      color: #DDDDDD;
+    }
   }
   .grid-row-line {
     &:after {
@@ -602,6 +606,7 @@ form.search-small {
       color: $gray-color-dark;
     }
   }
+
 }
 
 .card {
@@ -781,10 +786,6 @@ form.search-small {
     font-size: 16px;
   }
 
-  .title {
-    font-size: 14px;
-    color: $gray-color-light;
-  }
 }
 
 .price-wrapper {
@@ -1038,10 +1039,7 @@ form.search-small {
     text-align: center;
     border: solid 1px $gray-color-light;
   }
-  .title {
-    font-size: 14px;
-    color: $gray-color-light;
-  }
+
 }
 
 .alert {
@@ -1072,7 +1070,7 @@ form.search-small {
 .select-row {
   span {
     display: inline-block;
-    width: 50px;
+    width: 80px;
     font-size: 14px;
     color: $gray-color;
   }
@@ -1103,6 +1101,38 @@ form.search-small {
 
 .zc-ref {
   display: none;
+}
+
+.statistic.card {
+  margin-bottom: 20px;
+}
+
+.finance-list {
+  width: 100%;
+  > .grid-row > div {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .finance-time {
+    width: 25%;
+    font-size: 16px;
+  }
+  .finance-order {
+    width: 25%;
+    font-size: 16px;
+  }
+  .finance-event {
+    width: 10%;
+  }
+  .finance-money-change, .finance-money-result {
+    width: 20%;
+    font-size: 16px;
+  }
+  .money {
+    color: $red-color;
+  }
 }
 
 // popup
@@ -1139,4 +1169,52 @@ form.search-small {
       float: right;
     }
   }
+}
+
+// select
+
+.am-selected .am-btn-default {
+  width: 300px;
+  height: 42px;
+  padding: 10px 10px;
+  line-height: 20px;
+  border: solid 1px $gray-color-light;
+  border-radius: $radius;
+  outline: none;
+  &:active {
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+.am-selected-text {
+  font-size: 14px;
+}
+.am-selected-status {
+  width: 250px;
+  font-family: $base-font-family;
+  font-size: 14px;
+  color: $gray-color-dark;
+}
+.am-selected-search input {
+  height: 30px;
+  padding: 5px;
+  font-size: 14px;
+  box-shadow: none;
+  border-color: $gray-color;
+  transition: none;
+  &:focus {
+    box-shadow: none;
+    border-color: $gray-color;
+  }
+}
+.am-form-field .am-input-sm {
+
+}
+
+.am-selected-list li.am-checked .am-icon-check {
+  color: $theme-color !important;
+}
+.am-btn-default:active, .am-btn-default.am-active, .am-dropdown.am-active .am-btn-default.am-dropdown-toggle {
+  background-color: transparent !important;
 }

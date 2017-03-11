@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.service;
 
+import edu.nju.hostelworld.bean.HostelPriceBean;
 import edu.nju.hostelworld.bean.RoomStockBean;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.HostelRoom;
@@ -30,7 +31,7 @@ public interface HostelService {
 
     public List<Hostel> findHostelsByKeyword(String value);
 
-    public List<Hostel> findHostelsByKeywordAndCheckDate(String value, LocalDate checkInDate, LocalDate checkOutDate);
+    public List<HostelPriceBean> findHostelsByKeywordAndCheckDate(String value, LocalDate checkInDate, LocalDate checkOutDate);
 
     public ResultMessage addHostelRoom(HostelRoom hostelRoom);
 

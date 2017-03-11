@@ -68,6 +68,27 @@
                 </div>
             </div>
 
+            <c:if test="${order.bookOrder.state == 'CheckOut'}">
+                <div class="grid-row">
+                    <div class="grid-label">
+                        <label for="accounted">结算状态</label>
+                    </div>
+                    <div class="grid-content">
+                        <c:choose>
+                            <c:when test="${order.bookOrder.accountedTime != null}">
+                                <span id="accounted" class="tag tag-green-current">已结算</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span id="accounted" class="tag tag-red-current">未结算</span>
+                                <form action="${basePath}/admin/order/${order.bookOrder.ID}/account" method="post" class="inline">
+                                    <button type="submit" class="major-button-small">结算</button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:if>
+
             <div class="grid-row">
                 <div class="grid-label">
                     <label for="check-date">预计入离日期</label>
@@ -178,11 +199,11 @@
                 <div class="clear-fix"></div>
             </div>
             <div class="row">
-                <label for="discount">折扣</label>
+                <label for="discount">优惠折扣</label>
                 <span id="discount">
                     <c:choose>
                         <c:when test="${order.bookOrder.discount < 1}">
-                            <span class="money">${order.bookOrder.discount}</span>
+                            × <span class="money">${order.bookOrder.discount}</span>
                         </c:when>
                         <c:otherwise>
                             无
@@ -196,6 +217,28 @@
                 <span id="total-price">￥ <span class="money">${order.bookOrder.totalPrice}</span></span>
                 <div class="clear-fix"></div>
             </div>
+            <c:if test="${order.bookOrder.accountedTime != null}">
+                <div class="row">
+                    <label for="commission">抽成比率</label>
+                    <span id="commission">
+                    <c:choose>
+                        <c:when test="${order.bookOrder.commission > 0}">
+                           - × <span class="money">${order.bookOrder.commission}</span>
+                        </c:when>
+                        <c:otherwise>
+                            无
+                        </c:otherwise>
+                    </c:choose>
+                </span>
+                    <div class="clear-fix"></div>
+                </div>
+                <div class="row">
+                    <label for="account-price">实际收入</label>
+                    <span id="account-price">￥ <span class="money">${order.bookOrder.accountPrice}</span></span>
+                    <div class="clear-fix"></div>
+                </div>
+            </c:if>
+
         </div>
 
         <div class="clear-fix"></div>

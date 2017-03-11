@@ -15,7 +15,7 @@ public class SearchHostelBean {
 
     private String checkOutDate;
 
-    private List<Hostel> hostels;
+    private List<HostelPriceBean> hostels;
 
     public String getKeyword() {
         return keyword;
@@ -41,11 +41,11 @@ public class SearchHostelBean {
         this.checkOutDate = checkOutDate;
     }
 
-    public List<Hostel> getHostels() {
+    public List<HostelPriceBean> getHostels() {
         return hostels;
     }
 
-    public void setHostels(List<Hostel> hostels) {
+    public void setHostels(List<HostelPriceBean> hostels) {
         this.hostels = hostels;
     }
 }

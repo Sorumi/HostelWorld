@@ -1,9 +1,11 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.bean.FinanceRecordBean;
 import edu.nju.hostelworld.bean.HostelSearchRoomBean;
 import edu.nju.hostelworld.bean.SearchRoomJsonBean;
 import edu.nju.hostelworld.bean.StatisticOrderBean;
 import edu.nju.hostelworld.model.Hostel;
+import edu.nju.hostelworld.service.FinanceRecordService;
 import edu.nju.hostelworld.service.OrderService;
 import edu.nju.hostelworld.util.HostelState;
 import edu.nju.hostelworld.util.OrderState;
@@ -27,8 +29,11 @@ import java.util.Map;
 @SessionAttributes({"hostel"})
 public class HostelStatisticController {
 
-       @Autowired
-    OrderService orderService;
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private FinanceRecordService financeRecordService;
 
     @RequestMapping(value = "/statistic", method = RequestMethod.GET)
     public String statisticGet(ModelMap model) {
@@ -41,6 +46,9 @@ public class HostelStatisticController {
         if (hostel.getState() == HostelState.Unopened) {
             return "redirect:/hostel/home";
         }
+
+        List<FinanceRecordBean> financeRecords = financeRecordService.findFinanceHostelRecords(hostel.getID());
+        model.addAttribute("financeRecords", financeRecords);
 
         return "hostel-statistic";
     }

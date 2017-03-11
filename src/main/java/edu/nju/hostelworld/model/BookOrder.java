@@ -40,9 +40,13 @@ public class BookOrder {
 
     private double totalPrice;
 
+    private double accountPrice;
+
     private double discount;
 
-    private boolean accounted;
+    private double commission;
+
+    private String accountedTime;
 
     private String notMemberName;
 
@@ -152,6 +156,14 @@ public class BookOrder {
         this.totalPrice = totalPrice;
     }
 
+    public double getAccountPrice() {
+        return accountPrice;
+    }
+
+    public void setAccountPrice(double accountPrice) {
+        this.accountPrice = accountPrice;
+    }
+
     public double getDiscount() {
         return discount;
     }
@@ -160,12 +172,20 @@ public class BookOrder {
         this.discount = discount;
     }
 
-    public boolean isAccounted() {
-        return accounted;
+    public double getCommission() {
+        return commission;
     }
 
-    public void setAccounted(boolean accounted) {
-        this.accounted = accounted;
+    public void setCommission(double commission) {
+        this.commission = commission;
+    }
+
+    public String getAccountedTime() {
+        return accountedTime;
+    }
+
+    public void setAccountedTime(String accountedTime) {
+        this.accountedTime = accountedTime;
     }
 
     public String getNotMemberName() {

@@ -18,6 +18,11 @@ public class AppServiceImpl implements AppService {
 
 
     @Override
+    public App findApp() {
+        return appDao.findApp();
+    }
+
+    @Override
     public ResultMessage updateMoney(double money) {
         App app = appDao.findApp();
         app.setMoney(app.getMoney() + money);

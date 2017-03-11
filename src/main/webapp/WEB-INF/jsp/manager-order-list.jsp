@@ -78,7 +78,7 @@
                     <span class="order-price">￥ <span class="money">${order.bookOrder.totalPrice}</span></span>
                     <c:if test="${order.bookOrder.state == 'CheckOut'}">
                         <c:choose>
-                            <c:when test="${order.bookOrder.accounted}">
+                            <c:when test="${order.bookOrder.accountedTime != null}">
                                 <span class="order-accounted accounted">已结算</span>
                             </c:when>
                             <c:otherwise>

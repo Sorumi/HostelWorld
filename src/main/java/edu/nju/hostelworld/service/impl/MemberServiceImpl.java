@@ -9,6 +9,7 @@ import edu.nju.hostelworld.model.BookOrder;
 import edu.nju.hostelworld.model.Level;
 import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.service.AccountService;
+import edu.nju.hostelworld.service.AppService;
 import edu.nju.hostelworld.service.LevelService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.util.MemberState;
@@ -38,6 +39,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private AppService appService;
 
     @Override
     public MemberInfoBean convertToMemberInfoBean(String memberID) {
@@ -151,7 +155,11 @@ public class MemberServiceImpl implements MemberService {
         member.setStartDate(LocalDate.now().toString());
         member.setState(MemberState.Normal);
         member.setMoney(member.getMoney() + 1000);
-        return memberDao.updateMember(member);
+        resultMessage = memberDao.updateMember(member);
+        if (resultMessage != ResultMessage.SUCCESS) {
+            return resultMessage;
+        }
+        return accountService.deposit(member.getAccount(), 1000);
     }
 
     public ResultMessage pause(String ID) {
@@ -226,8 +234,13 @@ public class MemberServiceImpl implements MemberService {
             return ResultMessage.INSUFFICIENT;
         }
         member.setPoint(oldPoint - point);
-        member.setMoney(member.getMoney() + (double) point * 0.01);
-        return memberDao.updateMember(member);
+        double money = (double) point * 0.01;
+        member.setMoney(member.getMoney() + money);
+        ResultMessage resultMessage = memberDao.updateMember(member);
+        if (resultMessage != ResultMessage.SUCCESS) {
+            return resultMessage;
+        }
+        return appService.updateMoney(-money);
     }
 
     public ResultMessage pauseMembers() {

@@ -4,10 +4,7 @@ import edu.nju.hostelworld.bean.*;
 import edu.nju.hostelworld.dao.OrderDao;
 import edu.nju.hostelworld.dao.OrderRoomDao;
 import edu.nju.hostelworld.model.*;
-import edu.nju.hostelworld.service.AppService;
-import edu.nju.hostelworld.service.HostelService;
-import edu.nju.hostelworld.service.MemberService;
-import edu.nju.hostelworld.service.OrderService;
+import edu.nju.hostelworld.service.*;
 import edu.nju.hostelworld.util.DateAndTimeUtil;
 import edu.nju.hostelworld.util.OrderState;
 import edu.nju.hostelworld.util.ResultMessage;
@@ -41,6 +38,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private AppService appService;
 
+    @Autowired
+    private FinanceRecordService financeRecordService;
+
     @Override
     public OrderBean generateOrder(MemberHostelInfoBean memberHostelInfoBean, Member member) {
         List<RoomStockBean> roomStocks = memberHostelInfoBean.getRoomStocks();
@@ -71,6 +71,7 @@ public class OrderServiceImpl implements OrderService {
         double discount = memberService.findLevelByMemberID(member.getID()).getDiscount();
         bookOrder.setDiscount(discount);
         bookOrder.setTotalPrice(price * discount);
+        bookOrder.setAccountPrice(price * discount);
 
 
         orderBean.setBookOrder(bookOrder);
@@ -112,6 +113,7 @@ public class OrderServiceImpl implements OrderService {
         bookOrder.setCheckOutDate(hostelBookOrderBean.getCheckOutDate());
         bookOrder.setOriginPrice(price);
         bookOrder.setTotalPrice(price);
+        bookOrder.setAccountPrice(price);
 
         orderBean.setBookOrder(bookOrder);
         orderBean.setRooms(orderRooms);
@@ -157,6 +159,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (resultMessage == ResultMessage.SUCCESS) {
+            financeRecordService.addBookFinanceRecord(bookOrder);
             return orderID;
         } else {
             return null;
@@ -188,8 +191,9 @@ public class OrderServiceImpl implements OrderService {
                         LocalDate.parse(bookOrder.getCheckInDate()),
                         LocalDate.parse(bookOrder.getCheckOutDate()));
             }
-            return resultMessage;
-
+            if (resultMessage == ResultMessage.SUCCESS) {
+                return financeRecordService.addCancelFinanceRecord(bookOrder);
+            }
         }
         return ResultMessage.FAILED;
     }
@@ -224,13 +228,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResultMessage accountOrder(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
-        if (bookOrder.getState() == OrderState.CheckOut && !bookOrder.isAccounted()) {
-            bookOrder.setAccounted(true);
+        App app = appService.findApp();
+        double commission = app.getCommission();
+        double accountPrice = bookOrder.getTotalPrice() - bookOrder.getTotalPrice() * commission;
+
+        if (bookOrder.getState() == OrderState.CheckOut && bookOrder.getAccountedTime() == null) {
+            bookOrder.setCommission(commission);
+            bookOrder.setAccountPrice(accountPrice);
+            bookOrder.setAccountedTime(DateAndTimeUtil.timeStringWithHyphen(LocalDateTime.now()));
             ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
             if (resultMessage == ResultMessage.SUCCESS) {
-                appService.updateMoney(-bookOrder.getTotalPrice());
-                resultMessage = hostelService.updateMoney(bookOrder.getHostelID(), bookOrder.getTotalPrice());
-                return resultMessage;
+                appService.updateMoney(-accountPrice);
+                resultMessage = hostelService.updateMoney(bookOrder.getHostelID(), accountPrice);
+                if (resultMessage == ResultMessage.SUCCESS) {
+                    return financeRecordService.addAccountFinanceRecord(bookOrder);
+                }
             }
         }
         return ResultMessage.FAILED;
@@ -241,7 +253,10 @@ public class OrderServiceImpl implements OrderService {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
         if (bookOrder.getState() == OrderState.UnCheckIn && LocalDate.parse(bookOrder.getCheckInDate()).isBefore(LocalDate.now())) {
             bookOrder.setState(OrderState.Expired);
-            return orderDao.updateOrder(bookOrder);
+            ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
+            if (resultMessage == ResultMessage.SUCCESS) {
+                return financeRecordService.addCancelFinanceRecord(bookOrder);
+            }
         }
         return ResultMessage.FAILED;
     }
@@ -253,6 +268,7 @@ public class OrderServiceImpl implements OrderService {
         for (BookOrder order : list) {
             order.setState(OrderState.Expired);
             resultMessage = orderDao.updateOrder(order);
+            resultMessage = financeRecordService.addCancelFinanceRecord(order);
             if (resultMessage == ResultMessage.FAILED) break;
         }
         return resultMessage;
@@ -296,7 +312,7 @@ public class OrderServiceImpl implements OrderService {
     public List<Integer> countOrdersByStateAndMonth(OrderState orderState, String month) {
 
         String field = fieldOfOrderState(orderState);
-        if (orderState == OrderState.UnCheckIn) orderState = null;
+        if (orderState != OrderState.Expired) orderState = null;
         LocalDate date = LocalDate.parse(month + "-01");
         LocalDate endDate = date.plusMonths(1);
         LocalDate today = LocalDate.now();
@@ -315,7 +331,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Integer> countMemberOrdersByStateAndYear(String memberID, OrderState orderState, String year) {
         String field = fieldOfOrderState(orderState);
-        if (orderState == OrderState.UnCheckIn) orderState = null;
+        if (orderState != OrderState.Expired) orderState = null;
         LocalDate date = LocalDate.parse(year + "-01-01");
         LocalDate endDate = date.plusYears(1);
         LocalDate today = LocalDate.now();
@@ -324,7 +340,7 @@ public class OrderServiceImpl implements OrderService {
             if (date.isAfter(today)) {
                 counts.add(null);
             } else {
-                int count = Math.toIntExact(orderDao.countOrdersByStateAndDate(orderState, field, DateAndTimeUtil.monthStringWithHyphen(date)));
+                int count = Math.toIntExact(orderDao.countMemberOrdersByStateAndDate(memberID, orderState, field, DateAndTimeUtil.monthStringWithHyphen(date)));
                 counts.add(count);
             }
         }
@@ -334,7 +350,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Integer> countHostelOrdersByStateAndMonth(String hostelID, OrderState orderState, String month) {
         String field = fieldOfOrderState(orderState);
-        if (orderState == OrderState.UnCheckIn) orderState = null;
+        if (orderState != OrderState.Expired) orderState = null;
         LocalDate date = LocalDate.parse(month + "-01");
         LocalDate endDate = date.plusMonths(1);
         LocalDate today = LocalDate.now();

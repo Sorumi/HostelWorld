@@ -1,6 +1,7 @@
 package edu.nju.hostelworld.service.impl;
 
 
+import edu.nju.hostelworld.bean.HostelPriceBean;
 import edu.nju.hostelworld.bean.RoomStockBean;
 import edu.nju.hostelworld.dao.HostelDao;
 import edu.nju.hostelworld.dao.HostelRoomDao;
@@ -105,7 +106,7 @@ public class HostelServiceImpl implements HostelService {
     }
 
     @Override
-    public List<Hostel> findHostelsByKeywordAndCheckDate(String value, LocalDate checkInDate, LocalDate checkOutDate) {
+    public List<HostelPriceBean> findHostelsByKeywordAndCheckDate(String value, LocalDate checkInDate, LocalDate checkOutDate) {
         List<Hostel> list1 = hostelDao.findHostelByKeyword("address", value);
         List<Hostel> list2 = hostelDao.findHostelByKeyword("name", value);
 
@@ -116,11 +117,23 @@ public class HostelServiceImpl implements HostelService {
 
         List<Hostel> list = new ArrayList<Hostel>(set);
 
-        List<Hostel> result = new ArrayList<>();
+        List<HostelPriceBean> result = new ArrayList<>();
         for (Hostel hostel : list) {
-            List rooms = getRoomStockByCheckDate(hostel.getID(), checkInDate, checkOutDate);
+
+            List<RoomStockBean> rooms = getRoomStockByCheckDate(hostel.getID(), checkInDate, checkOutDate);
             if (rooms.size() > 0) {
-                result.add(hostel);
+                HostelRoom hostelRoom = findHostelRoomByID(rooms.get(0).getID());
+                double minPrice = hostelRoom.getPrice();
+                for (RoomStockBean roomStockBean : rooms) {
+                    hostelRoom = findHostelRoomByID(roomStockBean.getID());
+                    if (hostelRoom.getPrice() > minPrice) {
+                        minPrice = hostelRoom.getPrice();
+                    }
+                }
+                HostelPriceBean hostelPriceBean = new HostelPriceBean();
+                hostelPriceBean.setHostel(hostel);
+                hostelPriceBean.setPrice(minPrice);
+                result.add(hostelPriceBean);
             }
         }
         return result;
@@ -152,13 +165,13 @@ public class HostelServiceImpl implements HostelService {
         int num = 0;
         while (date.isBefore(endDate) || date.isEqual(endDate)) {
             RoomStock roomStock = new RoomStock();
-            roomStock.setID(String.format(hostelRoomID+ "%03d", num));
+            roomStock.setID(String.format(hostelRoomID + "%03d", num));
             roomStock.setHostelRoomID(hostelRoomID);
             roomStock.setDate(date.toString());
             roomStock.setQuantity(quantity);
             resultMessage = hostelRoomDao.addRoomStock(roomStock);
             date = date.plusDays(1);
-            num ++;
+            num++;
         }
 
         return resultMessage;

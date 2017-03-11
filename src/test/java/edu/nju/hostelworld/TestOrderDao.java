@@ -31,14 +31,14 @@ public class TestOrderDao extends TestCase {
 
     @Test
     public void testFind() {
-//        long count = orderDao.countMemberOrdersByStateAndDate("0000001", OrderState.Cancelled, "cancelledTime", "2017-02");
-//        assertEquals(3, count);
+        long count = orderDao.countMemberOrdersByStateAndDate("0000001", null, "checkOutTime", "2017-03");
+        assertEquals(3, count);
 
 //        long count = orderDao.countHostelOrdersByStateAndDate("0000001", null, "bookedTime", "2017-03-01");
 //        assertEquals(4, count);
 
-        long count = orderDao.countMemberOrdersByStateAndDate("0000001", null, "bookedTime", "2017-02");
-        System.out.print(count);
+//        long count = orderDao.countMemberOrdersByStateAndDate("0000001", null, "bookedTime", "2017-02");
+//        System.out.print(count);
     }
 
     @Test
