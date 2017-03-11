@@ -31,6 +31,7 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public ResultMessage updateCommission(double commission) {
+        if (commission < 0 || commission > 1) return ResultMessage.FAILED;
         App app = appDao.findApp();
         app.setCommission(commission);
         return appDao.updateApp(app);

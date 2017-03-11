@@ -48,7 +48,7 @@
                         <div class="finance-time">${record.financeRecord.time}</div>
                         <div class="finance-order"><a href="${basePath}/order/${record.financeRecord.orderID}">${record.financeRecord.orderID}</a></div>
                         <div class="finance-event"><span class="tag tag-${record.financeRecord.type.color}-current">${record.financeRecord.type.name}</span></div>
-                        <div class="finance-money-change">
+                        <div class="finance-money-change red-money">
                             <c:choose>
                                 <c:when test="${record.financeRecord.type == 'Book'}">
                                     -
@@ -60,7 +60,7 @@
                                 </c:otherwise>
                             </c:choose>
                             ￥<span class="money">${record.financeRecord.money}</span></div>
-                        <div class="finance-money-result">￥<span class="money">${record.resultMoney}</span></div>
+                        <div class="finance-money-result red-money">￥<span class="money">${record.resultMoney}</span></div>
                     </div>
                 </c:forEach>
 

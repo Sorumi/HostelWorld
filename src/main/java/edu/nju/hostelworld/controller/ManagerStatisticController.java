@@ -4,12 +4,11 @@ import edu.nju.hostelworld.bean.FinanceRecordBean;
 import edu.nju.hostelworld.model.App;
 import edu.nju.hostelworld.service.AppService;
 import edu.nju.hostelworld.service.FinanceRecordService;
+import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,8 +27,21 @@ public class ManagerStatisticController {
     @Autowired
     private AppService appService;
 
+    @ResponseBody
+    @RequestMapping(value = "/commission", method = RequestMethod.POST)
+    public String commissionPost(@RequestParam double commission, ModelMap model) {
+        if (model.get("manager") == null) {
+            return "redirect:/admin/login";
+        }
+
+        System.out.print(commission);
+
+        ResultMessage resultMessage = appService.updateCommission(commission);
+        return resultMessage.toString();
+    }
+
     @RequestMapping(value = "/statistic/money", method = RequestMethod.GET)
-    public String statisticGet(ModelMap model) {
+    public String statisticMoney(ModelMap model) {
 
         if (model.get("manager") == null) {
             return "redirect:/admin/login";

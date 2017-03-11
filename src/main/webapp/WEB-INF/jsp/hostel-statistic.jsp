@@ -46,8 +46,8 @@
                         <div class="finance-time">${record.financeRecord.time}</div>
                         <div class="finance-order"><a href="${basePath}/hostel/order/${record.financeRecord.orderID}">${record.financeRecord.orderID}</a></div>
                         <div class="finance-event"><span class="tag tag-${record.financeRecord.type.color}-current">${record.financeRecord.type.name}</span></div>
-                        <div class="finance-money-change">+ ￥<span class="money">${record.financeRecord.money}</span></div>
-                        <div class="finance-money-result">￥<span class="money">${record.resultMoney}</span></div>
+                        <div class="finance-money-change red-money">+ ￥<span class="money">${record.financeRecord.money}</span></div>
+                        <div class="finance-money-result red-money">￥<span class="money">${record.resultMoney}</span></div>
                     </div>
                 </c:forEach>
 
