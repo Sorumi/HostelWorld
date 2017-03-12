@@ -26,7 +26,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/hostel")
-@SessionAttributes({"hostel"})
+@SessionAttributes({"hostel", "manager"})
 public class HostelStatisticController {
 
     @Autowired

@@ -1047,12 +1047,12 @@ form.search-small {
 
 .select-row {
   margin: 5px 0; }
-  .select-row span {
+  .select-row > span {
     display: inline-block;
     width: 120px;
     font-size: 14px;
     color: #B3B3B3; }
-  .select-row div {
+  .select-row > div {
     display: inline-block; }
   .select-row .alert {
     margin: 0 5px;

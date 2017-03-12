@@ -1,23 +1,35 @@
 <%--
   Created by IntelliJ IDEA.
   User: Sorumi
-  Date: 17/3/5
-  Time: 上午11:12
+  Date: 17/3/12
+  Time: 上午10:28
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ include file="include/header.jsp" %>
+
+<%@ include file="include/header-select.jsp" %>
 
 <div class="top-fix"></div>
 
-<%@ include file="include/hostel-nav.jsp" %>
+<%@ include file="include/manager-nav.jsp" %>
 
 <main>
     <div class="container">
         <div class="card statistic">
-            <h1 class="title">预定统计</h1>
+            <h1 class="title">旅舍统计</h1>
+            <div class="select-row">
+                <span>旅舍</span>
+                <div>
+                    <select id="hostel-select" data-am-selected="{searchBox: 1}" placeholder="选择">
+                        <option selected value=""></option>
+                        <c:forEach var="hostel" items="${hostels}">
+                            <option value="${hostel.ID}">${hostel.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
             <div class="select-row">
                 <span>月份</span>
                 <div class="month-picker date-select"></div>
@@ -25,41 +37,10 @@
             <div id="myChart">
             </div>
         </div>
-
-        <div class="card statistic">
-            <h1 class="title">财务统计</h1>
-            <div class="select-row">
-                <span>余额</span>
-                <div class="">￥ <div class="money">${hostel.money}</div></div>
-            </div>
-            <div class="select-row">
-                <span>抽成比率</span>
-                <div><div class="money">${app.commission}</div></div>
-            </div>
-            <div class="grid finance-list">
-                <div class="grid-row">
-                    <div class="finance-time title">时间</div>
-                    <div class="finance-order title">订单编号</div>
-                    <div class="finance-event title">动作</div>
-                    <div class="finance-money-change title">变化金额</div>
-                    <div class="finance-money-result title">结果金额</div>
-                </div>
-                <c:forEach var="record" items="${financeRecords}">
-                    <div class="grid-row">
-                        <div class="finance-time">${record.financeRecord.time}</div>
-                        <div class="finance-order"><a href="${basePath}/hostel/order/${record.financeRecord.orderID}">${record.financeRecord.orderID}</a></div>
-                        <div class="finance-event"><span class="tag tag-${record.financeRecord.type.color}-current">${record.financeRecord.type.name}</span></div>
-                        <div class="finance-money-change red-money">+ ￥<span class="money">${record.financeRecord.money}</span></div>
-                        <div class="finance-money-result red-money">￥<span class="money">${record.resultMoney}</span></div>
-                    </div>
-                </c:forEach>
-
-            </div>
-        </div>
     </div>
 </main>
 
-<%----%>
+<script src="${basePath}/js/amazeui.min.js"></script>
 <script src="${basePath}/js/jquery-ui.min.js"></script>
 <script src="${basePath}/js/month-picker.js"></script>
 <script src="${basePath}/js/zingchart.min.js"></script>
@@ -74,24 +55,27 @@
     $('.month-picker').monthpicker({
         'max': $.datepicker.formatDate("yy-mm", new Date()),
         'onChange': function (date) {
-            console.log(date);
-            loadStatistics($.datepicker.formatDate("yy-mm", date));
+            loadStatistics();
         }
     });
 
-    function loadStatistics(month) {
-        var data = { "hostelID" : ${hostel.ID} };
+    $('#hostel-select').on('change',function() {
+        loadStatistics();
+    });
+
+    function loadStatistics() {
+        var month = $('.month-picker input').val();
+        var hostelID =  $('#hostel-select').val();
+        var data = { "hostelID" : hostelID };
 
         $.ajax({
             type: "GET",
             dataType: "json",
             contentType: "application/json",
-            url:"${basePath}/hostel/statistic/" + month,
+            url:"${basePath}/admin/statistic/hostel/" + hostelID + "/" + month,
             data: JSON.stringify(data),
 
             success: function (data) {
-                console.log(data);
-                console.log(data.booked);
 
                 refreshStatistic(data);
             }
@@ -294,7 +278,5 @@
         };
     }
 
-//    loadStatistics();
+    //    loadStatistics();
 </script>
-
-<%@ include file="include/footer.jsp" %>

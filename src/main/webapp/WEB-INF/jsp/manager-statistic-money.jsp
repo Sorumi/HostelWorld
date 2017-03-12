@@ -112,7 +112,7 @@
         }
 
             $.ajax({
-                type: "POST",
+                type: "POST",``
                 url: "${basePath}/admin/commission",
                 data: data,
 
