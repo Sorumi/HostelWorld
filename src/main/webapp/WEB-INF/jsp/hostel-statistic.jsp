@@ -30,7 +30,7 @@
             <h1 class="title">财务统计</h1>
             <div class="select-row">
                 <span>余额</span>
-                <div class="">￥ <div class="money">${hostel.money}</div></div>
+                <div class="">￥ <span class="money">${hostel.money}</span></div>
             </div>
             <div class="select-row">
                 <span>抽成比率</span>

@@ -21,7 +21,7 @@
             <div class="select-row">
                 <span>财务总额</span>
                 <div class="">￥
-                    <div class="money">${app.money}</div>
+                    <span class="money">${app.money}</span>
                 </div>
             </div>
             <div id="commission-row" class="select-row">

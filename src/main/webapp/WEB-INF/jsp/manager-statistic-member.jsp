@@ -21,9 +21,9 @@
             <h1 class="title">会员统计</h1>
             <div class="select-row">
                 <span>会员</span>
-                <div>
-                    <select id="member-select" data-am-selected="{searchBox: 1}" placeholder="选择">
-                        <option selected value=""></option>
+
+                <div class="select-wrapper">
+                    <select id="member-select">
                         <c:forEach var="member" items="${members}">
                             <option value="${member.ID}">${member.name}</option>
                         </c:forEach>
@@ -40,7 +40,7 @@
     </div>
 </main>
 
-<script src="${basePath}/js/amazeui.min.js"></script>
+<script src="${basePath}/js/select2.full.min.js"></script>
 <script src="${basePath}/js/jquery-ui.min.js"></script>
 <script src="${basePath}/js/year-picker.js"></script>
 <script src="${basePath}/js/zingchart.min.js"></script>
@@ -50,7 +50,9 @@
 </script>
 
 <script>
-    $(".money").number( true, 2 );
+    $("#member-select").select2();
+
+    $(".money").number(true, 2);
 
     $('.year-picker').yearpicker({
         'max': $.datepicker.formatDate("yy", new Date()),
@@ -59,20 +61,20 @@
         }
     });
 
-    $('#member-select').on('change',function() {
+    $('#member-select').on('change', function () {
         loadStatistics();
     });
 
     function loadStatistics() {
         var year = $('.year-picker input').val();
-        var memberID =  $('#member-select').val();
-        var data = { "memberID" : memberID };
+        var memberID = $('#member-select').val();
+        var data = {"memberID": memberID};
 
         $.ajax({
             type: "GET",
             dataType: "json",
             contentType: "application/json",
-            url:"${basePath}/admin/statistic/member/" + memberID + "/" + year,
+            url: "${basePath}/admin/statistic/member/" + memberID + "/" + year,
             data: JSON.stringify(data),
 
             success: function (data) {

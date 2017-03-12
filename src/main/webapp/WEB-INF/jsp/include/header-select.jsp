@@ -23,7 +23,7 @@
     <meta charset="UTF-8">
     <title>Hostel World</title>
 
-    <link rel="stylesheet" type="text/css" href="${basePath}/css/amazeui.css"/>
+    <link rel="stylesheet" type="text/css" href="${basePath}/css/select2.min.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/font-awesome.min.css"/>
 

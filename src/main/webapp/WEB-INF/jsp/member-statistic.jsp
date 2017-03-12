@@ -33,7 +33,7 @@
             <h1 class="title">消费统计</h1>
             <div class="select-row">
                 <span>余额</span>
-                <div class="">￥ <div class="money">${member.money}</div></div>
+                <div class="">￥ <span class="money">${member.money}</span></div>
             </div>
             <div class="grid finance-list">
                 <div class="grid-row">

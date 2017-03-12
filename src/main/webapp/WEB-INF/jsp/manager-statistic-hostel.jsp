@@ -21,9 +21,8 @@
             <h1 class="title">旅舍统计</h1>
             <div class="select-row">
                 <span>旅舍</span>
-                <div>
-                    <select id="hostel-select" data-am-selected="{searchBox: 1}" placeholder="选择">
-                        <option selected value=""></option>
+                <div class="select-wrapper">
+                    <select id="hostel-select">
                         <c:forEach var="hostel" items="${hostels}">
                             <option value="${hostel.ID}">${hostel.name}</option>
                         </c:forEach>
@@ -40,7 +39,7 @@
     </div>
 </main>
 
-<script src="${basePath}/js/amazeui.min.js"></script>
+<script src="${basePath}/js/select2.full.min.js"></script>
 <script src="${basePath}/js/jquery-ui.min.js"></script>
 <script src="${basePath}/js/month-picker.js"></script>
 <script src="${basePath}/js/zingchart.min.js"></script>
@@ -50,6 +49,8 @@
 </script>
 
 <script>
+    $("#hostel-select").select2();
+
     $(".money").number( true, 2 );
 
     $('.month-picker').monthpicker({
