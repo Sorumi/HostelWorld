@@ -141,20 +141,4 @@ public class BaseDaoImpl implements BaseDao {
         return list;
     }
 
-//    public Session getSession() {
-//        return sessionFactory.getCurrentSession();
-//    }
-//
-//    public Session getNewSession() {
-//        return sessionFactory.openSession();
-//    }
-//
-//    public void flush() {
-//        getSession().flush();
-//    }
-//
-//    public void clear() {
-//        getSession().clear();
-//    }
-
 }

@@ -23,19 +23,13 @@ public interface HostelRoomDao {
 
     public List<HostelRoom> findHostelRoomsByHostelID(String hostelID);
 
-//    public List<HostelRoom> findHostelRoomsByHostelIDAndDate(String hostelID, String date);
-
     public List<HostelRoom> findHostelRoomsByHostelIDAndDate(String hostelID, String startDate, String endDate);
-
-    // room stock
 
     public ResultMessage addRoomStock(RoomStock roomStock);
 
     public ResultMessage updateRoomStock(RoomStock roomStock);
 
     public ResultMessage deleteRoomStock(RoomStock roomStock);
-
-//    public long countRoomStocksByHostelRoomID(String hostelID);
 
     public List<RoomStock> findRoomStocksByHostelRoomID(String hostelRoomID);
 

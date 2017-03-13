@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.bean.AlertBean;
 import edu.nju.hostelworld.bean.ApplicationBean;
 import edu.nju.hostelworld.model.Application;
 import edu.nju.hostelworld.model.Hostel;
@@ -75,7 +76,23 @@ public class ManagerApplicationController {
         }
         ResultMessage resultMessage = applicationService.passApplication(ID);
 
-        return "redirect:/admin/application/" + ID;
+        AlertBean alertBean = new AlertBean();
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+
+            alertBean.setMessage("申请通过成功！");
+            alertBean.setUrl("admin/application/" + ID);
+            alertBean.setButton("查看");
+            model.addAttribute("alertBean", alertBean);
+
+        } else {
+            alertBean.setMessage("申请通过失败！");
+            alertBean.setUrl("admin/application/" + ID);
+            alertBean.setButton("返回");
+            model.addAttribute("alertBean", alertBean);
+        }
+
+        return "alert-href";
     }
 
     @RequestMapping(value = "/application/{id}/fail", method = RequestMethod.POST)
@@ -91,7 +108,22 @@ public class ManagerApplicationController {
         }
         ResultMessage resultMessage = applicationService.failApplication(ID);
 
-        return "redirect:/admin/application/" + ID;
+        AlertBean alertBean = new AlertBean();
+
+        if (resultMessage == ResultMessage.SUCCESS) {
+
+            alertBean.setMessage("申请拒绝成功！");
+            alertBean.setUrl("admin/application/" + ID);
+            alertBean.setButton("查看");
+            model.addAttribute("alertBean", alertBean);
+
+        } else {
+            alertBean.setMessage("申请拒绝失败！");
+            alertBean.setUrl("admin/application/" + ID);
+            alertBean.setButton("返回");
+            model.addAttribute("alertBean", alertBean);
+        }
+        return "alert-href";
     }
 
 }

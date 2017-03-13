@@ -5,6 +5,7 @@ import edu.nju.hostelworld.model.Member;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.service.OrderService;
+import edu.nju.hostelworld.util.City;
 import edu.nju.hostelworld.util.MemberState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class MemberSearchHostelController {
         searchHostelBean.setCheckInDate(LocalDate.now().toString());
         searchHostelBean.setCheckOutDate(LocalDate.now().plusDays(1).toString());
         model.addAttribute("searchHostelBean", searchHostelBean);
+        model.addAttribute("cities", City.values());
         return "member-home";
     }
 
@@ -47,10 +49,11 @@ public class MemberSearchHostelController {
     public String searchHostel(SearchHostelBean searchHostelBean, ModelMap model) {
         LocalDate checkInDate = LocalDate.parse(searchHostelBean.getCheckInDate());
         LocalDate checkOutDate = LocalDate.parse(searchHostelBean.getCheckOutDate());
-        List<HostelPriceBean> hostels = hostelService.findHostelsByKeywordAndCheckDate(searchHostelBean.getKeyword(), checkInDate, checkOutDate);
+        List<HostelPriceBean> hostels = hostelService.findHostelsByCityAndKeywordAndCheckDate(searchHostelBean.getCity(), searchHostelBean.getKeyword(), checkInDate, checkOutDate);
 //        System.out.println(hostels.size());
         searchHostelBean.setHostels(hostels);
 
+        model.addAttribute("cities", City.values());
         return "member-search-hostel";
     }
 

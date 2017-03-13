@@ -18,67 +18,90 @@
     <div class="container card member-info">
         <h1 class="title">申请修改信息</h1>
         <c:choose>
-            <c:when test="${application.type == 'Open'}">
-                <form action="${basePath}/hostel/application/open/add" method="post" autocomplete="off" id="add-form">
+        <c:when test="${application.type == 'Open'}">
+        <form action="${basePath}/hostel/application/open/add" method="post" autocomplete="off" id="add-form">
             </c:when>
             <c:otherwise>
-                <form action="${basePath}/hostel/application/edit/add" method="post" autocomplete="off" id="add-form">
-            </c:otherwise>
-        </c:choose>
-            <div class="grid">
-                <div class="grid-row">
-                    <div class="grid-label">
-                        <label for="type">申请类型</label>
+            <form action="${basePath}/hostel/application/edit/add" method="post" autocomplete="off" id="add-form">
+                </c:otherwise>
+                </c:choose>
+                <div class="grid">
+                    <div class="grid-row">
+                        <div class="grid-label">
+                            <label for="type">申请类型</label>
+                        </div>
+                        <div class="grid-content">
+                            <span id="type">${application.type.name}</span>
+                            <span class="alert"></span>
+                        </div>
                     </div>
-                    <div class="grid-content">
-                        <span id="type">${application.type.name}</span>
-                        <span class="alert"></span>
+                    <div class="grid-row">
+                        <div class="grid-label">
+                            <label for="name">酒店名称</label>
+                        </div>
+                        <div class="grid-content">
+                            <input id="name" type="text" name="name" value="${application.name}">
+                            <span class="alert"></span>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-label">
+                            <label for="city">酒店城市</label>
+                        </div>
+                        <div class="grid-content">
+                            <%--<input id="city" type="text" name="city" value="">--%>
+                            <div class="select-wrapper">
+                                <select id="city" name="city">
+                                    <c:forEach var="city" items="${cities}">
+                                        <option value="${city.toString()}"
+                                                <c:if test="${hostel.city == city}">
+                                                    selected="selected"
+                                                </c:if>
+                                        >${city.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <span class="alert"></span>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-label">
+                            <label for="address">酒店地址</label>
+                        </div>
+                        <div class="grid-content">
+                            <input id="address" type="text" name="address" value="${application.address}">
+                            <span class="alert"></span>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-label">
+                            <label for="introduction">酒店简介</label>
+                        </div>
+                        <div class="grid-content">
+                            <textarea id="introduction" name="introduction">${application.introduction}</textarea>
+                            <span class="alert"></span>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-label">
+                            <label for="facility">服务设施</label>
+                        </div>
+                        <div class="grid-content">
+                            <textarea id="facility" name="facility">${application.facility}</textarea>
+                            <span class="alert"></span>
+                        </div>
                     </div>
                 </div>
-                <div class="grid-row">
-                    <div class="grid-label">
-                        <label for="name">酒店名称</label>
-                    </div>
-                    <div class="grid-content">
-                        <input id="name" type="text" name="name" value="${application.name}">
-                        <span class="alert"></span>
-                    </div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-label">
-                        <label for="address">酒店地址</label>
-                    </div>
-                    <div class="grid-content">
-                        <input id="address" type="text" name="address" value="${application.address}">
-                        <span class="alert"></span>
-                    </div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-label">
-                        <label for="introduction">酒店简介</label>
-                    </div>
-                    <div class="grid-content">
-                        <textarea id="introduction" name="introduction">${application.introduction}</textarea>
-                        <span class="alert"></span>
-                    </div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-label">
-                        <label for="facility">服务设施</label>
-                    </div>
-                    <div class="grid-content">
-                        <textarea id="facility" name="facility">${application.facility}</textarea>
-                        <span class="alert"></span>
-                    </div>
-                </div>
-            </div>
-            <input id="submit-button" class="major-button" value="提交"/>
-            <button class="minor-button" type="button" onclick="history.back()">取消</button>
-        </form>
+                <input id="submit-button" class="major-button" value="提交"/>
+                <button class="minor-button" type="button" onclick="history.back()">取消</button>
+            </form>
     </div>
 </main>
 
+<script src="${basePath}/js/select2.full.min.js"></script>
 <script>
+    $("#city").select2();
+
     $("#submit-button").click(function () {
         var name = $("#name").val();
         var nameAlert = $("#name + .alert");

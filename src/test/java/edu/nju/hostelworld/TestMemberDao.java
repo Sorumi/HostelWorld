@@ -41,7 +41,7 @@ public class TestMemberDao extends TestCase {
 
     @Test
     public void testCount() {
-        long count = memberDao.countMember();
+        long count = memberDao.countMembers();
         assertEquals(5, count);
     }
 

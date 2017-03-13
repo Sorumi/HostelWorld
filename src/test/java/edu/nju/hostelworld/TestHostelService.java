@@ -3,6 +3,7 @@ package edu.nju.hostelworld;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.HostelRoom;
 import edu.nju.hostelworld.service.HostelService;
+import edu.nju.hostelworld.util.City;
 import edu.nju.hostelworld.util.ResultMessage;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class TestHostelService extends TestCase {
 
     @Test
     public void testFindKeyword() {
-        List list = hostelService.findHostelsByKeywordAndCheckDate("1", LocalDate.now().plusDays(30), LocalDate.now().plusDays(31));
+        List list = hostelService.findHostelsByCityAndKeywordAndCheckDate(City.ShangHai, "1", LocalDate.now().plusDays(30), LocalDate.now().plusDays(31));
         assertEquals(0, list.size());
     }
 }

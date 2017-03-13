@@ -435,10 +435,35 @@ form.search-large {
     font-size: 14px;
     margin: 5px 0; }
   form.search-large input[type=text] {
-    display: block;
     padding: 10px 20px;
     height: 50px;
     font-size: 18px; }
+  form.search-large .keyword-column {
+    width: 60.52632%;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: top;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 0;
+    margin-bottom: 20px; }
+  form.search-large .city-select-column {
+    width: 39.47368%;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: top;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 0;
+    padding-right: 10px;
+    height: 50px; }
   form.search-large .check-in-date-column {
     width: 39.47368%;
     font-size: 18px;
@@ -475,13 +500,27 @@ form.search-large {
     box-sizing: border-box;
     padding-left: 10px;
     padding-right: 0; }
-  form.search-large #keyword {
+  form.search-large #city-select {
     width: 100%;
-    margin-bottom: 20px; }
+    height: 50px; }
+  form.search-large #keyword {
+    width: 100%; }
   form.search-large #check-in-date, form.search-large #check-out-date {
     width: 100%; }
   form.search-large #submit {
     width: 100%;
+    height: 50px; }
+  form.search-large .select2-container--default .select2-selection--single {
+    height: 50px; }
+  form.search-large input.select2-search__field {
+    height: 50px;
+    color: #808080;
+    border-color: #B3B3B3; }
+  form.search-large #select2-city-select-container {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px; }
+  form.search-large .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 50px; }
   form.search-large .label-fix {
     height: 30px; }
@@ -494,8 +533,8 @@ form.search-small {
     margin: 5px 0; }
   form.search-small input {
     display: block; }
-  form.search-small .keyword-column {
-    width: 31%;
+  form.search-small .city-select-column {
+    width: 22%;
     font-size: 18px;
     display: inline-block;
     vertical-align: top;
@@ -505,9 +544,22 @@ form.search-small {
     -o-box-sizing: border-box;
     box-sizing: border-box;
     padding-left: 0;
+    padding-right: 10px;
+    height: 40px; }
+  form.search-small .keyword-column {
+    width: 28%;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: top;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 10px;
     padding-right: 10px; }
   form.search-small .check-in-date-column {
-    width: 27%;
+    width: 18%;
     font-size: 18px;
     display: inline-block;
     vertical-align: top;
@@ -519,7 +571,7 @@ form.search-small {
     padding-left: 10px;
     padding-right: 10px; }
   form.search-small .check-out-date-column {
-    width: 27%;
+    width: 18%;
     font-size: 18px;
     display: inline-block;
     vertical-align: top;
@@ -531,7 +583,7 @@ form.search-small {
     padding-left: 10px;
     padding-right: 10px; }
   form.search-small .submit-column {
-    width: 15%;
+    width: 14%;
     font-size: 18px;
     display: inline-block;
     vertical-align: top;
@@ -549,6 +601,21 @@ form.search-small {
     width: 100%; }
   form.search-small #submit {
     width: 100%; }
+  form.search-small #city-select {
+    width: 100%;
+    height: 40px; }
+  form.search-small .select2-container--default .select2-selection--single {
+    height: 40px; }
+  form.search-small input.select2-search__field {
+    height: 50px;
+    color: #808080;
+    border-color: #B3B3B3; }
+  form.search-small #select2-city-select-container {
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px; }
+  form.search-small .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px; }
   form.search-small .label-fix {
     height: 30px; }
 
@@ -701,6 +768,10 @@ form.search-small {
 .hostel-info .hostel-name {
   font-size: 36px;
   color: #5B6E79; }
+.hostel-info .hostel-loocation span {
+  height: 24px;
+  display: inline-block;
+  vertical-align: bottom; }
 .hostel-info .hostel-address {
   font-size: 18px;
   color: #B3B3B3; }
@@ -981,7 +1052,7 @@ form.search-small {
     font-size: 18px;
     color: #5B6E79; }
   .application-wrapper .application-hostel-address {
-    top: 75px; }
+    top: 80px; }
   .application-wrapper .application-hostel-introduction {
     width: 70%;
     top: 105px;

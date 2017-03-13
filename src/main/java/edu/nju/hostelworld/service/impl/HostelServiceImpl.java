@@ -9,6 +9,7 @@ import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.HostelRoom;
 import edu.nju.hostelworld.model.RoomStock;
 import edu.nju.hostelworld.service.HostelService;
+import edu.nju.hostelworld.util.City;
 import edu.nju.hostelworld.util.DateAndTimeUtil;
 import edu.nju.hostelworld.util.HostelState;
 import edu.nju.hostelworld.util.ResultMessage;
@@ -87,12 +88,10 @@ public class HostelServiceImpl implements HostelService {
         return hostelDao.findAllHostels();
     }
 
-    @Override
     public List<Hostel> findAllOpeningHostels() {
         return hostelDao.findHostelsByState(HostelState.Opening);
     }
 
-    @Override
     public List<Hostel> findHostelsByKeyword(String value) {
         List<Hostel> list1 = hostelDao.findHostelByKeyword("address", value);
         List<Hostel> list2 = hostelDao.findHostelByKeyword("name", value);
@@ -106,7 +105,10 @@ public class HostelServiceImpl implements HostelService {
     }
 
     @Override
-    public List<HostelPriceBean> findHostelsByKeywordAndCheckDate(String value, LocalDate checkInDate, LocalDate checkOutDate) {
+    public List<HostelPriceBean> findHostelsByCityAndKeywordAndCheckDate(City city, String value, LocalDate checkInDate, LocalDate checkOutDate) {
+
+        List<Hostel> listCity = hostelDao.findHostelsByCity(city);
+
         List<Hostel> list1 = hostelDao.findHostelByKeyword("address", value);
         List<Hostel> list2 = hostelDao.findHostelByKeyword("name", value);
 
@@ -116,6 +118,7 @@ public class HostelServiceImpl implements HostelService {
         set.addAll(list2);
 
         List<Hostel> list = new ArrayList<Hostel>(set);
+        list.retainAll(listCity);
 
         List<HostelPriceBean> result = new ArrayList<>();
         for (Hostel hostel : list) {

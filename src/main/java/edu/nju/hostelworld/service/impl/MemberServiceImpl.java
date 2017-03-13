@@ -8,10 +8,7 @@ import edu.nju.hostelworld.model.Account;
 import edu.nju.hostelworld.model.BookOrder;
 import edu.nju.hostelworld.model.Level;
 import edu.nju.hostelworld.model.Member;
-import edu.nju.hostelworld.service.AccountService;
-import edu.nju.hostelworld.service.AppService;
-import edu.nju.hostelworld.service.LevelService;
-import edu.nju.hostelworld.service.MemberService;
+import edu.nju.hostelworld.service.*;
 import edu.nju.hostelworld.util.MemberState;
 import edu.nju.hostelworld.util.OrderState;
 import edu.nju.hostelworld.util.ResultMessage;
@@ -42,6 +39,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private AppService appService;
+
+    @Autowired
+    private FinanceRecordService financeRecordService;
 
     @Override
     public MemberInfoBean convertToMemberInfoBean(String memberID) {
@@ -215,9 +215,12 @@ public class MemberServiceImpl implements MemberService {
 
         member.setMoney(member.getMoney() + money);
         ResultMessage resultMessage = memberDao.updateMember(member);
+
         if (resultMessage == ResultMessage.FAILED) {
             return resultMessage;
         }
+
+        financeRecordService.addDepositFinanceRecord(member.getID(), money);
         return accountService.deposit(member.getAccount(), money);
     }
 
@@ -240,6 +243,7 @@ public class MemberServiceImpl implements MemberService {
         if (resultMessage != ResultMessage.SUCCESS) {
             return resultMessage;
         }
+        financeRecordService.addExchangeFinanceRecord(member.getID(), money);
         return appService.updateMoney(-money);
     }
 
@@ -270,7 +274,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private String generateMemberID() {
-        int count = Math.toIntExact(memberDao.countMember());
+        int count = Math.toIntExact(memberDao.countMembers());
         return String.format("%07d", count);
     }
 }

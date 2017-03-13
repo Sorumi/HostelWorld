@@ -16,7 +16,23 @@
 <main>
     <div class="container">
         <form class="search-large" action="${basePath}/search" method="get">
-            <input id="keyword" name="keyword" type="text"/>
+            <div class="row">
+                <div class="city-select-column">
+                    <label for="city-select">城市</label>
+                    <select id="city-select" name="city">
+                        <c:forEach var="city" items="${cities}">
+                            <option value="${city.toString()}">${city.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="keyword-column">
+                    <label for="keyword">旅舍名称或地址</label>
+                    <input id="keyword" name="keyword" type="text"/>
+                </div>
+
+            </div>
+
+            <%--<input id="keyword" name="keyword" type="text"/>--%>
             <div class="row">
                 <div class="check-in-date-column">
                     <div>
@@ -42,7 +58,9 @@
     </div>
 </main>
 
+<script src="${basePath}/js/select2.full.min.js"></script>
 <script>
+    $("#city-select").select2();
 
     Date.prototype.addDays = function(days) {
         var dat = new Date(this.valueOf());

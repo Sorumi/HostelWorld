@@ -27,7 +27,7 @@ public class HostelInfoController {
     private ApplicationService applicationService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String homeGet(ModelMap model) {
+    public String home(ModelMap model) {
 
         boolean isLogin = model.containsAttribute("hostel");
         if (!isLogin) {
@@ -132,6 +132,7 @@ public class HostelInfoController {
         application.setHostelID(hostel.getID());
 
         model.addAttribute("application", application);
+        model.addAttribute("cities", City.values());
 
         return "hostel-application-edit";
     }
@@ -197,6 +198,7 @@ public class HostelInfoController {
         application.setFacility(hostel.getFacility());
 
         model.addAttribute("application", application);
+        model.addAttribute("cities", City.values());
 
         return "hostel-application-edit";
     }

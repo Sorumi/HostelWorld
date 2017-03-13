@@ -30,7 +30,7 @@ public class HostelRoomController {
     private HostelService hostelService;
 
     @RequestMapping(value = "/room", method = RequestMethod.GET)
-    public String homeGet(ModelMap model) {
+    public String room(ModelMap model) {
 
         boolean isLogin = model.containsAttribute("hostel");
         if (!isLogin) {
@@ -61,7 +61,7 @@ public class HostelRoomController {
     }
 
     @RequestMapping(value = "/plan", method = RequestMethod.GET)
-    public String planGet(ModelMap model) {
+    public String plan(ModelMap model) {
         boolean isLogin = model.containsAttribute("hostel");
         if (!isLogin) {
             return "redirect:/hostel/login";

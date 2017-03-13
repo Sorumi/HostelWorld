@@ -111,7 +111,6 @@ public class MemberInfoController {
             member = (Member) model.get("member");
         }
 
-
         ResultMessage resultMessage = memberService.deposit(member.getID(), money);
 
         AlertBean alertBean = new AlertBean();
@@ -160,7 +159,7 @@ public class MemberInfoController {
     }
 
     @RequestMapping(value = "/info/activate", method = RequestMethod.POST)
-    public String infoActivate(ModelMap model) {
+    public String activate(ModelMap model) {
         Member member;
         if (model.get("member") == null) {
             return "redirect:/login";
@@ -189,7 +188,7 @@ public class MemberInfoController {
 
 
     @RequestMapping(value = "/info/resume", method = RequestMethod.POST)
-    public String infoResume(ModelMap model) {
+    public String resume(ModelMap model) {
         Member member;
         if (model.get("member") == null) {
             return "redirect:/login";
@@ -217,7 +216,7 @@ public class MemberInfoController {
     }
 
     @RequestMapping(value = "/info/stop", method = RequestMethod.POST)
-    public String infoStop(ModelMap model) {
+    public String stop(ModelMap model) {
         Member member;
         if (model.get("member") == null) {
             return "redirect:/login";

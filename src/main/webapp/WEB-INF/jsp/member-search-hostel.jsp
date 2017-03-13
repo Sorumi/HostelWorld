@@ -19,9 +19,21 @@
         <form class="search-small" action="${basePath}/search" method="get">
 
             <div class="row">
+                <div class="city-select-column">
+                    <label for="city-select">城市</label>
+                    <select id="city-select" name="city">
+                        <c:forEach var="city" items="${cities}">
+                            <option value="${city.toString()}"
+                                    <c:if test="${searchHostelBean.city == city}">
+                                        selected="selected"
+                                    </c:if>
+                            >${city.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
                 <div class="keyword-column">
                     <div>
-                        <div class="label-fix"></div>
+                        <label for="keyword">旅舍名称或地址</label>
                         <input id="keyword" name="keyword" type="text" value="${searchHostelBean.keyword}"/>
                     </div>
                 </div>
@@ -60,7 +72,7 @@
                                 </div>
                                 <div class="info-wrapper">
                                     <a href="${basePath}/search/${hostelPriceBean.hostel.ID}" class="title">${hostelPriceBean.hostel.name}</a>
-                                    <p class="address">地址:${hostelPriceBean.hostel.address}</p>
+                                    <p class="address"><span class="tag tag-green-current">${hostelPriceBean.hostel.city.name}</span> ${hostelPriceBean.hostel.address}</p>
                                     <p class="intro">${hostelPriceBean.hostel.introduction}</p>
                                     <p class="price">￥<span class="money">${hostelPriceBean.price}</span> 起</p>
                                 </div>
@@ -76,7 +88,7 @@
                                 </div>
                                 <div class="info-wrapper">
                                     <a href="${basePath}/search/${hostelPriceBean.hostel.ID}" class="title">${hostelPriceBean.hostel.name}</a>
-                                    <p class="address">地址:${hostelPriceBean.hostel.address}</p>
+                                    <p class="address"><span class="tag tag-green-current">${hostelPriceBean.hostel.city.name}</span> ${hostelPriceBean.hostel.address}</p>
                                     <p class="intro">${hostelPriceBean.hostel.introduction}</p>
                                     <p class="price">￥<span class="money">${hostelPriceBean.price}</span> 起</p>
                                 </div>
@@ -91,7 +103,7 @@
                                 </div>
                                 <div class="info-wrapper">
                                     <a href="${basePath}/search/${hostelPriceBean.hostel.ID}" class="title">${hostelPriceBean.hostel.name}</a>
-                                    <p class="address">地址:${hostelPriceBean.hostel.address}</p>
+                                    <p class="address"><span class="tag tag-green-current">${hostelPriceBean.hostel.city.name}</span> ${hostelPriceBean.hostel.address}</p>
                                     <p class="intro">${hostelPriceBean.hostel.introduction}</p>
                                     <p class="price">￥<span class="money">${hostelPriceBean.price}</span> 起</p>
                                 </div>
@@ -105,8 +117,9 @@
     </div>
 </main>
 
+<script src="${basePath}/js/select2.full.min.js"></script>
 <script>
-    $(".money").number(true, 2);
+    $("#city-select").select2();
 
     Date.prototype.addDays = function(days) {
         var dat = new Date(this.valueOf());

@@ -139,8 +139,10 @@ public class OrderServiceImpl implements OrderService {
         if (bookOrder.getMemberID() != null) {
             memberService.resume(bookOrder.getMemberID());
             memberService.updateMoney(bookOrder.getMemberID(), -bookOrder.getTotalPrice());
+            appService.updateMoney(bookOrder.getTotalPrice());
+            financeRecordService.addBookFinanceRecord(bookOrder);
         }
-        appService.updateMoney(bookOrder.getTotalPrice());
+
 
         List<OrderRoomBean> orderRoomBeans = orderBean.getRooms();
 
@@ -159,7 +161,6 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (resultMessage == ResultMessage.SUCCESS) {
-            financeRecordService.addBookFinanceRecord(bookOrder);
             return orderID;
         } else {
             return null;
@@ -181,8 +182,9 @@ public class OrderServiceImpl implements OrderService {
 
             if (bookOrder.getMemberID() != null) {
                 memberService.updateMoney(bookOrder.getMemberID(), bookOrder.getTotalPrice());
+                appService.updateMoney(-bookOrder.getTotalPrice());
+                financeRecordService.addCancelFinanceRecord(bookOrder);
             }
-            appService.updateMoney(-bookOrder.getTotalPrice());
 
             List<OrderRoom> orderRooms = orderRoomDao.findOrderRoomsByOrderID(bookOrder.getID());
             for (OrderRoom orderRoom : orderRooms) {
@@ -191,9 +193,7 @@ public class OrderServiceImpl implements OrderService {
                         LocalDate.parse(bookOrder.getCheckInDate()),
                         LocalDate.parse(bookOrder.getCheckOutDate()));
             }
-            if (resultMessage == ResultMessage.SUCCESS) {
-                return financeRecordService.addCancelFinanceRecord(bookOrder);
-            }
+            return resultMessage;
         }
         return ResultMessage.FAILED;
     }
@@ -228,6 +228,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResultMessage accountOrder(String ID) {
         BookOrder bookOrder = orderDao.findOrderByID(ID);
+        if (bookOrder.getMemberID() == null) return ResultMessage.FAILED;
+
         App app = appService.findApp();
         double commission = app.getCommission();
         double accountPrice = bookOrder.getTotalPrice() - bookOrder.getTotalPrice() * commission;
@@ -255,7 +257,7 @@ public class OrderServiceImpl implements OrderService {
             bookOrder.setState(OrderState.Expired);
             ResultMessage resultMessage = orderDao.updateOrder(bookOrder);
             if (resultMessage == ResultMessage.SUCCESS) {
-                return financeRecordService.addCancelFinanceRecord(bookOrder);
+                return financeRecordService.addExpireFinanceRecord(bookOrder);
             }
         }
         return ResultMessage.FAILED;
@@ -268,7 +270,7 @@ public class OrderServiceImpl implements OrderService {
         for (BookOrder order : list) {
             order.setState(OrderState.Expired);
             resultMessage = orderDao.updateOrder(order);
-            resultMessage = financeRecordService.addCancelFinanceRecord(order);
+            resultMessage = financeRecordService.addExpireFinanceRecord(order);
             if (resultMessage == ResultMessage.FAILED) break;
         }
         return resultMessage;

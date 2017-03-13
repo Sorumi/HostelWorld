@@ -32,7 +32,7 @@ public class MemberDaoImpl extends BaseDaoImpl implements MemberDao {
         return update(member);
     }
 
-    public long countMember() {
+    public long countMembers() {
         return count(Member.class);
     }
 

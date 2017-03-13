@@ -4,6 +4,7 @@ import edu.nju.hostelworld.bean.HostelPriceBean;
 import edu.nju.hostelworld.bean.RoomStockBean;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.HostelRoom;
+import edu.nju.hostelworld.util.City;
 import edu.nju.hostelworld.util.ResultMessage;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by Sorumi on 17/2/5.
  */
 public interface HostelService {
+
     public ResultMessage addHostel(Hostel hostel);
 
     public ResultMessage updateHostel(Hostel hostel);
@@ -27,11 +29,7 @@ public interface HostelService {
 
     public List<Hostel> findAllHostels();
 
-    public List<Hostel> findAllOpeningHostels();
-
-    public List<Hostel> findHostelsByKeyword(String value);
-
-    public List<HostelPriceBean> findHostelsByKeywordAndCheckDate(String value, LocalDate checkInDate, LocalDate checkOutDate);
+    public List<HostelPriceBean> findHostelsByCityAndKeywordAndCheckDate(City city, String value, LocalDate checkInDate, LocalDate checkOutDate);
 
     public ResultMessage addHostelRoom(HostelRoom hostelRoom);
 

@@ -52,7 +52,7 @@
                 <div class="grid-content">
                     <div id="hostel">
                         <span class="hostel-name">${order.hostel.name}</span>
-                        <span class="hostel-address">${order.hostel.address}</span>
+                        <span class="hostel-address">${order.hostel.city.name} ${order.hostel.address}</span>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <c:if test="${order.bookOrder.state == 'CheckOut'}">
+            <c:if test="${order.bookOrder.state == 'CheckOut' && order.bookOrder.memberID != null}">
                 <div class="grid-row">
                     <div class="grid-label">
                         <label for="accounted">结算状态</label>
@@ -214,7 +214,7 @@
                 <span id="total-price">￥ <span class="money">${order.bookOrder.totalPrice}</span></span>
                 <div class="clear-fix"></div>
             </div>
-            <c:if test="${order.bookOrder.accountedTime != null}">
+            <c:if test="${order.bookOrder.accountedTime != null && order.bookOrder.memberID != null}">
                 <div class="row">
                     <label for="commission">抽成比率</label>
                     <span id="commission">

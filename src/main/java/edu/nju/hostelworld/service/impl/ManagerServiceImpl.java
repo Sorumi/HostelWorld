@@ -57,7 +57,7 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     private String generateManagerID() {
-        int count = Math.toIntExact(managerDao.countManager());
+        int count = Math.toIntExact(managerDao.countManagers());
         return String.format("%07d", count);
     }
 }

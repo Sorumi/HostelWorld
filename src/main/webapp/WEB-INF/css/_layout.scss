@@ -440,13 +440,21 @@ form.search-large {
     font-size: 14px;
     margin: 5px 0;
   }
+
   input[type=text] {
-    display: block;
+
     padding: 10px 20px;
     height: 50px;
     font-size: 18px;
   }
-
+  .keyword-column {
+    @include col(460, 760, $last: true);
+    margin-bottom: 20px;
+  }
+  .city-select-column {
+    @include col(300, 760, $first: true);
+    height: 50px;
+  }
   .check-in-date-column {
     @include col(300, 760, $first: true);
   }
@@ -456,15 +464,34 @@ form.search-large {
   .submit-column {
     @include col(160, 760, $last: true);
   }
+  #city-select {
+    width: 100%;
+    height: 50px;
+  }
   #keyword {
     width: 100%;
-    margin-bottom: 20px;
   }
   #check-in-date, #check-out-date {
     width: 100%;
   }
   #submit {
     width: 100%;
+    height: 50px;
+  }
+  .select2-container--default .select2-selection--single {
+    height: 50px;
+  }
+  input.select2-search__field {
+    height: 50px;
+    color: $gray-color-dark;
+    border-color: $gray-color;
+  }
+  #select2-city-select-container {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 50px;
   }
   .label-fix {
@@ -482,18 +509,21 @@ form.search-small {
   input {
     display: block;
   }
-
+  .city-select-column {
+    @include col(220, 1000, $first: true);
+    height: 40px;
+  }
   .keyword-column {
-    @include col(310, 1000, $first: true);
+    @include col(280, 1000);
   }
   .check-in-date-column {
-    @include col(270, 1000);
+    @include col(180, 1000);
   }
   .check-out-date-column {
-    @include col(270, 1000);
+    @include col(180, 1000);
   }
   .submit-column {
-    @include col(150, 1000, $last: true);
+    @include col(140, 1000, $last: true);
   }
   #keyword {
     width: 100%;
@@ -504,6 +534,26 @@ form.search-small {
   }
   #submit {
     width: 100%;
+  }
+  #city-select {
+     width: 100%;
+     height: 40px;
+   }
+  .select2-container--default .select2-selection--single {
+    height: 40px;
+  }
+  input.select2-search__field {
+    height: 50px;
+    color: $gray-color-dark;
+    border-color: $gray-color;
+  }
+  #select2-city-select-container {
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px;
   }
   .label-fix {
     height: 30px;
@@ -663,9 +713,16 @@ form.search-small {
     font-size: 36px;
     color: $theme-font-color;
   }
+  .hostel-loocation {
+    span {
+      height: 24px;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+  }
   .hostel-address {
     font-size: 18px;
-    color: $gray-color
+    color: $gray-color;
   }
 }
 
@@ -978,8 +1035,12 @@ form.search-small {
     font-size: 18px;
     color: $theme-font-color;
   }
+  //.application-hostel-city {
+  //  top: 75px;
+  //}
   .application-hostel-address {
-    top: 75px;
+    top: 80px;
+    //left: 100px;
   }
   .application-hostel-introduction {
     width: 70%;

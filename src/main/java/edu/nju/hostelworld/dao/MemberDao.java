@@ -15,7 +15,7 @@ public interface MemberDao {
 
     public ResultMessage updateMember(Member member);
 
-    public long countMember();
+    public long countMembers();
 
     public Member findMemberByID(String ID);
 

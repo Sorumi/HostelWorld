@@ -74,6 +74,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         Hostel hostel = hostelService.findHostelByID(application.getHostelID());
         hostel.setName(application.getName());
+        hostel.setCity(application.getCity());
         hostel.setAddress(application.getAddress());
         hostel.setIntroduction(application.getIntroduction());
         hostel.setFacility(application.getFacility());

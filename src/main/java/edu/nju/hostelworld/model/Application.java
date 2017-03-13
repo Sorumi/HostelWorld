@@ -2,6 +2,7 @@ package edu.nju.hostelworld.model;
 
 import edu.nju.hostelworld.util.ApplicationState;
 import edu.nju.hostelworld.util.ApplicationType;
+import edu.nju.hostelworld.util.City;
 
 import javax.persistence.*;
 
@@ -30,6 +31,9 @@ public class Application {
     private String hostelID;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private City city;
 
     private String address;
 
@@ -91,6 +95,14 @@ public class Application {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getAddress() {

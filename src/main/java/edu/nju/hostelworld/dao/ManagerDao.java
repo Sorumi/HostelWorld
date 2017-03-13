@@ -14,7 +14,7 @@ public interface ManagerDao {
 
     public ResultMessage updateManager(Manager manager);
 
-    public long countManager();
+    public long countManagers();
 
     public Manager findManagerByID(String ID);
 

@@ -78,7 +78,7 @@
                             ${room.name} × ${room.quantity}
                         </c:forEach>
                     </span>
-                    <c:if test="${order.bookOrder.state == 'CheckOut'}">
+                    <c:if test="${order.bookOrder.state == 'CheckOut' && order.bookOrder.memberID != null}">
                         <c:choose>
                             <c:when test="${order.bookOrder.accountedTime != null}">
                                 <span class="order-accounted accounted">已结算</span>

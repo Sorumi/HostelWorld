@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.model;
 
+import edu.nju.hostelworld.util.City;
 import edu.nju.hostelworld.util.HostelState;
 
 import javax.persistence.*;
@@ -24,6 +25,9 @@ public class Hostel {
     private HostelState state;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private City city;
 
     private String address;
 
@@ -71,6 +75,14 @@ public class Hostel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getAddress() {

@@ -34,7 +34,7 @@ public class MemberStatisticController {
     private FinanceRecordService financeRecordService;
 
     @RequestMapping(value = "/statistic", method = RequestMethod.GET)
-    public String statisticGet(ModelMap model) {
+    public String statistic(ModelMap model) {
 
         if (model.get("member") == null) {
             return "redirect:/login";

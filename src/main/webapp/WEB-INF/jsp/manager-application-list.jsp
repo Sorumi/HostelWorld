@@ -50,7 +50,7 @@
                     <span class="application-date">申请时间:${application.appliedTime}</span>
                     <span class="application-state tag tag-${application.state.color}-current">${application.state.name}</span>
                     <span class="application-hostel-name">${application.name}</span>
-                    <span class="application-hostel-address">${application.address}</span>
+                    <span class="application-hostel-address">${application.city.name} ${application.address}</span>
                     <p class="application-hostel-introduction">${application.introduction}</p>
                     <a href="${basePath}/admin/application/${application.ID}" class="major-button info-button">详情</a>
                 </div>

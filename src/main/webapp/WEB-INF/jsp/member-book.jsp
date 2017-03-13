@@ -26,7 +26,7 @@
                     <div class="grid-content">
                         <div id="hostel-info">
                             <span class="hostel-name">${orderBean.hostel.name}</span>
-                            <span class="hostel-address">${orderBean.hostel.address}</span>
+                            <span class="hostel-address">${order.hostel.city.name} ${orderBean.hostel.address}</span>
                         </div>
                     </div>
                 </div>

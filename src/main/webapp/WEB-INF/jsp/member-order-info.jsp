@@ -49,7 +49,7 @@
                 <div class="grid-content">
                     <div id="hostel">
                         <span class="hostel-name">${order.hostel.name}</span>
-                        <span class="hostel-address">${order.hostel.address}</span>
+                        <span class="hostel-address">${order.hostel.city.name} ${order.hostel.address}</span>
                     </div>
                 </div>
             </div>

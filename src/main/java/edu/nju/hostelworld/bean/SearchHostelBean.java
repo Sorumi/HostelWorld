@@ -1,6 +1,7 @@
 package edu.nju.hostelworld.bean;
 
 import edu.nju.hostelworld.model.Hostel;
+import edu.nju.hostelworld.util.City;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
  */
 public class SearchHostelBean {
 
+    private City city;
+
     private String keyword;
 
     private String checkInDate;
@@ -16,6 +19,14 @@ public class SearchHostelBean {
     private String checkOutDate;
 
     private List<HostelPriceBean> hostels;
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
 
     public String getKeyword() {
         return keyword;

@@ -3,6 +3,7 @@ package edu.nju.hostelworld.dao.impl;
 import edu.nju.hostelworld.dao.HostelDao;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.model.Member;
+import edu.nju.hostelworld.util.City;
 import edu.nju.hostelworld.util.HostelState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.hibernate.Session;
@@ -68,6 +69,11 @@ public class HostelDaoImpl extends BaseDaoImpl implements HostelDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public List<Hostel> findHostelsByCity(City city) {
+        return findByFieldAndValue(Hostel.class, "city", city);
     }
 
     public List<Hostel> findHostelByKeyword(String keyword, String value) {

@@ -18,11 +18,7 @@ public interface OrderService {
 
     public OrderBean generateOrder(HostelBookOrderBean hostelBookOrderBean, Hostel hostel);
 
-//    public ResultMessage addOrder(BookOrder bookOrder);
-
     public String addNewOrder(OrderBean orderBean);
-
-//    public ResultMessage updateOrder(BookOrder order);
 
     public ResultMessage cancelOrder(String ID);
 

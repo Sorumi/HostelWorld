@@ -22,6 +22,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Hostel World</title>
+
+    <link rel="stylesheet" type="text/css" href="${basePath}/css/select2.min.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/flatpickr.min.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/magnific-popup.css"/>
@@ -36,7 +38,7 @@
 
 <header>
     <div class="container">
-        <a class="title" href="#">Hostel World</a>
+        <a class="title" href="${basePath}/home">Hostel World</a>
         <div class="nav">
             <div class="nav">
                 <c:if test="${member == null && hostel == null && manager == null}" >

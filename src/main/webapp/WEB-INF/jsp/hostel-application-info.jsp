@@ -70,6 +70,14 @@
             </div>
             <div class="grid-row">
                 <div class="grid-label">
+                    <label for="city">酒店城市</label>
+                </div>
+                <div class="grid-content">
+                    <span id="city" class="tag tag-green-current">${application.city.name}</span>
+                </div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-label">
                     <label for="address">酒店地址</label>
                 </div>
                 <div class="grid-content">

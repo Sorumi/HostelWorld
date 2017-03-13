@@ -1,6 +1,7 @@
 package edu.nju.hostelworld.dao;
 
 import edu.nju.hostelworld.model.Hostel;
+import edu.nju.hostelworld.util.City;
 import edu.nju.hostelworld.util.HostelState;
 import edu.nju.hostelworld.util.ResultMessage;
 
@@ -25,6 +26,8 @@ public interface HostelDao {
 
     public List<Hostel> findHostelsByState(HostelState state);
 
-    public List<Hostel> findHostelByKeyword(String keword, String value);
+    public List<Hostel> findHostelsByCity(City city);
+
+    public List<Hostel> findHostelByKeyword(String keyword, String value);
 
 }

@@ -16,7 +16,4 @@ public interface OrderRoomDao {
 
     public List<OrderRoom> findOrderRoomsByOrderID(String orderID);
 
-
-//    public List<OrderRoom> findHostelRoomsByHostelIDAndDate(String hostelID, String startDate, String endDate);
-
 }

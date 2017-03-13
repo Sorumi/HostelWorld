@@ -24,7 +24,7 @@ public class ManagerDaoImpl extends BaseDaoImpl implements ManagerDao {
         return update(manager);
     }
 
-    public long countManager() {
+    public long countManagers() {
         return count(Manager.class);
     }
 
