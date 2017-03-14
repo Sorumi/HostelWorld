@@ -21,6 +21,8 @@ public class HostelRoom {
 
     private int quantity;
 
+    private String imageType;
+
     private String startDate;
 
     private String endDate;
@@ -67,6 +69,13 @@ public class HostelRoom {
         this.quantity = quantity;
     }
 
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
     public String getStartDate() {
         return startDate;
     }

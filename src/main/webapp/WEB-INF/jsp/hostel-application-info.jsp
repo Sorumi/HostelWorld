@@ -45,12 +45,12 @@
                 </div>
             </div>
             <%--<div class="grid-row">--%>
-                <%--<div class="grid-label">--%>
-                    <%--<label for="user">申请人</label>--%>
-                <%--</div>--%>
-                <%--<div class="grid-content">--%>
-                    <%--<span id="user">sorumi</span>--%>
-                <%--</div>--%>
+            <%--<div class="grid-label">--%>
+            <%--<label for="user">申请人</label>--%>
+            <%--</div>--%>
+            <%--<div class="grid-content">--%>
+            <%--<span id="user">sorumi</span>--%>
+            <%--</div>--%>
             <%--</div>--%>
             <div class="grid-row">
                 <div class="grid-label">
@@ -62,12 +62,31 @@
             </div>
             <div class="grid-row">
                 <div class="grid-label">
+                    <label for="image">酒店图片</label>
+                </div>
+                <div class="grid-content">
+                    <c:choose>
+                        <c:when test="${application.imageType != null}">
+                            <div id="image" class="image-view-wrapper">
+                                <div id="image-view" class="image-view"
+                                     style="background-image: url('${basePath}/static/images/application/${application.ID}.${application.imageType}')"></div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            无
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-label">
                     <label for="name">酒店名称</label>
                 </div>
                 <div class="grid-content">
                     <span id="name">${application.name}</span>
                 </div>
             </div>
+
             <div class="grid-row">
                 <div class="grid-label">
                     <label for="city">酒店城市</label>
@@ -102,9 +121,9 @@
             </div>
         </div>
         <button class="minor-button" type="button" onclick="history.back()">返回</button>
-    <%--<div class="book-submit">--%>
-            <%--<button class="major-button">通过</button>--%>
-            <%--<button class="minor-button">拒绝</button>--%>
+        <%--<div class="book-submit">--%>
+        <%--<button class="major-button">通过</button>--%>
+        <%--<button class="minor-button">拒绝</button>--%>
         <%--</div>--%>
         <div class="clear-fix"></div>
     </div>

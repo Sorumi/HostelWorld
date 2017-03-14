@@ -11,7 +11,11 @@
 <%@ include file="include/header.jsp" %>
 
 <div class="bg bg-large">
-    <div class="img"></div>
+    <div class="img"
+    <c:if test="${hostel.imageType != null}">
+        style="background-image: url('${basePath}/static/images/hostel/${hostel.ID}.${hostel.imageType}')"
+    </c:if>
+    ></div>
 </div>
 
 <main>

@@ -42,7 +42,11 @@
             <div class="application-wrapper">
 
                 <div class="application-img-wrapper">
-                    <div class="img"></div>
+                    <div class="img"
+                            <c:if test="${hostel.imageType != null}">
+                                style="background-image: url('${basePath}/static/images/application/${application.ID}.${application.imageType}')"
+                            </c:if>
+                    ></div>
                 </div>
                 <div class="info-wrapper card">
                     <span class="application-type">${application.type.name}</span>

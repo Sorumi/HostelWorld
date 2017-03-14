@@ -15,14 +15,15 @@
 <%@ include file="include/hostel-nav.jsp" %>
 
 <main>
-    <div class="container card member-info">
+    <div class="container card application-edit">
         <h1 class="title">申请修改信息</h1>
         <c:choose>
         <c:when test="${application.type == 'Open'}">
         <form action="${basePath}/hostel/application/open/add" method="post" autocomplete="off" id="add-form">
             </c:when>
             <c:otherwise>
-            <form action="${basePath}/hostel/application/edit/add" method="post" autocomplete="off" id="add-form">
+            <form action="${basePath}/hostel/application/edit/add" method="post" autocomplete="off" id="add-form"
+                  enctype="multipart/form-data">
                 </c:otherwise>
                 </c:choose>
                 <div class="grid">
@@ -33,6 +34,31 @@
                         <div class="grid-content">
                             <span id="type">${application.type.name}</span>
                             <span class="alert"></span>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-label">
+                            <label for="image">酒店图片</label>
+                        </div>
+                        <div class="grid-content">
+                            <div class="buttons">
+                                <button id="upload-image" type="button" class="major-button">上传图片</button>
+                                <button id="remove-image" type="button" class="minor-button" style="display:none;">
+                                    移除图片
+                                </button>
+                            </div>
+                            <div id="image">
+                                <input type="file" id="image-file" name="image" accept="image/*" style="display: none">
+                                <input type="hidden" id="image-change" name="imageChanged" value="0">
+                            </div>
+
+                            <div id="image-view-wrapper" class="image-view-wrapper" style="display: none">
+                                <div id="image-view" class="image-view"
+                                        <c:if test="${hostel.imageType != null}">
+                                            style="background-image: url('${basePath}/static/images/hostel/${hostel.ID}.${hostel.imageType}')"
+                                        </c:if>
+                                ></div>
+                            </div>
                         </div>
                     </div>
                     <div class="grid-row">
@@ -99,6 +125,7 @@
 </main>
 
 <script src="${basePath}/js/select2.full.min.js"></script>
+<script src="${basePath}/js/upload-image.js"></script>
 <script>
     $("#city").select2();
 
@@ -127,6 +154,13 @@
             $("#add-form").submit();
         }
     });
+</script>
+
+<script>
+    <c:if test="${hostel.imageType != null}">
+    $('#image-view-wrapper').show();
+    $("#remove-image").show();
+    </c:if>
 </script>
 
 <%@ include file="include/footer.jsp" %>

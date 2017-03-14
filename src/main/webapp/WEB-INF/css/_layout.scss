@@ -584,7 +584,8 @@ form.search-small {
   }
   .img {
     @include cover-img();
-    background-image: url("../img/example.png");
+    background-color: $gray-color-light;
+    //background-image: url("../img/example.png");
   }
   .info-wrapper {
     height: 150px;
@@ -791,7 +792,8 @@ form.search-small {
       border-radius: 50px;
       .img {
         @include cover-img();
-        background-image: url(../img/example.png);
+        background-color: $gray-color-light;
+        //background-image: url(../img/example.png);
       }
     }
   }
@@ -901,7 +903,8 @@ form.search-small {
     height: 200px;
     .img {
       @include cover-img();
-      background-image: url(../img/example.png);
+      background-color: $gray-color-light;
+      //background-image: url(../img/example.png);
     }
   }
 
@@ -1001,7 +1004,8 @@ form.search-small {
     height: 200px;
     .img {
       @include cover-img();
-      background-image: url(../img/example.png);
+      background-color: $gray-color-light;
+      //background-image: url(../img/example.png);
     }
   }
 
@@ -1059,6 +1063,30 @@ form.search-small {
     bottom: 20px;
   }
 
+}
+
+.application-edit {
+  #city {
+    width: 200px;
+    height: 40px;
+  }
+  .select2-container--default .select2-selection--single {
+    height: 40px;
+  }
+  input.select2-search__field {
+    height: 40px;
+    font-size: 14px;
+    color: $gray-color-dark;
+    border-color: $gray-color;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px;
+  }
 }
 
 .level-list {
@@ -1211,6 +1239,18 @@ form.search-small {
   }
 }
 
+// image-upload
+
+.image-view-wrapper {
+  width: 300px;
+  height: 200px;
+  margin: 10px 0;
+  .image-view {
+    @include cover-img();
+    //background-image: url(../img/example.png);
+  }
+}
+
 // popup
 .popup {
   position: relative;
@@ -1282,56 +1322,3 @@ input.select2-search__field {
   color: $gray-color-dark;
 }
 
-//.select2-container {
-//  width: 200px;
-//}
-//
-//.select2-dropdown {
-//  width: 200px;
-//}
-
-//.am-selected .am-btn-default {
-//  width: 300px;
-//  height: 42px;
-//  padding: 10px 10px;
-//  line-height: 20px;
-//  border: solid 1px $gray-color-light;
-//  border-radius: $radius;
-//  outline: none;
-//  &:active {
-//    box-shadow: none;
-//    outline: none;
-//  }
-//}
-//
-//.am-selected-text {
-//  font-size: 14px;
-//}
-//.am-selected-status {
-//  width: 250px;
-//  font-family: $base-font-family;
-//  font-size: 14px;
-//  color: $gray-color-dark;
-//}
-//.am-selected-search input {
-//  height: 30px;
-//  padding: 5px;
-//  font-size: 14px;
-//  box-shadow: none;
-//  border-color: $gray-color;
-//  transition: none;
-//  &:focus {
-//    box-shadow: none;
-//    border-color: $gray-color;
-//  }
-//}
-//.am-form-field .am-input-sm {
-//
-//}
-//
-//.am-selected-list li.am-checked .am-icon-check {
-//  color: $theme-color !important;
-//}
-//.am-btn-default:active, .am-btn-default.am-active, .am-dropdown.am-active .am-btn-default.am-dropdown-toggle {
-//  background-color: transparent !important;
-//}

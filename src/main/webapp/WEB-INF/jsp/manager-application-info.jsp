@@ -63,6 +63,24 @@
             </div>
             <div class="grid-row">
                 <div class="grid-label">
+                    <label for="image">酒店图片</label>
+                </div>
+                <div class="grid-content">
+                    <c:choose>
+                        <c:when test="${applicationBean.application.imageType != null}">
+                            <div id="image" class="image-view-wrapper">
+                                <div id="image-view" class="image-view"
+                                     style="background-image: url('${basePath}/static/images/application/${applicationBean.application.ID}.${applicationBean.application.imageType}')"></div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            无
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-label">
                     <label for="name">酒店名称</label>
                 </div>
                 <div class="grid-content">

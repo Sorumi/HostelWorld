@@ -35,6 +35,8 @@ public class Hostel {
 
     private String facility;
 
+    private String imageType;
+
     private double money;
 
     public String getID() {
@@ -109,6 +111,13 @@ public class Hostel {
         this.facility = facility;
     }
 
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
     public double getMoney() {
         return money;
     }

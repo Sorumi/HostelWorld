@@ -41,6 +41,8 @@ public class Application {
 
     private String facility;
 
+    private String imageType;
+
     public String getID() {
         return ID;
     }
@@ -127,5 +129,13 @@ public class Application {
 
     public void setFacility(String facility) {
         this.facility = facility;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
     }
 }

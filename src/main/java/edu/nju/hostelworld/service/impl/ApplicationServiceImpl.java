@@ -9,9 +9,13 @@ import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.service.ApplicationService;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.util.*;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -27,6 +31,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Autowired
     private HostelService hostelService;
+
+    @Autowired
+    ServletContext servletContext;
 
     @Override
     public ApplicationBean convertToApplicationBean(String ID) {
@@ -79,6 +86,32 @@ public class ApplicationServiceImpl implements ApplicationService {
         hostel.setIntroduction(application.getIntroduction());
         hostel.setFacility(application.getFacility());
 
+
+        String pathRoot = servletContext.getRealPath("");
+        if (application.getImageType() != null) {
+
+            new File(pathRoot + "/static/images/hostel").mkdirs();
+
+            String imageType = application.getImageType();
+            hostel.setImageType(imageType);
+
+            File source = new File(pathRoot + "/static/images/application/" + application.getID() + "." + imageType);
+            File dest = new File(pathRoot + "/static/images/hostel/" + hostel.getID() + "." + imageType);
+            try {
+                FileUtils.copyFile(source, dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+
+            File dest = new File(pathRoot + "/static/images/hostel/" + hostel.getID() + "." + hostel.getImageType());
+            if (dest.exists()) {
+                dest.delete();
+            }
+            hostel.setImageType(null);
+        }
+
         if (hostel.getState() == HostelState.Unopened) {
             hostel.setState(HostelState.Opening);
         }
@@ -108,14 +141,14 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<Application> findApplicationsByType(ApplicationType type) {
-        List<Application> applications =  applicationDao.findApplicationsByType(type);
+        List<Application> applications = applicationDao.findApplicationsByType(type);
         applications.sort(new ApplicationDateComparator());
         return applications;
     }
 
     @Override
     public List<Application> findApplicationsByHostelID(String hostelID, ApplicationType type) {
-        List<Application> applications =  applicationDao.findApplicationsByHostelID(hostelID, type);
+        List<Application> applications = applicationDao.findApplicationsByHostelID(hostelID, type);
         applications.sort(new ApplicationDateComparator());
         return applications;
     }

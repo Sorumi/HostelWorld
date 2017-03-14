@@ -7,11 +7,16 @@ import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.service.ApplicationService;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.util.*;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,6 +30,9 @@ public class HostelInfoController {
 
     @Autowired
     private ApplicationService applicationService;
+
+    @Autowired
+    ServletContext servletContext;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(ModelMap model) {
@@ -138,7 +146,7 @@ public class HostelInfoController {
     }
 
     @RequestMapping(value = "/application/open/add", method = RequestMethod.POST)
-    public String applicationOpenAddPost(Application application, ModelMap model) {
+    public String applicationOpenAddPost(Application application, @RequestParam(value = "image", required = false) MultipartFile image, ModelMap model) throws IOException {
         boolean isLogin = model.containsAttribute("hostel");
         if (!isLogin) {
             return "redirect:/hostel/login";
@@ -161,6 +169,24 @@ public class HostelInfoController {
         application.setHostelID(hostel.getID());
 
         String applicationID = applicationService.addApplication(application);
+
+        // image
+        String pathRoot = servletContext.getRealPath("");
+        String path;
+
+        if (image != null && !image.isEmpty()) {
+            new File(pathRoot + "/static/images/application").mkdirs();
+
+            String name = application.getID();
+            String contentType = image.getContentType();
+            String imageType = contentType.substring(contentType.indexOf("/") + 1);
+            path = "/static/images/application/" + name + "." + imageType;
+            image.transferTo(new File(pathRoot + path));
+            application.setImageType(imageType);
+        }
+
+        applicationService.updateApplication(application);
+
         if (applicationID != null) {
             AlertBean alertBean = new AlertBean();
 
@@ -204,7 +230,7 @@ public class HostelInfoController {
     }
 
     @RequestMapping(value = "/application/edit/add", method = RequestMethod.POST)
-    public String applicationEditAddPost(Application application, ModelMap model) {
+    public String applicationEditAddPost(Application application, @RequestParam(value = "image", required = false) MultipartFile image, @RequestParam(value = "imageChanged", required = false) int change, ModelMap model) throws IOException {
         boolean isLogin = model.containsAttribute("hostel");
         if (!isLogin) {
             return "redirect:/hostel/login";
@@ -218,6 +244,44 @@ public class HostelInfoController {
         application.setHostelID(hostel.getID());
 
         String applicationID = applicationService.addApplication(application);
+
+        // image
+        String pathRoot = servletContext.getRealPath("");
+        String path;
+
+
+        System.out.println(change);
+
+        new File(pathRoot + "/static/images/application").mkdirs();
+
+        if (image != null && !image.isEmpty()) {
+
+
+            String name = application.getID();
+            String contentType = image.getContentType();
+            String imageType = contentType.substring(contentType.indexOf("/") + 1);
+            path = "/static/images/application/" + name + "." + imageType;
+            image.transferTo(new File(pathRoot + path));
+            application.setImageType(imageType);
+
+        } else if (change == 0 && hostel.getImageType() != null) {
+
+            String imageType = hostel.getImageType();
+            hostel.setImageType(imageType);
+
+            File source = new File(pathRoot + "/static/images/hostel/" + hostel.getID() + "." + imageType);
+            File dest = new File(pathRoot + "/static/images/application/" + application.getID() + "." + imageType);
+
+            try {
+                FileUtils.copyFile(source, dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        applicationService.updateApplication(application);
+
         if (applicationID != null) {
             AlertBean alertBean = new AlertBean();
 

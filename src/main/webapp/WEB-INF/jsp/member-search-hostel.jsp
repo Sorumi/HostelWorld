@@ -68,7 +68,11 @@
                         <div class="hostel-1">
                             <div class="hostel-wrapper">
                                 <div class="img-wrapper">
-                                    <div class="img"></div>
+                                    <div class="img"
+                                            <c:if test="${hostelPriceBean.hostel.imageType != null}">
+                                                style="background-image: url('${basePath}/static/images/hostel/${hostelPriceBean.hostel.ID}.${hostelPriceBean.hostel.imageType}')"
+                                            </c:if>
+                                    ></div>
                                 </div>
                                 <div class="info-wrapper">
                                     <a href="${basePath}/search/${hostelPriceBean.hostel.ID}" class="title">${hostelPriceBean.hostel.name}</a>
@@ -84,7 +88,11 @@
                         <div class="hostel-2">
                             <div class="hostel-wrapper">
                                 <div class="img-wrapper">
-                                    <div class="img"></div>
+                                    <div class="img"
+                                            <c:if test="${hostelPriceBean.hostel.imageType != null}">
+                                                style="background-image: url('${basePath}/static/images/hostel/${hostelPriceBean.hostel.ID}.${hostelPriceBean.hostel.imageType}')"
+                                            </c:if>
+                                    ></div>
                                 </div>
                                 <div class="info-wrapper">
                                     <a href="${basePath}/search/${hostelPriceBean.hostel.ID}" class="title">${hostelPriceBean.hostel.name}</a>
@@ -99,7 +107,11 @@
                         <div class="hostel-3">
                             <div class="hostel-wrapper">
                                 <div class="img-wrapper">
-                                    <div class="img"></div>
+                                    <div class="img"
+                                            <c:if test="${hostelPriceBean.hostel.imageType != null}">
+                                                style="background-image: url('${basePath}/static/images/hostel/${hostelPriceBean.hostel.ID}.${hostelPriceBean.hostel.imageType}')"
+                                            </c:if>
+                                    ></div>
                                 </div>
                                 <div class="info-wrapper">
                                     <a href="${basePath}/search/${hostelPriceBean.hostel.ID}" class="title">${hostelPriceBean.hostel.name}</a>
