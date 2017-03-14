@@ -58,7 +58,11 @@
         <c:forEach var="order" items="${orderList}">
             <div class="order-wrapper">
                 <div class="order-img-wrapper">
-                    <div class="img"></div>
+                    <div class="img"
+                            <c:if test="${order.hostel.imageType != null}">
+                                style="background-image: url('${basePath}/static/images/hostel/${order.hostel.ID}.${order.hostel.imageType}')"
+                            </c:if>
+                    ></div>
                 </div>
                 <div class="info-wrapper card">
                     <span class="order-id">订单编号:${order.bookOrder.ID}</span>

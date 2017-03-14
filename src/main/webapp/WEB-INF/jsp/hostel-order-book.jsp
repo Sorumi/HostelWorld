@@ -77,7 +77,11 @@
                                 <div class="grid-row grid-row-line">
                                     <div class="room-img">
                                         <div class="room-img-wrapper">
-                                            <div class="img"></div>
+                                            <div class="img"
+                                                    <c:if test="${room.imageType != null}">
+                                                        style="background-image: url('${basePath}/static/images/hostelroom/${hostel.ID}/${room.ID}.${room.imageType}')"
+                                                    </c:if>
+                                            ></div>
                                         </div>
                                     </div>
                                     <div class="room-name">${room.name}</div>

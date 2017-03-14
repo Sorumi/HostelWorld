@@ -143,9 +143,9 @@ public class HostelServiceImpl implements HostelService {
     }
 
     @Override
-    public ResultMessage addHostelRoom(HostelRoom hostelRoom) {
+    public String addHostelRoom(HostelRoom hostelRoom) {
         if (hostelRoom.getHostelID() == null) {
-            return ResultMessage.FAILED;
+            return null;
         }
 
         ResultMessage resultMessage;
@@ -159,7 +159,7 @@ public class HostelServiceImpl implements HostelService {
         resultMessage = hostelRoomDao.addHostelRoom(hostelRoom);
 
         if (resultMessage != ResultMessage.SUCCESS) {
-            return resultMessage;
+            return null;
         }
 
         LocalDate startDate = LocalDate.parse(hostelRoom.getStartDate());
@@ -177,7 +177,15 @@ public class HostelServiceImpl implements HostelService {
             num++;
         }
 
-        return resultMessage;
+        if (resultMessage == ResultMessage.SUCCESS) {
+            return hostelRoomID;
+        }
+        return null;
+    }
+
+    @Override
+    public ResultMessage updateHostelRoom(HostelRoom hostelRoom) {
+        return hostelRoomDao.updateHostelRoom(hostelRoom);
     }
 
     @Override
@@ -204,6 +212,7 @@ public class HostelServiceImpl implements HostelService {
             roomStockBean.setPrice(hostelRoom.getPrice());
             roomStockBean.setTotalQuantity(hostelRoom.getQuantity());
             roomStockBean.setAvailableQuantity(roomStock.getQuantity());
+            roomStockBean.setImageType(hostelRoom.getImageType());
             roomStockBeans.add(roomStockBean);
         }
         return roomStockBeans;
@@ -225,6 +234,7 @@ public class HostelServiceImpl implements HostelService {
             roomStockBean.setPrice(hostelRoom.getPrice());
             roomStockBean.setTotalQuantity(hostelRoom.getQuantity());
             roomStockBean.setAvailableQuantity(minQuantity);
+            roomStockBean.setImageType(hostelRoom.getImageType());
             roomStockBeans.add(roomStockBean);
         }
         return roomStockBeans;

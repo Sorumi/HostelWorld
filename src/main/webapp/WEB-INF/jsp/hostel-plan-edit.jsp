@@ -17,8 +17,27 @@
 <main>
     <div class="container card plan-edit">
         <h1 class="title">发布计划</h1>
-        <form action="${basePath}/hostel/plan/add" method="post" autocomplete="off" id="add-form">
+        <form action="${basePath}/hostel/plan/add" method="post" autocomplete="off" id="add-form" enctype="multipart/form-data">
             <div class="grid">
+                <div class="grid-row">
+                    <div class="grid-label">
+                        <label for="image">房间图片</label>
+                    </div>
+                    <div class="grid-content">
+                        <div class="buttons">
+                            <button id="upload-image" type="button" class="major-button">上传图片</button>
+                            <button id="remove-image" type="button" class="minor-button" style="display:none;">移除图片</button>
+                        </div>
+                        <div id="image">
+                            <input type="file" id="image-file" name="image" accept="image/*" style="display: none">
+                            <input type="hidden" id="image-change" name="imageChanged" value="0">
+                        </div>
+
+                        <div id="image-view-wrapper" class="image-view-wrapper" style="display: none">
+                            <div id="image-view" class="image-view"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="grid-row">
                     <div class="grid-label">
                         <label for="name">房间名称</label>
@@ -70,6 +89,7 @@
     </div>
 </main>
 
+<script src="${basePath}/js/upload-image.js"></script>
 <script>
     //validate
     $("#submit-button").click(function () {

@@ -15,6 +15,8 @@ public class OrderRoomBean {
 
     private double total;
 
+    private String imageType;
+
     public String getHostelRoomID() {
         return hostelRoomID;
     }
@@ -53,5 +55,13 @@ public class OrderRoomBean {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
     }
 }

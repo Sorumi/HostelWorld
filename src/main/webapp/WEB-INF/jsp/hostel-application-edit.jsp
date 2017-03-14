@@ -19,7 +19,7 @@
         <h1 class="title">申请修改信息</h1>
         <c:choose>
         <c:when test="${application.type == 'Open'}">
-        <form action="${basePath}/hostel/application/open/add" method="post" autocomplete="off" id="add-form">
+        <form action="${basePath}/hostel/application/open/add" method="post" autocomplete="off" id="add-form" enctype="multipart/form-data">
             </c:when>
             <c:otherwise>
             <form action="${basePath}/hostel/application/edit/add" method="post" autocomplete="off" id="add-form"

@@ -13,7 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,6 +29,9 @@ import java.util.List;
 @RequestMapping("/hostel")
 @SessionAttributes({"hostel"})
 public class HostelRoomController {
+
+    @Autowired
+    ServletContext servletContext;
 
     @Autowired
     private HostelService hostelService;
@@ -101,7 +108,7 @@ public class HostelRoomController {
     }
 
     @RequestMapping(value = "/plan/add", method = RequestMethod.POST)
-    public String planAddPost(HostelRoom hostelRoom, ModelMap model) {
+    public String planAddPost(HostelRoom hostelRoom, @RequestParam(value = "image", required = false) MultipartFile image, ModelMap model) throws IOException {
         boolean isLogin = model.containsAttribute("hostel");
         if (!isLogin) {
             return "redirect:/hostel/login";
@@ -121,10 +128,29 @@ public class HostelRoomController {
             return "hostel-plan-edit";
         }
 
-        hostelRoom.setHostelID(hostel.getID());
+        String hostelID = hostel.getID();
+        hostelRoom.setHostelID(hostelID);
 
-        ResultMessage resultMessage = hostelService.addHostelRoom(hostelRoom);
-        if (resultMessage == ResultMessage.SUCCESS) {
+        String hostelRoomID = hostelService.addHostelRoom(hostelRoom);
+        if (hostelRoomID != null) {
+
+            // image
+            String pathRoot = servletContext.getRealPath("");
+            String path;
+
+            if (image != null && !image.isEmpty()) {
+                new File(pathRoot + "/static/images/hostelroom/" + hostelID + "/").mkdirs();
+
+                String contentType = image.getContentType();
+                String imageType = contentType.substring(contentType.indexOf("/") + 1);
+                path = "/static/images/hostelroom/" + hostelID + "/" + hostelRoomID + "." + imageType;
+                image.transferTo(new File(pathRoot + path));
+                hostelRoom.setImageType(imageType);
+            }
+
+            hostelService.updateHostelRoom(hostelRoom);
+
+            // alert
             AlertBean alertBean = new AlertBean();
 
             alertBean.setMessage("添加成功！");

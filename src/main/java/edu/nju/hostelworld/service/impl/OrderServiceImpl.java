@@ -57,6 +57,7 @@ public class OrderServiceImpl implements OrderService {
                 orderRoomBean.setPrice(roomStockBean.getPrice());
                 orderRoomBean.setQuantity(quantity);
                 orderRoomBean.setTotal(roomStockBean.getPrice() * quantity);
+                orderRoomBean.setImageType(roomStockBean.getImageType());
                 orderRooms.add(orderRoomBean);
                 price += roomStockBean.getPrice() * quantity;
             }
@@ -98,6 +99,7 @@ public class OrderServiceImpl implements OrderService {
                 orderRoomBean.setPrice(roomStockBean.getPrice());
                 orderRoomBean.setQuantity(quantity);
                 orderRoomBean.setTotal(roomStockBean.getPrice() * quantity);
+                orderRoomBean.setImageType(roomStockBean.getImageType());
                 orderRooms.add(orderRoomBean);
                 price += roomStockBean.getPrice() * quantity;
             }
@@ -393,10 +395,12 @@ public class OrderServiceImpl implements OrderService {
         for (OrderRoom orderRoom : orderRooms) {
             OrderRoomBean orderRoomBean = new OrderRoomBean();
             HostelRoom hostelRoom = hostelService.findHostelRoomByID(orderRoom.getHostelRoomID());
+            orderRoomBean.setHostelRoomID(hostelRoom.getID());
             orderRoomBean.setName(hostelRoom.getName());
             orderRoomBean.setPrice(hostelRoom.getPrice());
             orderRoomBean.setQuantity(orderRoom.getQuantity());
             orderRoomBean.setTotal(hostelRoom.getPrice() * orderRoom.getQuantity());
+            orderRoomBean.setImageType(hostelRoom.getImageType());
             orderRoomBeans.add(orderRoomBean);
         }
 

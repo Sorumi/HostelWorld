@@ -34,13 +34,17 @@
                     <div class="room-plan-quantity title">数量</div>
                     <div class="room-plan-start-date title">起始日期</div>
                     <div class="room-plan-end-date title">结束日期</div>
-                    <div class="room-plan-operation title">操作</div>
+                    <%--<div class="room-plan-operation title">操作</div>--%>
                 </div>
                 <c:forEach var="room" items="${hostelRoomListBean.hostelRooms}">
                     <div class="grid-row grid-row-line">
                         <div class="room-img">
                             <div class="room-img-wrapper">
-                                <div class="img"></div>
+                                <div class="img"
+                                        <c:if test="${room.imageType != null}">
+                                            style="background-image: url('${basePath}/static/images/hostelroom/${room.hostelID}/${room.ID}.${room.imageType}')"
+                                        </c:if>
+                                ></div>
                             </div>
                         </div>
                         <div class="room-plan-name">${room.name}</div>
@@ -48,10 +52,10 @@
                         <div class="room-plan-quantity">${room.quantity}</div>
                         <div class="room-plan-start-date">${room.startDate}</div>
                         <div class="room-plan-end-date">${room.endDate}</div>
-                        <div class="room-plan-operation">
-                            <button class="major-button-small">修改</button>
-                            <button class="minor-button-small">删除</button>
-                        </div>
+                        <%--<div class="room-plan-operation">--%>
+                            <%--<button class="major-button-small">修改</button>--%>
+                            <%--<button class="minor-button-small">删除</button>--%>
+                        <%--</div>--%>
                     </div>
                 </c:forEach>
 

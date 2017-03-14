@@ -15,6 +15,7 @@ public class RoomStockBean {
 
     private int availableQuantity;
 
+    private String imageType;
 
     public String getID() {
         return ID;
@@ -54,5 +55,13 @@ public class RoomStockBean {
 
     public void setAvailableQuantity(int availableQuantity) {
         this.availableQuantity = availableQuantity;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
     }
 }

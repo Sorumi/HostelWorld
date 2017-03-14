@@ -31,7 +31,9 @@ public interface HostelService {
 
     public List<HostelPriceBean> findHostelsByCityAndKeywordAndCheckDate(City city, String value, LocalDate checkInDate, LocalDate checkOutDate);
 
-    public ResultMessage addHostelRoom(HostelRoom hostelRoom);
+    public String addHostelRoom(HostelRoom hostelRoom);
+
+    public ResultMessage updateHostelRoom(HostelRoom hostelRoom);
 
     public HostelRoom findHostelRoomByID(String ID);
 

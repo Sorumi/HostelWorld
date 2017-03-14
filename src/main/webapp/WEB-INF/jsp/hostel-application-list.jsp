@@ -52,7 +52,7 @@
 
                 <div class="application-img-wrapper">
                     <div class="img"
-                            <c:if test="${hostel.imageType != null}">
+                            <c:if test="${application.imageType != null}">
                                 style="background-image: url('${basePath}/static/images/application/${application.ID}.${application.imageType}')"
                             </c:if>
                     ></div>

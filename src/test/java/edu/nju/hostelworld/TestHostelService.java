@@ -55,8 +55,8 @@ public class TestHostelService extends TestCase {
         hostelRoom.setPrice(120);
         hostelRoom.setStartDate("2017-03-01");
         hostelRoom.setEndDate("2017-03-02");
-        ResultMessage resultMessage = hostelService.addHostelRoom(hostelRoom);
-        assertEquals(ResultMessage.SUCCESS, resultMessage);
+        String ID = hostelService.addHostelRoom(hostelRoom);
+        assertNotNull(ID);
     }
 
     @Test

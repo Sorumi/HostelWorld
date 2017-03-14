@@ -29,10 +29,10 @@ import java.util.List;
 public class HostelInfoController {
 
     @Autowired
-    private ApplicationService applicationService;
+    ServletContext servletContext;
 
     @Autowired
-    ServletContext servletContext;
+    private ApplicationService applicationService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(ModelMap model) {
@@ -170,24 +170,26 @@ public class HostelInfoController {
 
         String applicationID = applicationService.addApplication(application);
 
-        // image
-        String pathRoot = servletContext.getRealPath("");
-        String path;
-
-        if (image != null && !image.isEmpty()) {
-            new File(pathRoot + "/static/images/application").mkdirs();
-
-            String name = application.getID();
-            String contentType = image.getContentType();
-            String imageType = contentType.substring(contentType.indexOf("/") + 1);
-            path = "/static/images/application/" + name + "." + imageType;
-            image.transferTo(new File(pathRoot + path));
-            application.setImageType(imageType);
-        }
-
-        applicationService.updateApplication(application);
-
         if (applicationID != null) {
+
+            // image
+            String pathRoot = servletContext.getRealPath("");
+            String path;
+
+            if (image != null && !image.isEmpty()) {
+                new File(pathRoot + "/static/images/application").mkdirs();
+
+                String name = applicationID;
+                String contentType = image.getContentType();
+                String imageType = contentType.substring(contentType.indexOf("/") + 1);
+                path = "/static/images/application/" + name + "." + imageType;
+                image.transferTo(new File(pathRoot + path));
+                application.setImageType(imageType);
+            }
+
+            applicationService.updateApplication(application);
+
+            // alert
             AlertBean alertBean = new AlertBean();
 
             alertBean.setMessage("申请成功！");
@@ -245,44 +247,42 @@ public class HostelInfoController {
 
         String applicationID = applicationService.addApplication(application);
 
-        // image
-        String pathRoot = servletContext.getRealPath("");
-        String path;
-
-
-        System.out.println(change);
-
-        new File(pathRoot + "/static/images/application").mkdirs();
-
-        if (image != null && !image.isEmpty()) {
-
-
-            String name = application.getID();
-            String contentType = image.getContentType();
-            String imageType = contentType.substring(contentType.indexOf("/") + 1);
-            path = "/static/images/application/" + name + "." + imageType;
-            image.transferTo(new File(pathRoot + path));
-            application.setImageType(imageType);
-
-        } else if (change == 0 && hostel.getImageType() != null) {
-
-            String imageType = hostel.getImageType();
-            hostel.setImageType(imageType);
-
-            File source = new File(pathRoot + "/static/images/hostel/" + hostel.getID() + "." + imageType);
-            File dest = new File(pathRoot + "/static/images/application/" + application.getID() + "." + imageType);
-
-            try {
-                FileUtils.copyFile(source, dest);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        applicationService.updateApplication(application);
 
         if (applicationID != null) {
+            // image
+            String pathRoot = servletContext.getRealPath("");
+            String path;
+
+            new File(pathRoot + "/static/images/application").mkdirs();
+
+            if (image != null && !image.isEmpty()) {
+
+                String name = applicationID;
+                String contentType = image.getContentType();
+                String imageType = contentType.substring(contentType.indexOf("/") + 1);
+                path = "/static/images/application/" + name + "." + imageType;
+                image.transferTo(new File(pathRoot + path));
+                application.setImageType(imageType);
+
+            } else if (change == 0 && hostel.getImageType() != null) {
+
+                String imageType = hostel.getImageType();
+                hostel.setImageType(imageType);
+
+                File source = new File(pathRoot + "/static/images/hostel/" + hostel.getID() + "." + imageType);
+                File dest = new File(pathRoot + "/static/images/application/" + application.getID() + "." + imageType);
+
+                try {
+                    FileUtils.copyFile(source, dest);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            applicationService.updateApplication(application);
+
+            // alert
             AlertBean alertBean = new AlertBean();
 
             alertBean.setMessage("申请成功！");
