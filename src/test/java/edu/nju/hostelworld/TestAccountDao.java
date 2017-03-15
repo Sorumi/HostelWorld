@@ -32,8 +32,8 @@ public class TestAccountDao extends TestCase {
     @Test
     public void testAdd() {
         Account account = new Account();
-        account.setAccount("12345678901234567892");
-        account.setMoney(900);
+        account.setAccount("12345678901234567893");
+        account.setMoney(9000);
         accountDao.addAccount(account);
 
     }
