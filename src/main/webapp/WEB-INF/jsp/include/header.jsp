@@ -44,7 +44,7 @@
                         href="${basePath}/hostel/home"
                     </c:when>
                     <c:when test="${manager != null}">
-                        href="${basePath}/manager/application"
+                        href="${basePath}/admin/application"
                     </c:when>
                     <c:otherwise>
                         href="${basePath}/home"

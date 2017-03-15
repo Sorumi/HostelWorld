@@ -201,12 +201,13 @@
 
         <div class="clear-fix"></div>
         <div class="book-submit">
-            <a href="${basePath}/order" class="major-button">返回</a>
             <c:if test="${order.bookOrder.state == 'UnCheckIn'}">
                 <form action="${basePath}/order/${order.bookOrder.ID}/cancel" method="post" class="inline">
                     <button type="submit" class="minor-button">取消预订</button>
                 </form>
             </c:if>
+
+            <a href="${basePath}/order" class="major-button">返回</a>
         </div>
         <div class="clear-fix"></div>
     </div>
