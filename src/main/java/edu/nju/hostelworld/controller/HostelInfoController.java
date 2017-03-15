@@ -55,6 +55,8 @@ public class HostelInfoController {
         }
         model.addAttribute("hostelInfoBean", hostelInfoBean);
 
+        model.addAttribute("title", "旅舍信息");
+        model.addAttribute("nav", "nav-info");
         return "hostel-home";
     }
 
@@ -70,6 +72,9 @@ public class HostelInfoController {
         }
 
 //        model.addAttribute("hostel", hostel);
+        model.addAttribute("title", "旅舍信息");
+        model.addAttribute("nav", "nav-info");
+
         return "hostel-info";
     }
 
@@ -90,6 +95,8 @@ public class HostelInfoController {
         model.addAttribute("applicationList", applicationList);
         model.addAttribute("applicationType", applicationType);
 
+        model.addAttribute("title", "申请管理");
+        model.addAttribute("nav", "nav-applcation");
         return "hostel-application-list";
     }
 
@@ -112,6 +119,8 @@ public class HostelInfoController {
 
         model.addAttribute("application", application);
 
+        model.addAttribute("title", "申请信息");
+        model.addAttribute("nav", "nav-application");
         return "hostel-application-info";
     }
 
@@ -141,6 +150,9 @@ public class HostelInfoController {
 
         model.addAttribute("application", application);
         model.addAttribute("cities", City.values());
+
+        model.addAttribute("title", "开店申请");
+        model.addAttribute("nav", "nav-application");
 
         return "hostel-application-edit";
     }
@@ -228,6 +240,8 @@ public class HostelInfoController {
         model.addAttribute("application", application);
         model.addAttribute("cities", City.values());
 
+        model.addAttribute("title", "修改申请");
+        model.addAttribute("nav", "nav-application");
         return "hostel-application-edit";
     }
 

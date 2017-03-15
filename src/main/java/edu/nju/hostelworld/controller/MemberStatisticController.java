@@ -44,6 +44,10 @@ public class MemberStatisticController {
         List<FinanceRecordBean> financeRecords = financeRecordService.findFinanceMemberRecords(member.getID());
         model.addAttribute("financeRecords", financeRecords);
 
+
+        model.addAttribute("title", "信息统计");
+        model.addAttribute("nav", "nav-statistic");
+
         return "member-statistic";
     }
 

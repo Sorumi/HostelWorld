@@ -12,14 +12,18 @@
 <nav>
     <div class="container">
         <c:if test="${hostel.state != 'Unopened'}">
-            <a href="${basePath}/hostel/info">酒店信息</a>
-            <a href="${basePath}/hostel/room">房间管理</a>
-            <a href="${basePath}/hostel/order">预定管理</a>
+            <a id="nav-info" href="${basePath}/hostel/info">旅舍信息</a>
+            <a id="nav-room" href="${basePath}/hostel/room">房间管理</a>
+            <a id="nav-order" href="${basePath}/hostel/order">预定管理</a>
         </c:if>
-        <a href="${basePath}/hostel/application">申请管理</a>
+        <a id="nav-application" href="${basePath}/hostel/application">申请管理</a>
         <c:if test="${hostel.state != 'Unopened'}">
-            <a href="${basePath}/hostel/statistic">信息统计</a>
+            <a id="nav-statistic" href="${basePath}/hostel/statistic">信息统计</a>
         </c:if>
         <div class="clear-fix"></div>
     </div>
 </nav>
+
+<script>
+    $('#${nav}').addClass('current');
+</script>

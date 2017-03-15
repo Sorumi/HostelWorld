@@ -11,12 +11,16 @@
 
 <nav>
     <div class="container">
-        <a href="${basePath}/admin/application">申请管理</a>
-        <a href="${basePath}/admin/order">预定管理</a>
-        <a href="${basePath}/admin/level">等级管理</a>
-        <a href="${basePath}/admin/statistic/hostel">酒店统计</a>
-        <a href="${basePath}/admin/statistic/member">会员统计</a>
-        <a href="${basePath}/admin/statistic/money">财务统计</a>
+        <a id="nav-application" href="${basePath}/admin/application">申请管理</a>
+        <a id="nav-order" href="${basePath}/admin/order">预定管理</a>
+        <a id="nav-level" href="${basePath}/admin/level">等级管理</a>
+        <a id="nav-hostel" href="${basePath}/admin/statistic/hostel">旅舍统计</a>
+        <a id="nav-member" href="${basePath}/admin/statistic/member">会员统计</a>
+        <a id="nav-money" href="${basePath}/admin/statistic/money">财务统计</a>
         <div class="clear-fix"></div>
     </div>
 </nav>
+
+<script>
+    $('#${nav}').addClass('current');
+</script>

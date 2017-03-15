@@ -68,6 +68,9 @@ public class ManagerStatisticController {
         List<FinanceRecordBean> financeRecords = financeRecordService.findFinanceManagerRecords();
         model.addAttribute("financeRecords", financeRecords);
 
+        model.addAttribute("title", "财务统计");
+        model.addAttribute("nav", "nav-money");
+
         return "manager-statistic-money";
     }
 
@@ -80,6 +83,9 @@ public class ManagerStatisticController {
 
         List<Hostel> hostels = hostelService.findAllHostels();
         model.addAttribute("hostels", hostels);
+
+        model.addAttribute("title", "旅舍统计");
+        model.addAttribute("nav", "nav-hostel");
 
         return "manager-statistic-hostel";
     }
@@ -121,6 +127,9 @@ public class ManagerStatisticController {
 
         List<Member> members = memberService.findAllMembers();
         model.addAttribute("members", members);
+
+        model.addAttribute("title", "会员统计");
+        model.addAttribute("nav", "nav-member");
 
         return "manager-statistic-member";
     }

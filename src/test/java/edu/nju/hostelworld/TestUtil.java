@@ -21,16 +21,16 @@ public class TestUtil extends TestCase {
 
     @Test
     public void testDate() {
-//        LocalDate date = LocalDate.parse("2017-02");
+        LocalDate date = LocalDate.parse("2017-02-01");
 
 
-//        ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
-//        long time = date.atStartOfDay(zoneId).toEpochSecond();
+        ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
+        long time = date.atStartOfDay(zoneId).toEpochSecond();
 
-//        System.out.print(date);
+        System.out.print(time);
 
-        long days = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(1));
-
-        System.out.print(days);
+//        long days = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(1));
+//
+//        System.out.print(days);
     }
 }

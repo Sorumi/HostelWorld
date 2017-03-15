@@ -51,6 +51,8 @@ public class HostelOrderController {
         model.addAttribute("orderList", orderList);
         model.addAttribute("orderState", orderState);
 
+        model.addAttribute("title", "预定管理");
+        model.addAttribute("nav", "nav-order");
         return "hostel-order-list";
     }
 
@@ -73,6 +75,8 @@ public class HostelOrderController {
         }
         model.addAttribute("order", orderBean);
 
+        model.addAttribute("title", "预定信息");
+        model.addAttribute("nav", "nav-order");
         return "hostel-order-info";
     }
 
@@ -201,6 +205,9 @@ public class HostelOrderController {
         hostelBookOrderBean.setRoomStocks(list);
 
         model.addAttribute("hostelBookOrderBean", hostelBookOrderBean);
+
+        model.addAttribute("title", "非会员入住");
+        model.addAttribute("nav", "nav-order");
 
         return "hostel-order-book";
     }

@@ -48,6 +48,9 @@ public class MemberOrderController {
         model.addAttribute("orderList", orderList);
         model.addAttribute("orderState", orderState);
 
+        model.addAttribute("title", "预定管理");
+        model.addAttribute("nav", "nav-order");
+
         return "member-order-list";
     }
 
@@ -69,6 +72,9 @@ public class MemberOrderController {
             return "alert";
         }
         model.addAttribute("order", orderBean);
+
+        model.addAttribute("title", "预定信息");
+        model.addAttribute("nav", "nav-order");
 
         return "member-order-info";
     }

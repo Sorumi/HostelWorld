@@ -42,6 +42,9 @@ public class MemberInfoController {
         MemberInfoBean memberInfoBean = memberService.convertToMemberInfoBean(member.getID());
         model.addAttribute("memberInfoBean", memberInfoBean);
 
+        model.addAttribute("title", "个人资料");
+        model.addAttribute("nav", "nav-info");
+
         return "member-info";
     }
 
@@ -53,6 +56,9 @@ public class MemberInfoController {
         } else {
             member = (Member) model.get("member");
         }
+
+        model.addAttribute("title", "修改个人资料");
+        model.addAttribute("nav", "nav-info");
 
         return "member-info-edit";
     }

@@ -21,7 +21,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hostel World</title>
+    <title>Hostel World - ${title}</title>
+
+    <link rel="icon" href="${basePath}/img/icon.png">
 
     <link rel="stylesheet" type="text/css" href="${basePath}/css/select2.min.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/flatpickr.min.css"/>

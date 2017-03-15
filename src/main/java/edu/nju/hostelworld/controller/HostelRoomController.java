@@ -53,6 +53,9 @@ public class HostelRoomController {
         hostelSearchRoomBean.setRooms(roomStocks);
 
         model.addAttribute("hostelSearchRoomBean", hostelSearchRoomBean);
+
+        model.addAttribute("title", "房间管理");
+        model.addAttribute("nav", "nav-room");
         return "hostel-room";
     }
 
@@ -81,6 +84,9 @@ public class HostelRoomController {
 
         model.addAttribute("hostelRoomListBean", hostelRoomListBean);
 
+        model.addAttribute("title", "房间计划");
+        model.addAttribute("nav", "nav-room");
+
         return "hostel-plan-list";
     }
 
@@ -100,6 +106,9 @@ public class HostelRoomController {
 //        hostelRoom.setEndDate(LocalDate.now().plusMonths(1).toString());
 
 //        model.addAttribute("hostelRoom", hostelRoom);
+
+        model.addAttribute("title", "发布房间计划");
+        model.addAttribute("nav", "nav-room");
 
         return "hostel-plan-edit";
     }

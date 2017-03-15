@@ -50,6 +50,9 @@ public class HostelStatisticController {
         List<FinanceRecordBean> financeRecords = financeRecordService.findFinanceHostelRecords(hostel.getID());
         model.addAttribute("financeRecords", financeRecords);
 
+        model.addAttribute("title", "信息统计");
+        model.addAttribute("nav", "nav-statistic");
+
         return "hostel-statistic";
     }
 

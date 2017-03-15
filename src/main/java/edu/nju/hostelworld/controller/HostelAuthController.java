@@ -38,6 +38,8 @@ public class HostelAuthController {
         }
 
         model.remove("alert");
+
+        model.addAttribute("title", "旅舍登录");
         return "hostel-login";
     }
 
@@ -89,6 +91,7 @@ public class HostelAuthController {
 
         model.remove("alert");
 
+        model.addAttribute("title", "旅舍注册");
         return "hostel-register";
     }
 

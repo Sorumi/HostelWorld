@@ -39,6 +39,7 @@ public class ManagerAuthController {
         }
 
         model.remove("alert");
+        model.addAttribute("title", "管理员登录");
         return "manager-login";
     }
 

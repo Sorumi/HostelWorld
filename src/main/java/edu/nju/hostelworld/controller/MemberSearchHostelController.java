@@ -42,6 +42,9 @@ public class MemberSearchHostelController {
         searchHostelBean.setCheckOutDate(LocalDate.now().plusDays(1).toString());
         model.addAttribute("searchHostelBean", searchHostelBean);
         model.addAttribute("cities", City.values());
+
+        model.addAttribute("title", "Meet the world");
+
         return "member-home";
     }
 
@@ -54,6 +57,8 @@ public class MemberSearchHostelController {
         searchHostelBean.setHostels(hostels);
 
         model.addAttribute("cities", City.values());
+
+        model.addAttribute("title", "Meet the world");
         return "member-search-hostel";
     }
 
@@ -70,6 +75,8 @@ public class MemberSearchHostelController {
 
         memberHostelInfoBean.setRoomStocks(list);
         model.addAttribute("memberHostelInfoBean", memberHostelInfoBean);
+
+        model.addAttribute("title", "旅舍信息");
 
         return "member-hostel";
     }

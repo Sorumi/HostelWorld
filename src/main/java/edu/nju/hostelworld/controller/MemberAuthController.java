@@ -40,6 +40,9 @@ public class MemberAuthController {
         }
 
         model.remove("alert");
+
+        model.addAttribute("title", "会员登录");
+
         return "member-login";
     }
 
@@ -90,6 +93,8 @@ public class MemberAuthController {
         }
 
         model.remove("alert");
+
+        model.addAttribute("title", "会员注册");
 
         return "member-register";
     }
@@ -189,7 +194,10 @@ public class MemberAuthController {
         alertBean.setButton("返回");
 
         model.addAttribute("alertBean", alertBean);
-        
+
+        model.addAttribute("title", "修改密码");
+        model.addAttribute("nav", "nav-info");
+
         return "alert-href";
 
     }

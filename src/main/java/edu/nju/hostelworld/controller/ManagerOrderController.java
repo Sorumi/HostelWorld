@@ -40,6 +40,9 @@ public class ManagerOrderController {
         model.addAttribute("orderList", orderList);
         model.addAttribute("orderState", orderState);
 
+        model.addAttribute("title", "预定管理");
+        model.addAttribute("nav", "nav-order");
+
         return "manager-order-list";
     }
 
@@ -56,6 +59,9 @@ public class ManagerOrderController {
             return "alert";
         }
         model.addAttribute("order", orderBean);
+
+        model.addAttribute("title", "预定信息");
+        model.addAttribute("nav", "nav-order");
 
         return "manager-order-info";
     }

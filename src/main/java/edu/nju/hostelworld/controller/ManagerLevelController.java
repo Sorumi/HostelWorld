@@ -32,6 +32,9 @@ public class ManagerLevelController {
         List<Level> levelList = levelService.findAllLevels();
         model.addAttribute("levelList", levelList);
 
+        model.addAttribute("title", "等级管理");
+        model.addAttribute("nav", "nav-level");
+
         return "manager-level";
     }
 

@@ -42,6 +42,9 @@ public class ManagerApplicationController {
         model.addAttribute("applicationList", applicationList);
         model.addAttribute("applicationType", applicationType);
 
+        model.addAttribute("title", "申请管理");
+        model.addAttribute("nav", "nav-application");
+
         return "manager-application-list";
     }
 
@@ -59,6 +62,9 @@ public class ManagerApplicationController {
         ApplicationBean applicationBean = applicationService.convertToApplicationBean(ID);
 
         model.addAttribute("applicationBean", applicationBean);
+
+        model.addAttribute("title", "申请信息");
+        model.addAttribute("nav", "nav-application");
 
         return "manager-application-info";
     }
