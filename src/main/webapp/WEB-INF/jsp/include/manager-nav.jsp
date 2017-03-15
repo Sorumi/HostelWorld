@@ -16,6 +16,7 @@
         <a id="nav-level" href="${basePath}/admin/level">等级管理</a>
         <a id="nav-hostel" href="${basePath}/admin/statistic/hostel">旅舍统计</a>
         <a id="nav-member" href="${basePath}/admin/statistic/member">会员统计</a>
+        <a id="nav-statistic" href="${basePath}/admin/statistic/order">预定统计</a>
         <a id="nav-money" href="${basePath}/admin/statistic/money">财务统计</a>
         <div class="clear-fix"></div>
     </div>

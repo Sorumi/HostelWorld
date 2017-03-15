@@ -103,11 +103,11 @@ public class ManagerStatisticController {
         ZoneId zoneId = ZoneId.systemDefault();
         long time = date.atStartOfDay(zoneId).toEpochSecond() * 1000;
 
-        List<Integer> booked = orderService.countHostelOrdersByStateAndMonth(hostelID, null, month);
-        List<Integer> checkIn = orderService.countHostelOrdersByStateAndMonth(hostelID, OrderState.CheckIn, month);
-        List<Integer> checkOut = orderService.countHostelOrdersByStateAndMonth(hostelID, OrderState.CheckOut, month);
-        List<Integer> cancelled = orderService.countHostelOrdersByStateAndMonth(hostelID, OrderState.Cancelled, month);
-        List<Integer> expired = orderService.countHostelOrdersByStateAndMonth(hostelID, OrderState.Expired, month);
+        List<Integer> booked = orderService.countOrdersByStateAndMonth(null, month);
+        List<Integer> checkIn = orderService.countOrdersByStateAndMonth(OrderState.CheckIn, month);
+        List<Integer> checkOut = orderService.countOrdersByStateAndMonth(OrderState.CheckOut, month);
+        List<Integer> cancelled = orderService.countOrdersByStateAndMonth(OrderState.Cancelled, month);
+        List<Integer> expired = orderService.countOrdersByStateAndMonth(OrderState.Expired, month);
         StatisticOrderBean statisticOrderBean = new StatisticOrderBean();
         statisticOrderBean.setTime(time);
         statisticOrderBean.setBooked(booked);
@@ -161,5 +161,52 @@ public class ManagerStatisticController {
         statisticOrderBean.setExpired(expired);
         return statisticOrderBean;
     }
+
+
+
+    @RequestMapping(value = "/statistic/order", method = RequestMethod.GET)
+    public String statisticOrder(ModelMap model) {
+
+        if (model.get("manager") == null) {
+            return "redirect:/admin/login";
+        }
+
+        List<Hostel> hostels = hostelService.findAllHostels();
+        model.addAttribute("hostels", hostels);
+
+        model.addAttribute("title", "预定统计");
+        model.addAttribute("nav", "nav-statistic");
+
+        return "manager-statistic-order";
+    }
+
+    @RequestMapping(value = "/statistic/order/{month}", method = RequestMethod.GET)
+    @ResponseBody
+    public StatisticOrderBean statisticOrderMonth(@PathVariable("month") String month, ModelMap model) {
+
+        if (model.get("manager") == null) {
+            return null;
+        }
+
+        LocalDate date = LocalDate.parse(month + "-01");
+
+        ZoneId zoneId = ZoneId.systemDefault();
+        long time = date.atStartOfDay(zoneId).toEpochSecond() * 1000;
+
+        List<Integer> booked = orderService.countOrdersByStateAndMonth(null, month);
+        List<Integer> checkIn = orderService.countOrdersByStateAndMonth(OrderState.CheckIn, month);
+        List<Integer> checkOut = orderService.countOrdersByStateAndMonth(OrderState.CheckOut, month);
+        List<Integer> cancelled = orderService.countOrdersByStateAndMonth(OrderState.Cancelled, month);
+        List<Integer> expired = orderService.countOrdersByStateAndMonth(OrderState.Expired, month);
+        StatisticOrderBean statisticOrderBean = new StatisticOrderBean();
+        statisticOrderBean.setTime(time);
+        statisticOrderBean.setBooked(booked);
+        statisticOrderBean.setCheckIn(checkIn);
+        statisticOrderBean.setCheckOut(checkOut);
+        statisticOrderBean.setCancelled(cancelled);
+        statisticOrderBean.setExpired(expired);
+        return statisticOrderBean;
+    }
+
 
 }
