@@ -3,7 +3,7 @@ package edu.nju.hostelworld.bean;
 /**
  * Created by Sorumi on 17/2/26.
  */
-public class HostelRegisterBean {
+public class HostelAuthBean {
 
     private String username;
 

@@ -31,7 +31,7 @@
                                 <label for="username">用户名</label>
                             </div>
                             <div class="grid-content">
-                                <input type="text" id="username" name="username" value="${hostelRegisterBean.username}">
+                                <input type="text" id="username" name="username" value="${hostelAuthBean.username}">
                                 <p class="alert"></p>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                                 <label for="password">密码</label>
                             </div>
                             <div class="grid-content">
-                                <input type="password" id="password" name="password" value="${hostelRegisterBean.password}">
+                                <input type="password" id="password" name="password" value="${hostelAuthBean.password}">
                                 <p class="alert"></p>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                                 <label for="confirm-password">确认密码</label>
                             </div>
                             <div class="grid-content">
-                                <input type="password" id="confirm-password" name="confirmPassword" value="${hostelRegisterBean.confirmPassword}">
+                                <input type="password" id="confirm-password" name="confirmPassword" value="${hostelAuthBean.confirmPassword}">
                                 <p class="alert"></p>
                             </div>
                         </div>

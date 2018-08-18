@@ -22,7 +22,7 @@
                                 <label for="username">用户名</label>
                             </div>
                             <div class="grid-content">
-                                <input type="text" id="username" name="username" value="${hostelRegisterBean.username}"/>
+                                <input type="text" id="username" name="username" value="${hostelAuthBean.username}"/>
                                 <p class="alert"></p>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <label for="password">密码</label>
                             </div>
                             <div class="grid-content">
-                                <input type="password" id="password" name="password" value="${hostelRegisterBean.password}"/>
+                                <input type="password" id="password" name="password" value="${hostelAuthBean.password}"/>
                                 <p class="alert"></p>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                         <%--<label for="username">用户名</label>--%>
                     <%--</td>--%>
                     <%--<td>--%>
-                        <%--<input type="text" id="username" name="username" value="${hostelRegisterBean.username}"/>--%>
+                        <%--<input type="text" id="username" name="username" value="${hostelAuthBean.username}"/>--%>
                         <%--<span class="alert"></span>--%>
                     <%--</td>--%>
                 <%--</tr>--%>
@@ -74,7 +74,7 @@
                         <%--<label for="password">密码</label>--%>
                     <%--</td>--%>
                     <%--<td>--%>
-                        <%--<input type="password" id="password" name="password" value="${hostelRegisterBean.password}"/>--%>
+                        <%--<input type="password" id="password" name="password" value="${hostelAuthBean.password}"/>--%>
                         <%--<span class="alert"></span>--%>
                     <%--</td>--%>
                 <%--</tr>--%>

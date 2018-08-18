@@ -1,6 +1,6 @@
 package edu.nju.hostelworld.controller;
 
-import edu.nju.hostelworld.bean.HostelRegisterBean;
+import edu.nju.hostelworld.bean.HostelAuthBean;
 import edu.nju.hostelworld.model.Hostel;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.util.ResultMessage;
@@ -44,18 +44,18 @@ public class HostelAuthController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPost(HostelRegisterBean hostelRegisterBean, HttpSession session, ModelMap model) {
+    public String loginPost(HostelAuthBean hostelAuthBean, HttpSession session, ModelMap model) {
         boolean isLogin = model.containsAttribute("hostel");
         if (isLogin) {
             return "redirect:/hostel/home";
         }
 
-        String username = hostelRegisterBean.getUsername();
-        String password = hostelRegisterBean.getPassword();
+        String username = hostelAuthBean.getUsername();
+        String password = hostelAuthBean.getPassword();
 
         if (!isValid(username) || !isValid(password)) {
             model.addAttribute("alert", "请将信息填写完整!");
-            model.addAttribute("hostelRegisterBean", hostelRegisterBean);
+            model.addAttribute("hostelRegisterBean", hostelAuthBean);
             return "hostel-login";
         }
 
@@ -63,13 +63,13 @@ public class HostelAuthController {
 
         if (resultMessage == ResultMessage.NOT_EXIST) {
             model.addAttribute("alert", "用户名不存在！");
-            model.remove("hostelRegisterBean");
+            model.remove("hostelAuthBean");
             return "hostel-login";
 
         } else if (resultMessage == ResultMessage.FAILED) {
             model.addAttribute("alert", "密码错误！");
-            hostelRegisterBean.setPassword("");
-            model.addAttribute("hostelRegisterBean", hostelRegisterBean);
+            hostelAuthBean.setPassword("");
+            model.addAttribute("hostelRegisterBean", hostelAuthBean);
             return "hostel-login";
         }
 
@@ -96,30 +96,30 @@ public class HostelAuthController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerPost(HostelRegisterBean hostelRegisterBean, ModelMap model) {
+    public String registerPost(HostelAuthBean hostelAuthBean, ModelMap model) {
 
         boolean isLogin = model.containsAttribute("hostel");
         if (isLogin) {
             return "redirect:/hostel/home";
         }
 
-        String username = hostelRegisterBean.getUsername();
-        String password = hostelRegisterBean.getPassword();
-        String confirmedPassword = hostelRegisterBean.getConfirmPassword();
+        String username = hostelAuthBean.getUsername();
+        String password = hostelAuthBean.getPassword();
+        String confirmedPassword = hostelAuthBean.getConfirmPassword();
 
         if (!isValid(username) || !isValid(password) || !isValid(confirmedPassword)) {
             model.addAttribute("alert", "请将信息填写完整!");
-            model.addAttribute("hostelRegisterBean", hostelRegisterBean);
+            model.addAttribute("hostelRegisterBean", hostelAuthBean);
             return "hostel-register";
         }
         if (!password.equals(confirmedPassword)) {
             model.addAttribute("alert", "两次密码输入不一致!");
-            model.addAttribute("hostelRegisterBean", hostelRegisterBean);
+            model.addAttribute("hostelRegisterBean", hostelAuthBean);
             return "hostel-register";
         }
         if (hostelService.findHostelByUsername(username) != null) {
             model.addAttribute("alert", "用户名已存在！");
-            model.addAttribute("hostelRegisterBean", hostelRegisterBean);
+            model.addAttribute("hostelRegisterBean", hostelAuthBean);
             return "hostel-register";
         }
         Hostel hostel = new Hostel();
